@@ -1,0 +1,38 @@
++ new features
+% modified features
+- removed features, fixed bugs
+=========================================================
+0.2.0 : 2011 Sep 18
++ upgraded engine (objectives, status, message, help UI)
++ diffuse lighting
++ new creature : dark wanderer
++ new creature : ice shrieker
++ new player skills : beacon, light, blast, firefly
+=========================================================
+0.1.2 : 2009 Mar 26
++ configurable movement key (in config.creatures.player)
++ font size auto-selection at first start depending on the desktop resolution
+% sub-cell resolution in title/end screens
+- fixed clamped fire ring rendering
+- fixed light radius continuity issue near angle -PI
+- fixed mouse issues in fullscreen (libtcod fix) 
+=========================================================
+0.1.1 : 2009 Mar 21
++ added sub-cell dungeon precision
++ added anti-aliased fov
++ added help screen
++ added new spell selection screen
++ added two new control modes : mouse only / mouse + keyboard
+% improved fire burst & incandescence visual effects
+% improve lights behaviour when far from player
+% Zeepoh moves even if player not below secure distance
+% made game (slightly) harder
+- fixed ghost lights from items left in the previous level
+- fixed crash when taking a scroll with all spells maxed out
+- fixed stair/amulet disappearing
+- fixed end screen not triggered on victory
+- fixed possible crash during boss fight
+=========================================================
+0.1   : 2009 Mar 7
+Initial release (7DRL)
+
