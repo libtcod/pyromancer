@@ -15,7 +15,7 @@
 % sub-cell resolution in title/end screens
 - fixed clamped fire ring rendering
 - fixed light radius continuity issue near angle -PI
-- fixed mouse issues in fullscreen (libtcod fix) 
+- fixed mouse issues in fullscreen (libtcod fix)
 =========================================================
 0.1.1 : 2009 Mar 21
 + added sub-cell dungeon precision
@@ -35,4 +35,3 @@
 =========================================================
 0.1   : 2009 Mar 7
 Initial release (7DRL)
-
