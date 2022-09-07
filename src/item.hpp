@@ -238,8 +238,8 @@ public :
 	// if item has EXPLODE_ON_BOUNCE feature
 	void explode(bool wallCollision);
 
-	virtual bool loadData(uint32 chunkId, uint32 chunkVersion, TCODZip *zip);
-	virtual void saveData(uint32 chunkId, TCODZip *zip);
+	virtual bool loadData(uint32_t chunkId, uint32_t chunkVersion, TCODZip *zip);
+	virtual void saveData(uint32_t chunkId, TCODZip *zip);
 
 	static TCODColor classColor[NB_ITEM_CLASSES];
 
@@ -291,6 +291,3 @@ protected :
 	void generateComponents();
 	void useFeature(ItemFeature::Type type);
 };
-
-
-

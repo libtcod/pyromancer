@@ -661,7 +661,7 @@ void Creature::unwield(Item *it) {
 }
 
 #define CREA_CHUNK_VERSION 9
-void Creature::saveData(uint32 chunkId, TCODZip *zip) {
+void Creature::saveData(uint32_t chunkId, TCODZip *zip) {
 	saveGame.saveChunk(CREA_CHUNK_ID,CREA_CHUNK_VERSION);
 	zip->putString(getType()->getName());
 	zip->putFloat(x);
@@ -684,7 +684,7 @@ void Creature::saveData(uint32 chunkId, TCODZip *zip) {
 
 }
 
-bool Creature::loadData(uint32 chunkId, uint32 chunkVersion, TCODZip *zip) {
+bool Creature::loadData(uint32_t chunkId, uint32_t chunkVersion, TCODZip *zip) {
 	if ( chunkVersion != CREA_CHUNK_VERSION ) return false;
 	const char *typeName=zip->getString();
 	type = CreatureType::getType(typeName);
@@ -701,7 +701,7 @@ bool Creature::loadData(uint32 chunkId, uint32 chunkVersion, TCODZip *zip) {
 		const char * itemTypeName=zip->getString();
 		ItemType *itemType=ItemType::getType(itemTypeName);
 		if (!itemType) return false;
-		uint32 itemChunkId ,itemChunkVersion;
+		uint32_t itemChunkId ,itemChunkVersion;
 		saveGame.loadChunk(&itemChunkId, &itemChunkVersion);
 		Item *it=Item::getItem(itemType, 0,0);
 		if (!it->loadData(itemChunkId, itemChunkVersion, zip)) return false;
@@ -719,4 +719,3 @@ bool Creature::loadData(uint32 chunkId, uint32 chunkVersion, TCODZip *zip) {
 	}
 	return true;
 }
-

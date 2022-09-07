@@ -219,8 +219,8 @@ public :
 	virtual void initItem() {} // build asItem member
 
 	// SaveListener
-	bool loadData(uint32 chunkId, uint32 chunkVersion, TCODZip *zip);
-	void saveData(uint32 chunkId, TCODZip *zip);
+	bool loadData(uint32_t chunkId, uint32_t chunkVersion, TCODZip *zip);
+	void saveData(uint32_t chunkId, TCODZip *zip);
 
 	float fovRange;
 	bool toDelete;
@@ -249,4 +249,3 @@ protected :
 	void updateConditions(float elapsed);
 	void updateSkills(float elapsed);
 };
-

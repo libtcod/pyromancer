@@ -338,9 +338,9 @@ bool UmbraEngine::registerFonts () {
 					int fontFlag = TCOD_FONT_TYPE_GREYSCALE;
 					if (layout[0] == '_') {
 						// parse font layout
-						if (strncasecmp(layout,"_TCOD.",6) == 0) fontFlag |= TCOD_FONT_LAYOUT_TCOD;
-						else if (strncasecmp(layout,"_INCOL.",7) == 0) fontFlag |= TCOD_FONT_LAYOUT_ASCII_INCOL;
-						else if (strncasecmp(layout,"_INROW.",7) == 0) fontFlag |= TCOD_FONT_LAYOUT_ASCII_INROW;
+						if (TCOD_strncasecmp(layout,"_TCOD.",6) == 0) fontFlag |= TCOD_FONT_LAYOUT_TCOD;
+						else if (TCOD_strncasecmp(layout,"_INCOL.",7) == 0) fontFlag |= TCOD_FONT_LAYOUT_ASCII_INCOL;
+						else if (TCOD_strncasecmp(layout,"_INROW.",7) == 0) fontFlag |= TCOD_FONT_LAYOUT_ASCII_INROW;
 					} else {
 						// default is TCOD |GREYSCALE
 						fontFlag|=TCOD_FONT_LAYOUT_TCOD;
@@ -599,7 +599,7 @@ int UmbraEngine::run () {
 				break;
 		}
 		keyboard(key);
-		uint32 startTime=TCODSystem::getElapsedMilli();
+		uint32_t startTime=TCODSystem::getElapsedMilli();
 		// update all active modules by priority order
 		UmbraModule ** tmpMod;
 		for (tmpMod = activeModules.begin(); tmpMod != activeModules.end(); tmpMod++) {
@@ -621,7 +621,7 @@ int UmbraEngine::run () {
 				}
 			}
 		}
-		uint32 updateTime=TCODSystem::getElapsedMilli() - startTime;
+		uint32_t updateTime=TCODSystem::getElapsedMilli() - startTime;
 		TCODConsole::root->setDefaultBackground(TCODColor::black);
 		TCODConsole::root->clear();
 		// render active modules by inverted priority order
@@ -629,7 +629,7 @@ int UmbraEngine::run () {
 			tmpMod--;
 			(*tmpMod)->render();
 		}
-		uint32 renderTime = TCODSystem::getElapsedMilli() - startTime - updateTime;
+		uint32_t renderTime = TCODSystem::getElapsedMilli() - startTime - updateTime;
 		if ( internalModules[UMBRA_INTERNAL_SPEEDOMETER]->getActive() ) {
 			((UmbraModSpeed *)internalModules[UMBRA_INTERNAL_SPEEDOMETER])->setTimes(updateTime,renderTime);
 		}
