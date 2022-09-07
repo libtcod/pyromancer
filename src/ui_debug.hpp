@@ -26,7 +26,7 @@
 
 class MapDebugger  : public Screen {
 public :
-	enum EDebugMapType { DBG_LIGHTMAP, DBG_HEIGHTMAP, DBG_SHADOWHEIGHT, DBG_SHADOWMAP, DBG_FOV, 
+	enum EDebugMapType { DBG_LIGHTMAP, DBG_HEIGHTMAP, DBG_SHADOWHEIGHT, DBG_SHADOWMAP, DBG_FOV,
 		DBG_NORMALMAP, DBG_CLOUDS, DBG_WATERCOEF, DBG_FIREZONES, NB_DEBUGMAPS };
 	static const char *mapNames[NB_DEBUGMAPS];
 	MapDebugger();
@@ -37,7 +37,7 @@ protected :
 	EDebugMapType mapNum;
 	bool toOpen;
 	bool toExit;
-	
+
 	TCODImage *img;
 	void onActivate();
 	void onInitialise();

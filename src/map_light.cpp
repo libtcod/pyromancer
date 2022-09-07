@@ -143,15 +143,15 @@ void Light::add(LightMap *l, TCODImage *img, bool withFov) {
 						if (l) {
 							HDRColor prevCol=l->getHdrColor2x(cx+minx,cy+miny);
 							switch(drawMode) {
-							case MODE_ADD:	
+							case MODE_ADD:
 								col = col * coef;
 								prevCol = prevCol+col;
 							break;
-							case MODE_MUL:	
+							case MODE_MUL:
 								col = HDRColor::lerp(hdrWhite, col,coef);
 								prevCol = prevCol*col;
 							break;
-							case MODE_MAX:	
+							case MODE_MAX:
 								col = col * coef;
 								prevCol.r = MAX(prevCol.r,col.r);
 								prevCol.g = MAX(prevCol.g,col.g);
@@ -165,7 +165,7 @@ void Light::add(LightMap *l, TCODImage *img, bool withFov) {
 							switch(drawMode) {
 							case MODE_ADD:	prevCol = prevCol+col;break;
 							case MODE_MUL:	prevCol = prevCol*col;break;
-							case MODE_MAX:	
+							case MODE_MAX:
 								prevCol.r = MAX(prevCol.r,col.r);
 								prevCol.g = MAX(prevCol.g,col.g);
 								prevCol.b = MAX(prevCol.b,col.b);

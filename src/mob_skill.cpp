@@ -38,7 +38,7 @@ public :
 	bool parserFlag(TCODParser *parser, const char *name);
 	bool parserProperty(TCODParser *parser, const char *propname, TCOD_value_type_t type, TCOD_value_t value);
 	bool parserEndStruct(TCODParser *parser, const TCODParserStruct *def, const char *name);
-	void error(const char *msg);	
+	void error(const char *msg);
 private :
 	SkillType *currentSkill;
 	union {
@@ -144,7 +144,7 @@ bool SkillParser::parserEndStruct(TCODParser *parser, const TCODParserStruct *de
 		}
 	}
 	return true;
-}	
+}
 
 void SkillParser::error(const char *msg) {
 	fprintf(stderr,"%s",msg);
@@ -214,7 +214,7 @@ bool SkillType::init() {
 	skill->addProperty("castTime",TCOD_TYPE_FLOAT,true);
 	skill->addProperty("reloadTime",TCOD_TYPE_FLOAT,true);
 	skill->addProperty("description",TCOD_TYPE_STRING,false);
-	skill->addProperty("resourceType",TCOD_TYPE_STRING,false);	
+	skill->addProperty("resourceType",TCOD_TYPE_STRING,false);
 	skill->addProperty("resourceCost",TCOD_TYPE_FLOAT,false);
 	skill->addProperty("requires",TCOD_TYPE_STRING,false);
 	skill->addValueList("targetType",targetTypes,true);
@@ -238,7 +238,7 @@ bool SkillType::init() {
 	Effect::configureParser(&parser,wielderEffects);
 	skill->addStructure(wielderEffects);
 	parser.run("data/cfg/skills.txt",new SkillParser());
-	
+
 	return true;
 }
 
@@ -253,7 +253,7 @@ bool SkillType::check(Creature *cr) {
 	*/
 	if ( flags & NEED_WALK ) {
 		// check if the creature can walk
-		if ( cr->hasCondition(ConditionType::PARALIZED) 
+		if ( cr->hasCondition(ConditionType::PARALIZED)
 			|| cr->hasCondition(ConditionType::CRIPPLED) ) return false;
 	}
 	if ( flags & NEED_MAIN ) {
@@ -278,7 +278,7 @@ const char *SkillType::getDescription() {
 	strcat(buf,"\n");
 	if ( description && description[0] != 0 ) {
 		strcat(buf,description);
-		strcat(buf,"\n");	
+		strcat(buf,"\n");
 	}
 	if ( hasEffect(Effect::DAMAGE) ) {
 		DamageEffect *fx=(DamageEffect *)getEffect(Effect::DAMAGE);
@@ -291,7 +291,7 @@ const char *SkillType::getDescription() {
 	for ( Effect **fx=targetEffects.begin(); fx != targetEffects.end(); fx++) {
 		if ((*fx)->type == Effect::CONDITION ) {
 			ConditionEffect *condFx=(ConditionEffect *)(*fx);
-			sprintf(tmp," %s",condFx->alias ? condFx->alias : 
+			sprintf(tmp," %s",condFx->alias ? condFx->alias :
 				ConditionType::get(condFx->conditionType)->name);
 			strcat(buf,tmp);
 			if ( condFx->chance != 1.0f ) {
@@ -313,7 +313,7 @@ const char *SkillType::getDescription() {
 		for ( Effect **fx=adrenalinEffects.begin(); fx != adrenalinEffects.end(); fx++) {
 			if ((*fx)->type == Effect::CONDITION ) {
 				ConditionEffect *condFx=(ConditionEffect *)(*fx);
-				sprintf(tmp," %s",condFx->alias ? condFx->alias : 
+				sprintf(tmp," %s",condFx->alias ? condFx->alias :
 					ConditionType::get(condFx->conditionType)->name);
 				strcat(buf,tmp);
 				if ( condFx->chance != 1.0f ) {
@@ -337,7 +337,7 @@ const char *SkillType::getDescription() {
 	return buf;
 }
 
-Skill::Skill(SkillType *type) : 
+Skill::Skill(SkillType *type) :
 	type(type), castTime(0.0f), combo(false),isOn(false),caster(NULL),target(NULL) {
 	// TODO
 	//for ( Effect **it=type->wielderEffects.begin();it!=type->wielderEffects.end();it++) {
@@ -356,9 +356,9 @@ char *Skill::getName() {
 bool Skill::isReady() {
 	if ( castTime != 0.0f ) return false;
 	if ( ( type->flags & SkillType::NEED_MAIN ) ) {
-		if ( ! caster->mainHand 
+		if ( ! caster->mainHand
 			// TODO
-			//|| ! caster->mainHand->isReady() 
+			//|| ! caster->mainHand->isReady()
 		) return false;
 	}
 	return true;
@@ -378,7 +378,7 @@ bool Skill::update(float elapsed) {
 		caster->addResource(type->resourceType,-cost);
 		if (caster->getResourceValue(type->resourceType)<= 0.0f) {
 			cast(); // no more resource. cast again to turn it off
-		} 
+		}
 	}
 	if ( castTime > 0.0f ) {
 		// casting
@@ -450,7 +450,7 @@ bool Skill::cast() {
 	/*
 	if ( type->classNeeded ) {
 		// check if the caster has a weapon of class classNeeded
-		if (( ! caster->mainHand || ! caster->mainHand->isA(type->classNeeded) )  
+		if (( ! caster->mainHand || ! caster->mainHand->isA(type->classNeeded) )
 			&& ( ! caster->offHand || ! caster->offHand->isA(type->classNeeded) ) ) return false;
 	}
 	*/
@@ -478,7 +478,7 @@ bool Skill::cast() {
 	if ( type->hasEffect(Effect::PARRY) ) {
 		// check if we parry an attack
 		for ( Skill **sk=target->skills.begin(); sk != target->skills.end(); sk ++ ) {
-			if ( (*sk)->type->weapon && (*sk)->castTime > 0.0 
+			if ( (*sk)->type->weapon && (*sk)->castTime > 0.0
 				// can only parry in the last parryDelay seconds of the casting phase
 				&& (*sk)->castTime <= parryDelay
 				) {
@@ -490,7 +490,7 @@ bool Skill::cast() {
 				} else {
 					gameEngine->stats.creatureParry(caster);
 				}
-				new Bubble(target->x,target->y-1, target->isPlayer ? TCODColor::lightRed : 
+				new Bubble(target->x,target->y-1, target->isPlayer ? TCODColor::lightRed :
 					TCODColor::lightBlue, "parry");
 				break;
 			}
@@ -512,7 +512,7 @@ void Skill::interrupt() {
 	}
 }
 
-// private stuff 
+// private stuff
 
 bool Skill::applyEffectOnTarget(Effect *fx, Creature *cr) {
 
@@ -542,12 +542,12 @@ bool Skill::execute() {
 	// TODO
 	//if ( type->flags & SkillType::USE_ALL_STAMINA ) caster->curSta=0;
 	if ( caster->isPlayer() && (!(type->flags & SkillType::ONOFF) || isOn)) type->nbCast++;
-	if ( type->targetType == SkillType::CASTER ) { 
-		if (executeOnTarget(caster) ) return true; 
-	} else if ( type->targetType == SkillType::OPPONENT ) { 
+	if ( type->targetType == SkillType::CASTER ) {
+		if (executeOnTarget(caster) ) return true;
+	} else if ( type->targetType == SkillType::OPPONENT ) {
 		if ( ABS(target->x - caster->x) > 2 ) return true; // target too far away
 		if ( ABS(target->y - caster->y) > 2 ) return true; // target too far away
-		if (executeOnTarget(target)) return true; 
+		if (executeOnTarget(target)) return true;
 	} else if ( type->targetType >= SkillType::RANGE1 && type->targetType <= SkillType::RANGE3 ) {
 		// range 1 creatures
 		Creature *cr;
@@ -608,7 +608,7 @@ bool Skill::execute() {
 			}
 		}
 	}
-	
+
 	if ( (type->flags & SkillType::EXECUTE_WHEN_CASTED) == 0 ) castTime=-type->reloadTime;
 	return false;
 }

@@ -33,7 +33,7 @@ struct TerrainType {
     bool swimmable; //is it swimmable?
 	bool ripples; // generates ripples
     float walkCost; //cost of moving through it (either walking or swimming)
-    float trampleDelay, trampleColorCoef; 
+    float trampleDelay, trampleColorCoef;
 };
 
 
@@ -81,8 +81,8 @@ struct Cell : public Persistant {
 	TerrainId terrain;
 	Building *building; // if cell is inside a building
 	float trampleDate; // last date when this cell was trampled
-	
-	// SaveListener	
+
+	// SaveListener
 	bool loadData(TCODZip *zip);
 	void saveData(TCODZip *zip);
 };
@@ -98,7 +98,7 @@ struct SubCell : public Persistant {
 	// for indoor, static light map
 	float r,g,b;
 
-	// SaveListener	
+	// SaveListener
 	bool loadData(TCODZip *zip);
 	void saveData(TCODZip *zip);
 };

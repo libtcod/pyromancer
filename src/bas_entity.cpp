@@ -45,7 +45,7 @@ bool Entity::isOnScreen() const {
 	return IN_RECTANGLE(x-gameEngine->xOffset,y-gameEngine->yOffset,CON_W,CON_H);
 }
 
-DynamicEntity::CollisionType DynamicEntity::updateMove(float elapsed, float bounceCoef, bool hitPlayer, 
+DynamicEntity::CollisionType DynamicEntity::updateMove(float elapsed, float bounceCoef, bool hitPlayer,
 	bool hitCreatures, bool hitItems) {
 	Dungeon *dungeon=gameEngine->dungeon;
 	float oldx=x;
@@ -104,10 +104,10 @@ DynamicEntity::CollisionType DynamicEntity::updateMove(float elapsed, float boun
 					// horizontal wall bounce
 					dy=-dy;
 				}
-			}			
+			}
 		} else {
 			// on a walkable cell
-			if ( hitPlayer && ABS(curoldx - (int)gameEngine->player->x) < 2 
+			if ( hitPlayer && ABS(curoldx - (int)gameEngine->player->x) < 2
 					&& ABS(curoldy - (int)gameEngine->player->y) < 2 ) {
 				x=oldx;y=oldy;
 				speed=0;

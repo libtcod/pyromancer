@@ -46,7 +46,7 @@ ItemFeature *ItemFeatureProduce::clone() const {
 }
 void ItemFeatureProduce::copy(const ItemFeature *feat) {
 	ItemFeature::copy(feat);
-	*this = *(const ItemFeatureProduce *)feat; 
+	*this = *(const ItemFeatureProduce *)feat;
 }
 void ItemFeatureProduce::use(Item *it) {
 	float odds=TCODRandom::getInstance()->getFloat(0.0f,1.0f) ;
@@ -60,7 +60,7 @@ void ItemFeatureProduce::use(Item *it) {
 			product->putInInventory(gameEngine->player);
 		} else {
 			if ( TCODRandom::getInstance()->getInt(0,2) == 0 ) {
-				gameEngine->gui.log.info("You kick %s.",it->theName());				
+				gameEngine->gui.log.info("You kick %s.",it->theName());
 				gameEngine->gui.log.warn("You feel a sharp pain in the foot.");
 				Condition *cond=new Condition(ConditionType::CRIPPLED,10.0f,0.5f);
 				gameEngine->hitFlash();
@@ -84,7 +84,7 @@ ItemFeature *ItemFeatureFire::clone() const {
 }
 void ItemFeatureFire::copy(const ItemFeature *feat) {
 	ItemFeature::copy(feat);
-	*this = *(const ItemFeatureFire *)feat; 
+	*this = *(const ItemFeatureFire *)feat;
 }
 bool ItemFeatureFire::update(float elapsed, TCOD_mouse_t *mouse, Item *it) {
 	if (it->fireResistance > 0.0f) return true;
@@ -123,24 +123,24 @@ ItemFeatureAge::ItemFeatureAge(float delay, ItemType *type) :
 	ItemFeature(AGE),delay(delay),type(type) {}
 ItemFeature *ItemFeatureAge::clone() const {
 	return new ItemFeatureAge(delay,type);
-}	
+}
 void ItemFeatureAge::copy(const ItemFeature *feat) {
 	ItemFeature::copy(feat);
-	*this = *(const ItemFeatureAge *)feat; 
+	*this = *(const ItemFeatureAge *)feat;
 }
 bool ItemFeatureAge::update(float elapsed, TCOD_mouse_t *mouse, Item *it) {
 	return it->age(elapsed,this);
 }
 
-// food 
+// food
 ItemFeatureFood::ItemFeatureFood(int health, int mana, float delay) :
 	ItemFeature(FOOD),health(health),mana(mana),delay(delay) {}
 ItemFeature *ItemFeatureFood::clone() const {
 	return new ItemFeatureFood(health,mana,delay);
-}	
+}
 void ItemFeatureFood::copy(const ItemFeature *feat) {
 	ItemFeature::copy(feat);
-	*this = *(const ItemFeatureFood *)feat; 
+	*this = *(const ItemFeatureFood *)feat;
 }
 void ItemFeatureFood::use(Item *it) {
 	if ( health ) it->owner->addCondition(new Condition(ConditionType::HEAL, delay,health));
@@ -149,7 +149,7 @@ void ItemFeatureFood::use(Item *it) {
 
 
 // light
-ItemFeatureLight::ItemFeatureLight(float range, const HDRColor &color, int flags, 
+ItemFeatureLight::ItemFeatureLight(float range, const HDRColor &color, int flags,
 	float patternDelay, const char *pattern,const HDRColor &color2,const char *colorPattern) :
 	ItemFeature(LIGHT),range(range),color(color),color2(color2),flags(flags),patternDelay(patternDelay) {
 	if ( pattern ) this->pattern=strdup(pattern);
@@ -162,12 +162,12 @@ ItemFeature *ItemFeatureLight::clone() const {
 }
 void ItemFeatureLight::copy(const ItemFeature *feat) {
 	ItemFeature::copy(feat);
-	*this = *(const ItemFeatureLight *)feat; 
+	*this = *(const ItemFeatureLight *)feat;
 }
 
 // attack
-ItemFeatureAttack::ItemFeatureAttack(WieldType wield, float minCastDelay, float maxCastDelay, 
-		float minReloadDelay, float maxReloadDelay, float minDamagesCoef, float maxDamagesCoef, 
+ItemFeatureAttack::ItemFeatureAttack(WieldType wield, float minCastDelay, float maxCastDelay,
+		float minReloadDelay, float maxReloadDelay, float minDamagesCoef, float maxDamagesCoef,
 		int flags, float speed, ItemType *ammunition, ItemType *casts,StatusResource::Type resourceType,float resourceCost) :
 		ItemFeature(ATTACK),wield(wield),minCastDelay(minCastDelay),
 		maxCastDelay(maxCastDelay),minReloadDelay(minReloadDelay),maxReloadDelay(maxReloadDelay),
@@ -175,13 +175,13 @@ ItemFeatureAttack::ItemFeatureAttack(WieldType wield, float minCastDelay, float 
 		speed(speed),ammunition(ammunition),casts(casts),resourceType(resourceType),
 		resourceCost(resourceCost){}
 ItemFeature *ItemFeatureAttack::clone() const {
-	return new ItemFeatureAttack(wield, minCastDelay, maxCastDelay, 
-		minReloadDelay, maxReloadDelay, minDamagesCoef, maxDamagesCoef, 
+	return new ItemFeatureAttack(wield, minCastDelay, maxCastDelay,
+		minReloadDelay, maxReloadDelay, minDamagesCoef, maxDamagesCoef,
 		flags, speed, ammunition, casts,resourceType,resourceCost);
-}		
+}
 void ItemFeatureAttack::copy(const ItemFeature *feat) {
 	ItemFeature::copy(feat);
-	*this = *(const ItemFeatureAttack *)feat; 
+	*this = *(const ItemFeatureAttack *)feat;
 }
 void ItemFeatureAttack::use(Item *it) {
 	if ( it->owner ) {
@@ -220,7 +220,7 @@ bool ItemFeatureAttack::update(float elapsed, TCOD_mouse_t *mouse, Item *it) {
 			} else if ( ammunition ) {
 				// TODO
 			}
-			
+
 			ItemFeatureAttack *projectileAttack=(ItemFeatureAttack *)projectile->getFeature(ItemFeature::ATTACK);
 			if ( ! projectileAttack ) {
 				fprintf(stderr,"Item type %s cannot have non projectile ammunition/casts type %s",it->typeData->name,projectile->typeData->name);
@@ -272,9 +272,9 @@ bool ItemFeatureAttack::update(float elapsed, TCOD_mouse_t *mouse, Item *it) {
 		}
 		break;
 	case IDLE:
-		if ( it->owner->isPlayer() && mouse->lbutton && it->isEquiped() 
+		if ( it->owner->isPlayer() && mouse->lbutton && it->isEquiped()
 			&& !it->owner->hasCondition(ConditionType::STUNNED)) {
-			static float longSpellDelay=config.getFloatProperty("config.creatures.player.longSpellDelay");				
+			static float longSpellDelay=config.getFloatProperty("config.creatures.player.longSpellDelay");
 			it->phaseTimer=it->castDelay;
 			it->phase=CAST;
 			int dx=mouse->cx+gameEngine->xOffset;
@@ -283,10 +283,10 @@ bool ItemFeatureAttack::update(float elapsed, TCOD_mouse_t *mouse, Item *it) {
 			it->targety=dy;
 			attackCoef=1.0f ; //+((Player *)it->owner)->lbuttonDelay/longSpellDelay;
 			attackCoef=MIN(2.0f,attackCoef);
-			((Player *)it->owner)->lbuttonDelay=0.0f;			
-//printf ("delay %g coef %g\n",((Player *)owner)->lbuttonDelay,attackCoef);					
+			((Player *)it->owner)->lbuttonDelay=0.0f;
+//printf ("delay %g coef %g\n",((Player *)owner)->lbuttonDelay,attackCoef);
 		}
-	break;	
+	break;
 	}
 	return true;
 }
@@ -299,7 +299,7 @@ ItemFeature *ItemFeatureHeat::clone() const {
 }
 void ItemFeatureHeat::copy(const ItemFeature *feat) {
 	ItemFeature::copy(feat);
-	*this = *(const ItemFeatureHeat *)feat; 
+	*this = *(const ItemFeatureHeat *)feat;
 }
 bool ItemFeatureHeat::update(float elapsed, TCOD_mouse_t *mouse, Item *it) {
 	it->heatTimer += elapsed;
@@ -345,7 +345,7 @@ ItemFeature *ItemFeatureContainer::clone() const {
 }
 void ItemFeatureContainer::copy(const ItemFeature *feat) {
 	ItemFeature::copy(feat);
-	*this = *(const ItemFeatureContainer *)feat; 
+	*this = *(const ItemFeatureContainer *)feat;
 }
 void ItemFeatureContainer::use(Item *it) {
 	if (! it->isPickable()) {
@@ -386,16 +386,16 @@ ItemFeature *ItemFeatureExplodeOnBounce::clone() const {
 void ItemFeatureExplodeOnBounce::copy(const ItemFeature *feat) {
 	ItemFeature::copy(feat);
 	const ItemFeatureExplodeOnBounce *eob=(const ItemFeatureExplodeOnBounce *)feat;
-	this->delay=eob->delay; 	
-	this->startRange=eob->startRange; 	
-	this->endRange=eob->endRange; 	
-	this->middleRange=eob->middleRange; 	
-	this->middleLightCoef=eob->middleLightCoef; 	
-	this->middleTime=eob->middleTime; 	
-	this->startLightCoef=eob->startLightCoef; 	
-	this->endLightCoef=eob->endLightCoef; 	
-	this->particleCount=eob->particleCount; 	
-	this->particleType=eob->particleType; 	
+	this->delay=eob->delay;
+	this->startRange=eob->startRange;
+	this->endRange=eob->endRange;
+	this->middleRange=eob->middleRange;
+	this->middleLightCoef=eob->middleLightCoef;
+	this->middleTime=eob->middleTime;
+	this->startLightCoef=eob->startLightCoef;
+	this->endLightCoef=eob->endLightCoef;
+	this->particleCount=eob->particleCount;
+	this->particleType=eob->particleType;
 	for ( Effect **it=eob->effects.begin(); it != eob->effects.end(); it++) {
 		effects.push(*it);
 	}
@@ -410,7 +410,7 @@ Effect *ItemFeatureExplodeOnBounce::getEffect(Effect::Type type) const {
 
 ConditionEffect *ItemFeatureExplodeOnBounce::getConditionEffect(ConditionType::Type type) const {
 	for ( Effect **effect=effects.begin(); effect != effects.end(); effect++) {
-		if ( (*effect)->type == Effect::CONDITION && ((ConditionEffect *)(*effect))->conditionType == type ) 
+		if ( (*effect)->type == Effect::CONDITION && ((ConditionEffect *)(*effect))->conditionType == type )
 			return (ConditionEffect *)*effect;
 	}
 	return NULL;
@@ -443,7 +443,7 @@ bool ItemFeatureExplodeOnBounce::update(float elapsed, TCOD_mouse_t *mouse, Item
 								creatures.push(player);
 							}
 						}
-					}					
+					}
 				}
 			}
 			// apply effects
@@ -477,7 +477,7 @@ bool ItemFeatureExplodeOnBounce::update(float elapsed, TCOD_mouse_t *mouse, Item
 		it->light->color=l->color*((endLightCoef
 			-(endLightCoef-startLightCoef*blastcoef)*it->phaseTimer/delay));
 	}
-	return true;	
+	return true;
 }
 
 //spell tree

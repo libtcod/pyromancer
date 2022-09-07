@@ -108,55 +108,55 @@ class UmbraModule {
 		/**
 		 * Gets the name of the module
 		 * @return the name of the module
-		 */		 		 		
+		 */
 		inline const char *getName () { return name.c_str(); }
 		/**
 		 * Fetches the module's ID number. Used mainly for debugging purposes and should play no real role in a release version of any program.
          * @return the module's ID number, assigned by UmbraEngine::registerModule().
          */
 		inline int getID () { return id; }
-		
+
 		/**
 		 * Get a boolean parameter from the module configuration file
 		 * @param name the parameter name
 		 * @return the boolean value (default false)
-		 */		 		 		 		
+		 */
 		inline bool getBoolParam (const char *name) { return getParametre(name).value.b; }
 		/**
 		 * Get a char parameter from the module configuration file
 		 * @param name the parameter name
 		 * @return the char value (default '\0')
-		 */		 		 		 		
+		 */
 		inline int getCharParam (const char *name) { return getParametre(name).value.c; }
 		/**
 		 * Get an integer parameter from the module configuration file
 		 * @param name the parameter name
 		 * @return the integer value (default 0)
-		 */		 		 		 		
+		 */
 		inline int getIntParam (const char *name) { return getParametre(name).value.i; }
 		/**
 		 * Get a float parameter from the module configuration file
 		 * @param name the parameter name
 		 * @return the float value (default 0.0f)
-		 */		 		 		 		
+		 */
 		inline float getFloatParam (const char *name) { return getParametre(name).value.f; }
 		/**
 		 * Get a string parameter from the module configuration file
 		 * @param name the parameter name
 		 * @return the string value (default NULL)
-		 */		 		 		 		
+		 */
 		inline const char *getStringParam (const char *name) { return getParametre(name).value.s; }
 		/**
 		 * Get a color parameter from the module configuration file
 		 * @param name the parameter name
 		 * @return the color value (default TCODColor::black)
-		 */		 		 		 		
+		 */
 		inline TCODColor getColourParam (const char *name) { return getParametre(name).value.col; }
 		/**
 		 * Get a dice parameter from the module configuration file
 		 * @param name the parameter name
 		 * @return the dice value (default filled with 0)
-		 */		 		 		 		
+		 */
 		inline TCOD_dice_t getDiceParam (const char *name) { return getParametre(name).value.dice; }
 
 	protected:
@@ -193,7 +193,7 @@ class UmbraModule {
 		void setFallback (const char *name);
 		/**
 		 * Sets the module's timeout.
-		 * @param val the number of milliseconds that the module will be allowed to run before timing out. Set to 0 if the timeout is to be removed.		 
+		 * @param val the number of milliseconds that the module will be allowed to run before timing out. Set to 0 if the timeout is to be removed.
 		 */
 		inline void setTimeout (uint32 val) { timeout = val; }
 		/**
@@ -204,7 +204,7 @@ class UmbraModule {
 		/**
 		 * Set the module's name
 		 * @param name the module's name
-		 */		 		
+		 */
 		inline void setName (const char *name) { this->name = name; }
 		/**
 		 * Provides a pointer to the engine object.
@@ -218,14 +218,14 @@ class UmbraModule {
 			TCOD_value_t value;
 		};
 		/**
-		 * get a parameter (internal helper function)	
-		 */		 	
+		 * get a parameter (internal helper function)
+		 */
 		UmbraModuleParametre &getParametre (const char *name);
 		/**
 		 * Sets a parametere (only used by module.txt file parser)
 		 * @param name the parametre's name
 		 * @param value the parametre's value
-		 */		 		
+		 */
 		void setParametre (const char *name, TCOD_value_t value);
 	private:
 		UmbraModuleStatus status;

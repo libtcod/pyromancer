@@ -123,7 +123,7 @@ public :
     		} else {
     			// at module chain level
 				UmbraModule::UmbraModuleParametre mod;
-				mod.name=strdup(name); 
+				mod.name=strdup(name);
 				mod.value=value;
 				chainParameters.push(mod);
 			}
@@ -138,13 +138,13 @@ public :
 				//finished parsing requested chain. skip other chains
 				// copy module chain parameters into modules
 				for (UmbraModule **mod=chainModules.begin();mod!=chainModules.end(); mod++) {
-					// inherits all chain parameters 
+					// inherits all chain parameters
 					// those parameters can be overloaded in the module declaration
 					for (UmbraModule::UmbraModuleParametre *chainParam=chainParameters.begin(); chainParam != chainParameters.end(); chainParam++) {
 						UmbraModule::UmbraModuleParametre moduleParam=(*mod)->getParametre(chainParam->name);
 						if( moduleParam.name == NULL ) {
 							(*mod)->setParametre(chainParam->name,chainParam->value);
-						} // else parameter overloaded by the module. 
+						} // else parameter overloaded by the module.
 					}
 				}
 				// activate active modules

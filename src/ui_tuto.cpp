@@ -373,7 +373,7 @@ bool Tutorial::update(float elapsed, TCOD_key_t &k,TCOD_mouse_t &mouse) {
 			}
 			if ( (mouse.lbutton_pressed && mouse.cx == x + w - 1 && mouse.cy == y )
 				|| (!k.pressed && (k.c == '?' || k.c ==' ' || k.vk == TCODK_ESCAPE )) || tutoElapsed > pages[id].delay ) {
-				if (renderMenu) gameEngine->gui.setMode(GUI_NONE); 
+				if (renderMenu) gameEngine->gui.setMode(GUI_NONE);
 				else if ( k.c != '?') closeLiveTuto();
 				else gameEngine->gui.setMode(GUI_TUTORIAL);
 			}
@@ -408,7 +408,7 @@ void Tutorial::enableMenuPage(TutorialPageId id) {
 void Tutorial::disableMenuPage(TutorialPageId id) {
 	alreadyStarted[id]=false;
 	pages[id].inMenu=false;
-	
+
 }
 void Tutorial::setNewPage(TutorialPageId newId) {
 	enableMenuPage(newId);

@@ -73,7 +73,7 @@ bool Archer::update(float elapsed) {
 			arrow->ch=angleChar[iangle];
 			gameEngine->dungeon->addItem(arrow);
 		}
-	} 
+	}
 	return true;
 }
 

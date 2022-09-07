@@ -66,7 +66,7 @@ void Player::addSkill(Skill *skill) {
 
 void Player::init() {
 	static float sprintLength=config.getFloatProperty("config.creatures.player.sprintLength");
-	
+
 	setLife(getMaxLife());
 	setMaxMana(getType()->getMana());
 	setMana(getType()->getMana());
@@ -189,7 +189,7 @@ void Player::render(LightMap *lightMap) {
 			stealthBar.putPixel(1,y,col);
 			transpBlit2x(&stealthBar, 0, 0, 2, 10, TCODConsole::root, CON_W/2-3, CON_H/2-3, 0.4f);
 		}
-		
+
 	}
 }
 
@@ -197,47 +197,47 @@ void Player::render(LightMap *lightMap) {
 // supported layouts:
 // hjklyubn (vi keys)
 // arrows
-// numpad 12346789 
+// numpad 12346789
 // WSAD / ZSQD (fps keys)
 bool Player::getMoveKey(TCOD_key_t key,bool *up, bool *down, bool *left, bool *right) {
 	static int moveUpKey=toupper(config.getCharProperty("config.creatures.player.moveUpKey"));
 	static int moveDownKey=toupper(config.getCharProperty("config.creatures.player.moveDownKey"));
 	static int moveLeftKey=toupper(config.getCharProperty("config.creatures.player.moveLeftKey"));
 	static int moveRightKey=toupper(config.getCharProperty("config.creatures.player.moveRightKey"));
-	
+
 	bool ret=false;
 	int kc=toupper(key.c);
 	if ( kc == moveUpKey || key.vk == TCODK_UP || kc == 'Z' || kc =='W' || kc == 'K' || key.vk == TCODK_KP8) {
 		*up = key.pressed;
-		if ( key.pressed ) ret=true;		
+		if ( key.pressed ) ret=true;
 	} else if ( kc == moveDownKey || key.vk == TCODK_DOWN || kc == 'S' || kc == 'J' || key.vk == TCODK_KP2) {
 		*down = key.pressed;
-		if ( key.pressed ) ret=true;		
+		if ( key.pressed ) ret=true;
 	} else if ( kc == moveLeftKey || key.vk == TCODK_LEFT || kc == 'Q' || kc == 'A' || kc == 'H' || key.vk == TCODK_KP4) {
 		*left = key.pressed;
-		if ( key.pressed ) ret=true;		
+		if ( key.pressed ) ret=true;
 	} else if ( kc == moveRightKey || key.vk == TCODK_RIGHT || kc == 'D' || kc == 'L' || key.vk == TCODK_KP6) {
 		*right = key.pressed;
-		if ( key.pressed ) ret=true;		
+		if ( key.pressed ) ret=true;
 	} else if ( kc == 'Y' || key.vk == TCODK_KP7 ) {
 		*up = key.pressed;
-		*left = key.pressed;		
-		if ( key.pressed ) ret=true;		
+		*left = key.pressed;
+		if ( key.pressed ) ret=true;
 	} else if ( kc == 'U' || key.vk == TCODK_KP9 ) {
 		*up = key.pressed;
-		*right = key.pressed;		
-		if ( key.pressed ) ret=true;		
+		*right = key.pressed;
+		if ( key.pressed ) ret=true;
 	} else if ( kc == 'B' || key.vk == TCODK_KP1 ) {
 		*down = key.pressed;
-		*left = key.pressed;		
-		if ( key.pressed ) ret=true;		
+		*left = key.pressed;
+		if ( key.pressed ) ret=true;
 	} else if ( kc == 'N' || key.vk == TCODK_KP3 ) {
 		*down = key.pressed;
-		*right = key.pressed;		
-		if ( key.pressed ) ret=true;		
+		*right = key.pressed;
+		if ( key.pressed ) ret=true;
 	}
-	
-	return ret;	
+
+	return ret;
 }
 
 void Player::computeStealth(float elapsed) {
@@ -268,7 +268,7 @@ bool Player::activateCell(int dungeonx, int dungeony, bool lbut_pressed, bool wa
 			TCODList<Item *>toPick;
 			TCODList<Item *>toUse;
 			for ( Item **it=items->begin();it != items->end(); it++) {
-				if ( (*it)->isPickable() && (*it)->speed == 0.0f 
+				if ( (*it)->isPickable() && (*it)->speed == 0.0f
 					&& (lbut_pressed || (*it)->hasAutoPick()) ) toPick.push(*it);
 				else if ( (*it)->isActivatedOnBump() ) toUse.push(*it);
 			}
@@ -315,7 +315,7 @@ bool Player::update(float elapsed, TCOD_key_t key,TCOD_mouse_t *mouse) {
 	Dungeon *dungeon=gameEngine->dungeon;
 	Cell *cell=dungeon->getCell(x,y);
 	cell->trampleDate=gameEngine->getCurrentDate();
-	
+
 	if ( initDungeon ) {
 		initDungeon=false;
 		if (light ) dungeon->addLight(light);
@@ -366,7 +366,7 @@ bool Player::update(float elapsed, TCOD_key_t key,TCOD_mouse_t *mouse) {
 		// wriggle to reduce frozen length
 		frozen->duration -= 0.1f;
 		frozen->duration=MAX(0.0001f,frozen->duration);
-	}	
+	}
 	if ( !isStunned && mouse->lbutton_pressed && ABS(dungeonx-x) <= 1 && ABS(dungeony-y) <= 1 ) {
 		// click on the player or near him in water=ripples
 		if ( mouse->lbutton_pressed && dungeon->hasRipples(dungeonx,dungeony) ) gameEngine->startRipple(dungeonx,dungeony);
@@ -382,9 +382,9 @@ bool Player::update(float elapsed, TCOD_key_t key,TCOD_mouse_t *mouse) {
 	if (!isStunned && mouse->lbutton) {
 		lbuttonDelay+=elapsed;
 		lWalkDelay+=elapsed;
-	} 
+	}
 	if (!isStunned && mouse->rbutton) rbuttonDelay+=elapsed;
-	
+
 	// right mouse button
 	if (!isStunned && mouse->rbutton_pressed && rmbSkill) {
 		rmbSkill->cast();
@@ -490,7 +490,7 @@ bool Player::update(float elapsed, TCOD_key_t key,TCOD_mouse_t *mouse) {
 					static int dy=1;
 					if ( IN_RECTANGLE(x+dx,y+dy,dungeon->width,dungeon->height )
 						&& dungeon->map->isWalkable((int)x+dx,(int)y+dy)
-						&& (! dungeon->hasCreature((int)x+dx,(int)y+dy) 
+						&& (! dungeon->hasCreature((int)x+dx,(int)y+dy)
 							|| ! dungeon->getCreature((int)x+dx,(int)y+dy)->isBlockingPath())
 						) {
 						newx = (int)x + dx;
@@ -502,7 +502,7 @@ bool Player::update(float elapsed, TCOD_key_t key,TCOD_mouse_t *mouse) {
 						hasWalked=true;
 					} else if ( IN_RECTANGLE(x+dx,y-dy,dungeon->width,dungeon->height )
 						&& dungeon->map->isWalkable((int)x+dx,(int)y-dy)
-						&& (! dungeon->hasCreature((int)x+dx,(int)y-dy) 
+						&& (! dungeon->hasCreature((int)x+dx,(int)y-dy)
 							|| ! dungeon->getCreature((int)x+dx,(int)y-dy)->isBlockingPath())
 						) {
 						newx = (int)x + dx;
@@ -517,7 +517,7 @@ bool Player::update(float elapsed, TCOD_key_t key,TCOD_mouse_t *mouse) {
 					static int dx=1;
 					if ( IN_RECTANGLE(x+dx,y+dy,dungeon->width,dungeon->height )
 						&& dungeon->map->isWalkable((int)x+dx,(int)y+dy)
-						&& (! dungeon->hasCreature((int)x+dx,(int)y+dy) 
+						&& (! dungeon->hasCreature((int)x+dx,(int)y+dy)
 							|| ! dungeon->getCreature((int)x+dx,(int)y+dy)->isBlockingPath())
 						) {
 						newx = (int)x + dx;
@@ -529,7 +529,7 @@ bool Player::update(float elapsed, TCOD_key_t key,TCOD_mouse_t *mouse) {
 						hasWalked=true;
 					} else if ( IN_RECTANGLE(x-dx,y+dy,dungeon->width,dungeon->height )
 						&& dungeon->map->isWalkable((int)x-dx,(int)y+dy)
-						&& (! dungeon->hasCreature((int)x-dx,(int)y+dy) 
+						&& (! dungeon->hasCreature((int)x-dx,(int)y+dy)
 							|| ! dungeon->getCreature((int)x-dx,(int)y+dy)->isBlockingPath())
 						) {
 						newx = (int)x - dx;
@@ -601,7 +601,7 @@ void Player::computeFovRange(float elapsed) {
 		float fovRefSpeed=playerSpeed/2;
 		fovRangeTarget = maxFovRange - (fovSpeed*0.5/fovRefSpeed)*0.8*maxFovRange ;
 	}
-	if ( crouch ) fovRangeTarget *= 1.15f;	
+	if ( crouch ) fovRangeTarget *= 1.15f;
 	if ( fovRange > fovRangeTarget ) fovRange += (fovRangeTarget-fovRange) * elapsed ;
 	else fovRange += (fovRangeTarget-fovRange) * elapsed / rangeAccomodation;
 }

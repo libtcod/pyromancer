@@ -104,7 +104,7 @@ void AiDirector::update(float elapsed) {
 		if ( nbBoss < gameEngine->dungeon->level )
 		for (int i=1; i < levelCoef*3; i++) {
 			spawnMiniBosses();
-		}	
+		}
 		while ( nbMissing> 0 && game->dungeon->creatures.size() < maxCreatures ) {
 			spawnMinion(true);
 			nbMissing--;
@@ -118,7 +118,7 @@ void AiDirector::spawnMiniBoss(Creature *cr, bool withItem) {
 	cr->setSeen(true);
 	if ( withItem ) {
 		Item *it=getDropItem();
-		cr->addToInventory(it);	
+		cr->addToInventory(it);
 	}
 	spawnCreature(cr);
 	nbBoss++;
@@ -207,7 +207,7 @@ Item *AiDirector::getDropItem() {
 	ItemType *scrollType=ItemType::getType("scroll");
 	for (Item **it2=gameEngine->dungeon->items.begin();it2!=gameEngine->dungeon->items.end(); it2++) {
 		if ( (*it2)->isA(scrollType) ) nbScrolls--;
-	} 
+	}
 	if ( gameEngine->player->getLifeRatio() < gameEngine->player->getManaRatio() ) {
 		hp=TCODRandom::getInstance()->getFloat(0.0f,1.0f) > gameEngine->player->getLifeRatio() ;
 		if (! hp ) mana = TCODRandom::getInstance()->getFloat(0.0f,1.0f) > gameEngine->player->getManaRatio();

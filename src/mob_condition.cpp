@@ -63,7 +63,7 @@ bool ConditionType::check(Creature *cr) {
 	}
 }
 
-Condition::Condition(ConditionType::Type type, float duration, float amount, const char *alias) 
+Condition::Condition(ConditionType::Type type, float duration, float amount, const char *alias)
 		: initialDuration(duration), duration(duration), amount(amount),curAmount(0.0f), alias(alias) {
 	this->type = ConditionType::get(type);
 }
@@ -107,7 +107,7 @@ bool Condition::update(float elapsed) {
 				//GameScreen::getInstance()->addBloodStain(target->x,target->y,lostHp);
 			}
 			curAmount = 0;
-			
+
 		}
 		break;
 		case ConditionType::HEAL : {
@@ -138,7 +138,7 @@ bool Condition::update(float elapsed) {
 				}
 				break;
 				case ConditionType::BLEED :
-					if (alias && strcmp(alias,"burning") == 0 ) target->setBurning(false); 
+					if (alias && strcmp(alias,"burning") == 0 ) target->setBurning(false);
 				break;
 				default:break;
 			}
@@ -164,12 +164,12 @@ void Condition::applyTo(Creature *cr) {
 		}
 		break;
 		case ConditionType::BLEED :
-			if (alias && strcmp(alias,"burning") == 0 ) cr->setBurning(true); 
+			if (alias && strcmp(alias,"burning") == 0 ) cr->setBurning(true);
 		break;
 		case ConditionType::STUNNED :
-		// !! NO-BREAK 
+		// !! NO-BREAK
 		case ConditionType::PARALIZED :
-			cr->walkTimer=-0.1f; 
+			cr->walkTimer=-0.1f;
 		break;
 		case ConditionType::WOUNDED : {
 			// wounded decrease the max hp
@@ -178,7 +178,7 @@ void Condition::applyTo(Creature *cr) {
 			if ( cr->getMaxLife() <= 0 ) {
 				cr->setMaxLife(0);
 			}
-			cr->addLife(0); // to clamp life between 0 and maxLife  
+			cr->addLife(0); // to clamp life between 0 and maxLife
 		}
 		break;
 		default:break;

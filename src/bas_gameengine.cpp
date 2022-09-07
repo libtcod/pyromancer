@@ -41,36 +41,36 @@ GameEngine::GameEngine() : Screen(0), nbPause(0), lookOn(false) {
 	rippleManager=NULL;
 	fireManager=NULL;
 	firstFrame=true;
-	win=false;	
+	win=false;
 	elapsedSeconds=dateDelta=0.0f;
 }
 
 GameEngine::~GameEngine() {
 }
 
-float GameEngine::getFog(int x,int y) { 
+float GameEngine::getFog(int x,int y) {
 	static int nbLevels=config.getIntProperty("config.gameplay.nbLevels");
-	return lightMap->getFog(x,y) * (dungeon->level+1) / nbLevels; 
+	return lightMap->getFog(x,y) * (dungeon->level+1) / nbLevels;
 }
 void GameEngine::onActivate() {
 	player = new Player();
 	player->init();
     Screen::onActivate();
     TCODConsole::setColorControl(TCOD_COLCTRL_1,TCODColor(255,255,240),TCODColor::black);
-    TCODConsole::setColorControl(TCOD_COLCTRL_2,guiHighlightedText,TCODColor::black);    
-	
+    TCODConsole::setColorControl(TCOD_COLCTRL_2,guiHighlightedText,TCODColor::black);
+
 	hitFlashAmount=0.0f;
 	firstFrame=true;
 	computeAspectRatio();
 	gui.onActivate();
 	memset(&stats,0,sizeof(stats));
-	TCODConsole::mapAsciiCodeToFont(TCOD_CHAR_PROGRESSBAR,26,3);	
+	TCODConsole::mapAsciiCodeToFont(TCOD_CHAR_PROGRESSBAR,26,3);
 	isUpdatingParticles=false;
 }
 
 void GameEngine::onDeactivate() {
 	Screen::onDeactivate();
-	gui.onDeactivate();	
+	gui.onDeactivate();
 }
 
 void GameEngine::applySepia() {
@@ -211,7 +211,7 @@ bool GameEngine::update(float elapsed, TCOD_key_t &k,TCOD_mouse_t &mouse) {
 	packer->clear();
 	if ( fade == FADE_OFF ) {
 		if ( hitFlashAmount > 0.0f ) {
-			hitFlashAmount-=elapsed;		
+			hitFlashAmount-=elapsed;
 			if ( hitFlashAmount > 0.0f ) {
 				int flashLvl=(int)(255-128*hitFlashAmount/(hitFlashDelay*5));
 				TCODConsole::setFade(flashLvl,flashColor);
@@ -219,7 +219,7 @@ bool GameEngine::update(float elapsed, TCOD_key_t &k,TCOD_mouse_t &mouse) {
 				TCODConsole::setFade(255,flashColor);
 			}
 		}
-	}	
+	}
 	if ( debug && k.vk == TCODK_TAB && ! k.pressed && k.shift ) {
 		gui.setMode(GUI_DEBUG);
 	}
@@ -238,12 +238,12 @@ void GameEngine::init() {
     engine.setKeyboardMode( UMBRA_KEYBOARD_PRESSED_RELEASED );
 }
 
-void GameEngine::pauseGame() { 
+void GameEngine::pauseGame() {
 	nbPause++;
 }
 
-void GameEngine::resumeGame() { 
-	nbPause--; 
+void GameEngine::resumeGame() {
+	nbPause--;
 }
 
 
@@ -289,9 +289,9 @@ void GameEngine::openCloseLoot(Item *toLoot) {
 	}
 }
 
-void GameEngine::addParticle(Particle *p) { 
+void GameEngine::addParticle(Particle *p) {
 	if ( isUpdatingParticles ) particlesToAdd.push(p);
-	else particles.push(p); 
+	else particles.push(p);
 }
 
 void GameEngine::updateParticles(float elapsed) {
@@ -308,8 +308,8 @@ void GameEngine::updateParticles(float elapsed) {
 		}
 	}
 	isUpdatingParticles=false;
-	particlesToRemove.clearAndDelete();	
-}	
+	particlesToRemove.clearAndDelete();
+}
 
 void GameEngine::displayProgress(float prog) {
 //printf ("==> %g \n",prog);

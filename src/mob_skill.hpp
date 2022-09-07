@@ -63,7 +63,7 @@ public :
 	int nbCast;
 
 	static TCODList<SkillType *> list;
-	
+
 	static SkillType *find(const char *name);
 
 	bool hasEffect(Effect::Type type);
@@ -90,10 +90,10 @@ public :
 	bool isOn; // for onoff skills
 	int durability; // for weapons
 	TCODList<Condition *> conditions; // for weapons, conditions when wielded
-	
+
 	Creature *caster;
 	Creature *target;
-	
+
 	char *getName();
 	Skill(SkillType *type);
 	bool isReady();

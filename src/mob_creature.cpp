@@ -129,7 +129,7 @@ CreatureTypeId CreatureType::getType(const char *name) {
 
 void CreatureType::setName(const char *pname) {
 	strncpy(name,pname,CREATURE_NAME_SIZE);
-	name[CREATURE_NAME_SIZE-1]=0;	
+	name[CREATURE_NAME_SIZE-1]=0;
 }
 
 Creature::Creature(const char *typeName) {
@@ -220,8 +220,8 @@ void Creature::addSkillType(SkillType *skillType) {
 	addSkill(skill);
 }
 
-void Creature::addSkillType(const char *skillTypeName) { 
-	addSkillType(SkillType::find(skillTypeName)); 
+void Creature::addSkillType(const char *skillTypeName) {
+	addSkillType(SkillType::find(skillTypeName));
 }
 
 Creature *Creature::getCreature(CreatureTypeId id) {
@@ -233,8 +233,8 @@ Creature *Creature::getCreature(CreatureTypeId id) {
 			 ret=new Creature("deer");
 			 ret->addBehavior(new HerdBehavior(new AvoidWaterWalkPattern(),pathDelay));
 		break;
-		case CREATURE_FRIEND : 
-			ret = new Friend(); 
+		case CREATURE_FRIEND :
+			ret = new Friend();
 		break;
 		case CREATURE_FISH :
 			ret = new Fish(NULL);
@@ -242,15 +242,15 @@ Creature *Creature::getCreature(CreatureTypeId id) {
 		// pyromancer
 		case CREATURE_MINION :
 			ret = new Creature("minion");
-			ret->addBehavior(new AttackOnSee(pathDelay));			
+			ret->addBehavior(new AttackOnSee(pathDelay));
 		break;
 		case CREATURE_DARK_WANDERER :
 			ret = new Creature("dark wanderer");
-			ret->addBehavior(new WalkBehavior(new WalkPattern(AVOID_WATER|FLEE_PLAYER),pathDelay,true));			
+			ret->addBehavior(new WalkBehavior(new WalkPattern(AVOID_WATER|FLEE_PLAYER),pathDelay,true));
 		break;
 		case CREATURE_ICE_SHRIEKER :
 			ret = new Creature("ice shrieker");
-			ret->addBehavior(new WalkBehavior(new WalkPattern(AVOID_WATER|FLEE_PLAYER),pathDelay,true));			
+			ret->addBehavior(new WalkBehavior(new WalkPattern(AVOID_WATER|FLEE_PLAYER),pathDelay,true));
 		break;
 		case CREATURE_ZEEPOH : {
 			ret = new Creature("Zeepoh");
@@ -267,11 +267,11 @@ Creature *Creature::getCreature(CreatureTypeId id) {
 		// treeburner
 		case CREATURE_VILLAGER :
 			ret = new Villager();
-			ret->addBehavior(new AttackOnSee(pathDelay));			
+			ret->addBehavior(new AttackOnSee(pathDelay));
 		break;
 		case CREATURE_ARCHER :
 			ret = new Archer();
-			ret->addBehavior(new AttackOnSee(pathDelay));			
+			ret->addBehavior(new AttackOnSee(pathDelay));
 		break;
 		case CREATURE_VILLAGE_HEAD :
 			ret = new VillageHead();
@@ -518,7 +518,7 @@ void Creature::die() {
 		it->y=y;
 		gameEngine->dungeon->addItem(it);
 		gameEngine->gui.log.info("The %s dropped %s",getName(),it->aName());
-	}	
+	}
 }
 
 bool Creature::update(float elapsed) {

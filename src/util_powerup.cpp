@@ -302,7 +302,7 @@ void Powerup::apply() {
 		light->range+=0.7f;
 		explode->startRange+=0.7f;
 		explode->endRange+=0.7f;
-		heat->radius += 0.7f;			
+		heat->radius += 0.7f;
 	} else if ( id == PW_BURST ) {
 		if ( level == 1 ) {
 			gameEngine->player->addSkillType("embers");
@@ -328,8 +328,8 @@ void Powerup::apply() {
 			explode->middleRange += 1.2f;
 			explode->endRange += 1.2f;
 			explode->middleTime+=2.0f;
-			heat->radius += 1.2f;	
-			heat->intensity += 1.0f;		
+			heat->radius += 1.2f;
+			heat->intensity += 1.0f;
 		}
 	} else if ( id == PW_SPARKLE_THROUGH ) {
 		ItemType *fireball=ItemType::getType("embers");
@@ -530,13 +530,13 @@ void PowerupGraph::render() {
 					}
 				}
 			}
-			DBG_GRAPH(("%s width : %d\n",current->pw->name,current->w));			
+			DBG_GRAPH(("%s width : %d\n",current->pw->name,current->w));
 		}
 		// compute nodes position (x & y fields)
 		pw[0].x=CON_W/2-20;
 		pw[0].y=0;
 		int lastRoot=0;
-		DBG_GRAPH(("%s pos : %d %d\n",pw[0].pw->name,pw[0].x,pw[0].y));			
+		DBG_GRAPH(("%s pos : %d %d\n",pw[0].pw->name,pw[0].x,pw[0].y));
 		for (int i=1; i < PW_NB;i++) {
 			PwGraphNode *current=&pw[i];
 			if ( current->requires ) {
@@ -558,7 +558,7 @@ void PowerupGraph::render() {
 			current->x+=iconWidth/2;
 			current->y = current->requires ? current->requires->y -1 -iconHeight : 0;
 			if ( -current->y > graphHeight ) graphHeight=-current->y;
-			DBG_GRAPH(("%s pos : %d %d\n",current->pw->name,current->x,current->y));			
+			DBG_GRAPH(("%s pos : %d %d\n",current->pw->name,current->x,current->y));
 		}
 		// position the graph vertically
 		graphHeight+=iconHeight;

@@ -32,11 +32,11 @@ public :
 	virtual ~GameEngine();
 
 	void init();
-    
+
 	inline bool isGamePaused() { return nbPause > 0; }
 	void pauseGame();
 	void resumeGame();
-	void onFontChange(); 
+	void onFontChange();
 	bool update(float elapsed, TCOD_key_t &k,TCOD_mouse_t &mouse);
 
 	Player *player;
@@ -55,14 +55,14 @@ public :
 
 	// fireballs
 	void addParticle(Particle *p);
-	void updateParticles(float elapsed);	
-	
+	void updateParticles(float elapsed);
+
 	// UI
 	void openCloseInventory();
 	void openCloseLoot(Item *toLoot);
 	void openCloseObjectives();
 	void openCloseCraft();
-	
+
 	// stats
 	struct {
 		int nbCreatureKilled;
@@ -71,13 +71,13 @@ public :
 	} stats;
 	inline void startRipple(float x, float y) { startRipple((int)x,(int)y);}
 	void startRipple(int dungeonx, int dungeony, float height=0.0f);
-	
+
 	// fire
 	void startFireZone(int x, int y, int w, int h);
 	void removeFireZone(int x, int y, int w, int h);
 	void recomputeCanopy(Item *it=NULL);
-	void setCanopy(int x, int y, const ItemType * treeType, const Rect *r=NULL); 
-	
+	void setCanopy(int x, int y, const ItemType * treeType, const Rect *r=NULL);
+
 	// base utilities. to be moved elsewhere
 	static TCODColor setSepia(const TCODColor &col, float coef);
 	void displayProgress(float prog); // renders a progress bar and flush
@@ -91,7 +91,7 @@ public :
 	RippleManager *rippleManager;
 	float dateDelta;
 	float elapsedSeconds;
-	
+
 protected :
 	TCODList<Particle *>particlesToAdd;
 	AiDirector aiDirector;

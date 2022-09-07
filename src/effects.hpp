@@ -53,7 +53,7 @@ public :
 	float amount;
 	ConditionEffect();
 	bool execute(int x, int y, Creature *cr, Creature *caster, Skill *skill);
-}; 
+};
 
 class RushEffect : public Effect {
 public :
@@ -75,7 +75,7 @@ public :
 };
 
 class LightEffect : public Effect {
-public : 
+public :
 	ItemFeatureLight light;
 	LightEffect();
 	bool execute(int x, int y, Creature *cr, Creature *caster, Skill *skill);

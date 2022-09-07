@@ -210,10 +210,10 @@ bool EffectParser::parserProperty(TCODParser *parser, const char *propname, TCOD
 	} else if ( strcmp(propname,"pattern") == 0 ) {
 		currentEffect.light->light.pattern=strdup(value.s);
 	} else if ( strcmp(propname,"mode") == 0 ) {
-		if ( strcmp(value.s,"mul") == 0 ) currentEffect.light->light.flags|=ItemFeatureLight::MODE_MUL; 
+		if ( strcmp(value.s,"mul") == 0 ) currentEffect.light->light.flags|=ItemFeatureLight::MODE_MUL;
 		else if ( strcmp(value.s,"max") == 0 ) currentEffect.light->light.flags|=ItemFeatureLight::MODE_MAX;
 		else if ( strcmp(value.s,"add") == 0 ) ;
-		else parser->error("Unknown light mode '%s'. Expect add,mul or max",value.s); 
+		else parser->error("Unknown light mode '%s'. Expect add,mul or max",value.s);
 	} else if ( strcmp(propname,"colorPattern") == 0 ) {
 		currentEffect.light->light.colorPattern=strdup(value.s);
 	// cast effect
@@ -228,7 +228,7 @@ bool EffectParser::parserProperty(TCODParser *parser, const char *propname, TCOD
 
 bool EffectParser::parserEndStruct(TCODParser *parser, const TCODParserStruct *def, const char *name) {
 	return true;
-}	
+}
 
 DamageEffect::DamageEffect() : Effect(DAMAGE) {}
 BlastEffect::BlastEffect() : Effect(BLAST) {}
@@ -242,7 +242,7 @@ RushEffect::RushEffect() : Effect(RUSH) {}
 bool DamageEffect::execute(int x, int y, Creature *cr, Creature *caster, Skill *skill) {
 	// deal damages to the target
 	int dmg = TCODRandom::getInstance()->getInt(minDmg,maxDmg);
-	// combo ? 
+	// combo ?
 	// TODO
 	//if ( combo ) {
 	//	dmg = (int)(dmg * comboCoef);
@@ -314,7 +314,7 @@ bool ConditionEffect::execute(int x, int y, Creature *cr, Creature *caster, Skil
 	if ( rnd <= chance ) {
 		ConditionType *condType=ConditionType::get(conditionType);
 		if ( condType->check(cr) ) {
-			Condition *cond=new Condition(conditionType,duration, amount, alias);	
+			Condition *cond=new Condition(conditionType,duration, amount, alias);
 			cond->applyTo(cr);
 		}
 	}
@@ -341,7 +341,7 @@ bool ConditionEffect::execute(int x, int y, Creature *cr, Creature *caster, Skil
 		cr->y=ry;
 		*/
 	// TODO RushEffect
-bool RushEffect::execute(int x, int y, Creature *cr, Creature *caster, Skill *skill) { return false; }	
+bool RushEffect::execute(int x, int y, Creature *cr, Creature *caster, Skill *skill) { return false; }
 		//caster->rush=true;
 		//caster->rushEffect=fx;
 
@@ -363,7 +363,7 @@ bool SummonEffect::execute(int x, int y, Creature *cr, Creature *caster, Skill *
 		gameEngine->dungeon->addCreature(summoned);
 	}
 	return false;
-}		
+}
 
 bool LightEffect::execute(int x, int y, Creature *cr, Creature *caster, Skill *skill) {
 	// put a light on target
@@ -389,7 +389,7 @@ bool LightEffect::execute(int x, int y, Creature *cr, Creature *caster, Skill *s
 		if ( light.flags & ItemFeatureLight::INVSQRT ) el->flags|=Light::INVSQRT;
 		if ( light.flags & ItemFeatureLight::MODE_MUL ) el->drawMode = Light::MODE_MUL;
 		else if ( light.flags & ItemFeatureLight::MODE_MAX ) el->drawMode = Light::MODE_MAX;
-		
+
 		gameEngine->dungeon->addLight(cr->light);
 		if ( cr->isPlayer())  {
 			gameEngine->dungeon->removeLight(&gameEngine->player->noLight);

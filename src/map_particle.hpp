@@ -42,7 +42,7 @@ public :
 
 class Particle : public DynamicEntity {
 private :
-	const ParticleType *type;	
+	const ParticleType *type;
 public :
 	Particle(const ParticleType *type);
 	void render(LightMap *lightMap);

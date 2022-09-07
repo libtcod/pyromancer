@@ -124,6 +124,6 @@ public :
 	float dx,dy; // movement direction (unit vector)
 	float duration,speed; // movement duration in second, speed in cells/sec
 	DynamicEntity() : speed(0.0f) {}
-	CollisionType updateMove(float elapsed, float bounceCoef, bool hitPlayer, 
-	bool hitCreatures, bool hitItems);	
+	CollisionType updateMove(float elapsed, float bounceCoef, bool hitPlayer,
+	bool hitCreatures, bool hitItems);
 };

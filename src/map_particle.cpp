@@ -61,7 +61,7 @@ bool Particle::update(float elapsed) {
 	y += speed*dy*elapsed;
 	int newx=(int)(x*2);
 	int newy=(int)(y*2);
-	
+
 	if (!IN_RECTANGLE(newx,newy,dungeon->width*2,dungeon->height*2) ) return false;
 	duration -= elapsed;
 	if ( newx==oldx && newy==oldy ) return duration > 0.0f;
@@ -107,6 +107,6 @@ bool Particle::update(float elapsed) {
 				dy=-dy;
 			}
 		}
-	}	
+	}
 	return duration > 0.0f;
 }

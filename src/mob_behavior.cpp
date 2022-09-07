@@ -53,9 +53,9 @@ float WalkPattern::getWalkCost( int xFrom, int yFrom, int xTo, int yTo, void *us
 	return cost;
 }
 
-WalkBehavior::WalkBehavior(WalkPattern *walkPattern, float pathDelay, bool trackPlayer) 
+WalkBehavior::WalkBehavior(WalkPattern *walkPattern, float pathDelay, bool trackPlayer)
 	: walkPattern(walkPattern), pathDelay(pathDelay), trackPlayer(trackPlayer) {
-	pathTimer=TCODRandom::getInstance()->getFloat(0.0f,pathDelay);	
+	pathTimer=TCODRandom::getInstance()->getFloat(0.0f,pathDelay);
 }
 
 bool WalkBehavior::update(Creature *crea, float elapsed) {
@@ -109,7 +109,7 @@ bool FollowBehavior::update(Creature *crea, float elapsed) {
 		if (crea->walk(elapsed)) {
 			standDelay=0.0f;
 		}
-	}		
+	}
 	return true;
 }
 
@@ -157,7 +157,7 @@ bool HerdBehavior::update(Creature *crea1, float elapsed) {
 			}
 		}
 	}
-	
+
 	float speed=crea1->getType()->getSpeed();
 	crea1->dx=CLAMP(-speed,speed,crea1->dx);
 	crea1->dy=CLAMP(-speed,speed,crea1->dy);
@@ -194,7 +194,7 @@ bool HerdBehavior::update(Creature *crea1, float elapsed) {
 			}
 		}
 	}
-	return true;	
+	return true;
 }
 
 void HerdBehavior::addScarePoint(int x, int y, float life) {
@@ -228,7 +228,7 @@ bool AttackOnSee::update(Creature *crea, float elapsed) {
 		// track player
 		if (! crea->path) {
 			crea->path=new TCODPath(game->dungeon->width,game->dungeon->height,crea,game);
-		} 
+		}
 		if ( pathTimer > pathDelay ) {
 			int dx,dy;
 			crea->path->getDestination(&dx,&dy);

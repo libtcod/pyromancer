@@ -82,7 +82,7 @@ void EndScreen::render() {
 		break;
 	}
 
-		/* 
+		/*
 		TODO
 	if ( gameEngine && ((Game *)gameEngine)->bossIsDead ) {
 		int score = gameEngine->stats.nbCreatureKilled - 10 * gameEngine->stats.nbEaten[ITEM_HEALTH_POTION];
@@ -111,7 +111,7 @@ void EndScreen::render() {
 				TCODConsole::root->print(2,sky++, "%19s :%4d",(*it)->name,(*it)->nbCast);
 			}
 		}
-			
+
 		TCODConsole::root->print(2,CON_H-1,"  distance traveled :%4d",
 			gameEngine->stats.nbSteps );
 		int thy=CON_H-7;
@@ -123,7 +123,7 @@ void EndScreen::render() {
 			}
 		}
 	}
-			
+
 }
 
 bool EndScreen::update(float elapsed, TCOD_key_t &k,TCOD_mouse_t &mouse) {
@@ -183,8 +183,8 @@ void EndScreen::renderText(int x,int y, int w, const char *txt) {
 				ascii = 233+28+27;
 				ascii2 = ascii+28;
 			}
-			if ( y >= 0 ) TCODConsole::root->putChar(curx,y,ascii); 
-			if ( ascii2 && y+1 >= 0 && y+1 < CON_H ) TCODConsole::root->putChar(curx,y+1,ascii2); 
+			if ( y >= 0 ) TCODConsole::root->putChar(curx,y,ascii);
+			if ( ascii2 && y+1 >= 0 && y+1 < CON_H ) TCODConsole::root->putChar(curx,y+1,ascii2);
 			curx++;
 			if ( curx >= CON_W || curx >= x+w ) {
 				while (*txt != ' ') {
@@ -244,7 +244,7 @@ void *TCOD_sys_get_surface(int width, int height, bool alpha) {
 }
 
 
-PaperScreen::PaperScreen(const char *txgfile, const char  *titlegen, const char *textgen, int chapter) 
+PaperScreen::PaperScreen(const char *txgfile, const char  *titlegen, const char *textgen, int chapter)
 	: EndScreen("",0.0f,false),txgfile(txgfile),titlegen(titlegen),textgen(textgen),chapter(chapter) {
 	title=NULL;
 	pix=NULL;
@@ -266,7 +266,7 @@ void PaperScreen::onInitialise() {
 		paper=new TCODImage("data/img/paper.png");
 		int w;
 		paper->getSize(&w,&paperHeight);
-	}	
+	}
 	onFontChange();
 }
 
@@ -296,13 +296,13 @@ void PaperScreen::onFontChange() {
 	SDL_SoftStretch(surf, NULL,surf2, NULL);
 	SDL_FreeSurface(surf);
 	if ( pix ) SDL_FreeSurface((SDL_Surface *)pix);
-	pix=(void *)surf2;		
+	pix=(void *)surf2;
 	int offx=0,offy=0;
-	
+
 	if ( TCODConsole::isFullscreen()) TCODSystem::getFullscreenOffsets(&offx,&offy);
 	pixx = offx + CON_W*charw/4-18;
-	pixy = offy + charh*13; 
-	
+	pixy = offy + charh*13;
+
 	overlaph=offseth=0;
 	int texth=TCODConsole::root->getHeightRect(0,0,50,0,txt) * 2;
 	overlaph = texth + (15 + pixh/charh) - CON_H;
@@ -338,7 +338,7 @@ void PaperScreen::render() {
 void PaperScreen::render(void *sdlSurface) {
 	int charw,charh;
 	TCODSystem::getCharSize(&charw, &charh);
-	SDL_Rect dst = {pixx, pixy+charh/2 - offseth * charh, 0, 0}; 
+	SDL_Rect dst = {pixx, pixy+charh/2 - offseth * charh, 0, 0};
 	if ( TCODConsole::getFade() != 255 ) {
 		SDL_SetAlpha((SDL_Surface *)pix,SDL_SRCALPHA,TCODConsole::getFade());
 	}
@@ -361,7 +361,7 @@ bool PaperScreen::update(float elapsed, TCOD_key_t &k,TCOD_mouse_t &mouse) {
 				offseth++;
 				scrolltimer=0.0f;
 				TCODConsole::root->setDirty(0,0,CON_W,CON_H);
-			}				
+			}
 		}
 	}
 	if ( k.vk == TCODK_UP || k.vk == TCODK_DOWN ) k.vk=TCODK_NONE;

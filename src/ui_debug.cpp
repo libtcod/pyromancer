@@ -93,7 +93,7 @@ void MapDebugger::render() {
 					} break;
 					case DBG_FIREZONES : {
 						if (gameEngine->fireManager ) {
-							col= gameEngine->fireManager->isBurning(dungeon2x/2,dungeon2y/2) 
+							col= gameEngine->fireManager->isBurning(dungeon2x/2,dungeon2y/2)
 								? TCODColor::white:TCODColor::black;
 						}
 					} break;
@@ -123,9 +123,9 @@ void MapDebugger::render() {
 bool MapDebugger::update(float elapsed, TCOD_key_t &k, TCOD_mouse_t &mouse)  {
 	if ( !k.pressed && k.vk == TCODK_DOWN ) {
 		mapNum = (EDebugMapType)(mapNum+1);
-		if ( mapNum == NB_DEBUGMAPS ) mapNum = (EDebugMapType)0; 
+		if ( mapNum == NB_DEBUGMAPS ) mapNum = (EDebugMapType)0;
 	} else if ( ! k.pressed && k.vk == TCODK_UP ) {
-		if ( mapNum == (EDebugMapType)0 ) mapNum = (EDebugMapType)(NB_DEBUGMAPS-1); 
+		if ( mapNum == (EDebugMapType)0 ) mapNum = (EDebugMapType)(NB_DEBUGMAPS-1);
 		else mapNum = (EDebugMapType)(mapNum-1);
 	} else if ( k.vk == TCODK_TAB && ! k.pressed && k.shift ) {
 		gameEngine->gui.setMode(GUI_NONE);

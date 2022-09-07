@@ -87,7 +87,7 @@ void UmbraModule::setParametre(const char *name,TCOD_value_t value) {
 	}
 	// new parametre
 	UmbraModuleParametre mod;
-	mod.name=strdup(name); 
+	mod.name=strdup(name);
 	mod.value=value;
 	params.push(mod);
 }
@@ -97,5 +97,5 @@ UmbraModule::UmbraModuleParametre &UmbraModule::getParametre(const char *name) {
 	for (UmbraModuleParametre *it=params.begin(); it != params.end(); it++) {
 		if (strcmp(it->name,name) == 0) return *it;
 	}
-	return def;	
+	return def;
 }

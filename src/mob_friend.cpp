@@ -55,7 +55,7 @@ bool Friend::update(float elapsed) {
 			gameEngine->gui.tutorial.startLiveTuto(TUTO_FOOD);
 			timer=-30.0f;
 		} else timer=0.0f;
-	} else if ( foodTuto && timer > 4.0f && talkText.delay == 0.0f && ! startPhrase 
+	} else if ( foodTuto && timer > 4.0f && talkText.delay == 0.0f && ! startPhrase
 		&& gameEngine->player->isInRange((int)x,(int)y) ) {
 		talk(talkGenerator->generate("friend","${HUNGRY}"));
 		startPhrase=true;
@@ -129,7 +129,7 @@ bool Friend::updateHideAndSeek(float elapsed) {
 						talk(talkGenerator->generate("friend","${HS_SPOTTED}"));
 						see=true;
 					}
-				} 
+				}
 			}
 			if (! inFov && see ) {
 				see=false;
@@ -138,7 +138,7 @@ bool Friend::updateHideAndSeek(float elapsed) {
 			if (! see && talkText.delay == 0.0f && standDelay > 5.0f ) {
 				talk(talkGenerator->generate("friend","${HS_TEASE}"));
 			}
-		}		
+		}
 	}
 	return true;
 }
@@ -163,9 +163,9 @@ bool Friend::updateCatchMe(float elapsed) {
 					awayCount=-5;
 				} else if ( lostDelay > 0.0f ) {
 					talk(talkGenerator->generate("friend","${CATCH_LOST}"));
-					lostDelay=-10.0f;		
+					lostDelay=-10.0f;
 				}
-			} 
+			}
 		} else {
 			lostDelay = -5.0f;
 		}
@@ -195,7 +195,7 @@ bool Friend::updateCatchMe(float elapsed) {
 			int destx,desty;
 			float dx = x - player->x;
 			float dy = y - player->y;
-			if ( pdist > 0 ) { 
+			if ( pdist > 0 ) {
 				if ( pdist < SECURE_DIST ) {
 					// get away from player
 					destx = (int)(x + dx*SECURE_DIST/pdist);
@@ -203,8 +203,8 @@ bool Friend::updateCatchMe(float elapsed) {
 					awayCount=0;
 				} else {
 					// get closer to player
-					destx = (int)(player->x + dx * SECURE_DIST/pdist); 				
-					desty = (int)(player->y + dy * SECURE_DIST/pdist); 				
+					destx = (int)(player->x + dx * SECURE_DIST/pdist);
+					desty = (int)(player->y + dy * SECURE_DIST/pdist);
 					awayCount++;
 				}
 			} else {
@@ -221,7 +221,7 @@ bool Friend::updateCatchMe(float elapsed) {
 			pathTimer=0.0f;
 	} else {
 		if (walk(elapsed)) standDelay=0.0f;
-	}		
+	}
 	return true;
 }
 
@@ -281,8 +281,8 @@ bool Friend::loadData(uint32 chunkId, uint32 chunkVersion, TCODZip *zip) {
 	if ( chunkVersion != FRIE_CHUNK_VERSION ) return false;
 	// load friend specific data
 	startPhrase = (zip->getChar() == 1);
-	foodTuto = (zip->getChar() == 1); 
-	foodObj = (zip->getChar() == 1); 
+	foodTuto = (zip->getChar() == 1);
+	foodObj = (zip->getChar() == 1);
 	//aiMode=(FriendAiMode)zip->getInt();
 	return true;
 }

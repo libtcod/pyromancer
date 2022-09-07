@@ -73,10 +73,10 @@ void OutdoorRenderer::renderSubcells() {
 	dungeon->renderSubcellCreatures(gameEngine->lightMap);
 	// draw ripples
 	if (gameEngine->rippleManager) gameEngine->rippleManager->renderRipples(gameEngine->ground);
-	
-	// render the lights 
+
+	// render the lights
 	dungeon->renderLightsToLightMap(gameEngine->lightMap);
-	
+
 	// render the fireballs
 	for (Particle **it=gameEngine->particles.begin();it!=gameEngine->particles.end(); it++) {
 		(*it)->render(gameEngine->lightMap);
@@ -86,7 +86,7 @@ void OutdoorRenderer::renderSubcells() {
 
 	// apply light map
 	gameEngine->lightMap->applyToImageOutdoor(gameEngine->ground);
-	
+
 	// render canopy
 	Building *playerBuilding = dungeon->getCell(gameEngine->player->x,gameEngine->player->y)->building;
 	for (int x=minx; x < maxx; x++) {
@@ -116,7 +116,7 @@ void OutdoorRenderer::renderSubcells() {
 void OutdoorRenderer::renderCells() {
 	Dungeon *dungeon=gameEngine->dungeon;
 	// render the corpses
-	dungeon->renderCorpses(gameEngine->lightMap);	
+	dungeon->renderCorpses(gameEngine->lightMap);
 	// render the items
 	dungeon->renderItems(gameEngine->lightMap,false);
 	// render the creatures

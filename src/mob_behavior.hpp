@@ -70,7 +70,7 @@ public :
 	WalkBehavior(WalkPattern *walkPattern, float pathDelay, bool trackPlayer=false);
 	bool update(Creature *crea, float elapsed);
 protected :
-	WalkPattern *walkPattern;	
+	WalkPattern *walkPattern;
 	float pathTimer;
 	float pathDelay;
 	bool trackPlayer;
@@ -80,7 +80,7 @@ class FollowBehavior : public WalkBehavior {
 public :
 	FollowBehavior(WalkPattern *walkPattern, float pathDelay) : WalkBehavior(walkPattern,pathDelay),leader(NULL),standDelay(0.0f) {}
 	void setLeader(Creature *leader) { this->leader=leader;}
-	bool update(Creature *crea, float elapsed);	
+	bool update(Creature *crea, float elapsed);
 protected :
 	Creature *leader;
 	float standDelay;
@@ -101,7 +101,7 @@ public :
 	HerdBehavior(WalkPattern *walkPattern, float pathDelay) : WalkBehavior(walkPattern,pathDelay) {}
 	virtual ~HerdBehavior() {}
 	bool update(Creature *crea, float elapsed);
-	static void addScarePoint(int x, int y, float life=SCARE_LIFE);	
+	static void addScarePoint(int x, int y, float life=SCARE_LIFE);
 	static void updateScarePoints(float elapsed);
 	static void recomputeHerds();
 protected :

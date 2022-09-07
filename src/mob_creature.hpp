@@ -81,7 +81,7 @@ public :
 	inline const char *getName() const { return name; }
 	void setName(const char *name);
 	inline const TCODColor & getColor() const { return col; }
-	inline float getResource(StatusResource::Type typ) { return maxStatusResource[typ]; } 
+	inline float getResource(StatusResource::Type typ) { return maxStatusResource[typ]; }
 	inline float getLife() const { return maxStatusResource[StatusResource::LIFE]; }
 	inline float getMana() const { return maxStatusResource[StatusResource::MANA]; }
 	inline float getSpeed() const { return speed; }
@@ -125,12 +125,12 @@ public :
 	Item *mainHand, *offHand;
 	Item *asItem; // an item corresponding to this creature
 	TCODList<Condition *> conditions;
-	Light *light; // light producing creature	
+	Light *light; // light producing creature
 
 	Creature();
 	Creature(const char *typeName);
 	virtual ~Creature();
-	
+
 	void initFromType();
 	void die();
 	inline bool isDead() {return getLife() <= 0.0f; }
@@ -204,8 +204,8 @@ public :
 	bool isTalking() const { return talkText.delay > 0.0f; }
 	bool isInRange(int x, int y) const;
 	bool isPlayer() const;
-	
-	
+
+
 	// items
 	Item * addToInventory(Item *it); // in case of stackable items, returned item might be != it
 	Item * removeFromInventory(Item *it, int count=1); // same as addToInventory

@@ -87,7 +87,7 @@ void LightMap::applyToImage(TCODImage *image,
 	static TCODColor groundColor=config.getColorProperty("config.display.groundColor");
 	Dungeon *dungeon=gameEngine->dungeon;
 	if ( maxx2x == 0 ) maxx2x = width-1;
-	if ( maxy2x == 0 ) maxy2x = height-1;                             
+	if ( maxy2x == 0 ) maxy2x = height-1;
 	for (int x=minx2x; x <= maxx2x; x++) {
 		int dungeonx=x+gameEngine->xOffset*2;
 		for (int y=miny2x; y < maxy2x; y++) {
@@ -149,7 +149,7 @@ void LightMap::applyToImageOutdoor(TCODImage *image) {
 				image->putPixel(x,y,TCODColor::black); // out of the map
 			} else {
 				// visible cell. shade it
-				HDRColor col=image->getPixel(x,y); 
+				HDRColor col=image->getPixel(x,y);
 				HDRColor lmcol=data2x[x+y*width] ;
 				lmcol = lmcol*col;
 				int lightIntensity=(int)(lmcol.r+lmcol.g+lmcol.b);
@@ -191,7 +191,7 @@ void LightMap::computeLightContribution(int lx, int ly, const HDRColor &lcol, fl
 	int maxx=MIN(omaxx,width-1);
 	int maxy=MIN(omaxy,height-1);
 	float *cellFormFactor = ff + (lx+ly*width)*RADIOSITY_DIAMETER*RADIOSITY_DIAMETER;
-	// compute the light's contribution		
+	// compute the light's contribution
 	#define MIN_FACTOR (1.0f/255.0f)
 	for (int y=miny,cdy=miny-ominy; y <= maxy; y++,cdy++) {
 		float *cellFormRow=&cellFormFactor[minx-ominx+cdy*RADIOSITY_DIAMETER];
@@ -199,7 +199,7 @@ void LightMap::computeLightContribution(int lx, int ly, const HDRColor &lcol, fl
 			float cellff=*cellFormRow;
 			if ( cellff > MIN_FACTOR ) {
 				addColor2x(x,y,lcol*cellff);
-			}					
+			}
 		}
 	}
 }
@@ -217,21 +217,21 @@ void LightMap::computeFastLightContribution(int lx, int ly, const HDRColor &lcol
 	if (map->isTransparent(lx,ly+1)) addColor2x(lx,ly+2,col);
 	if (map->isTransparent(lx,ly-1)) addColor2x(lx,ly-2,col);
 	col=col*0.8;
-	if (map->isTransparent(lx-1,ly)) 
+	if (map->isTransparent(lx-1,ly))
 		addColor2x(lx-2,ly+1,col);
-	if (map->isTransparent(lx+1,ly)) 
+	if (map->isTransparent(lx+1,ly))
 		addColor2x(lx+2,ly-1,col);
-	if (map->isTransparent(lx,ly+1)) 
+	if (map->isTransparent(lx,ly+1))
 		addColor2x(lx+1,ly+2,col);
-	if (map->isTransparent(lx,ly-1)) 
+	if (map->isTransparent(lx,ly-1))
 		addColor2x(lx-1,ly-2,col);
-	if (map->isTransparent(lx-1,ly)) 
+	if (map->isTransparent(lx-1,ly))
 		addColor2x(lx-2,ly+1,col);
-	if (map->isTransparent(lx+1,ly)) 
+	if (map->isTransparent(lx+1,ly))
 		addColor2x(lx+2,ly-1,col);
-	if (map->isTransparent(lx,ly+1)) 
+	if (map->isTransparent(lx,ly+1))
 		addColor2x(lx+1,ly+2,col);
-	if (map->isTransparent(lx,ly-1)) 
+	if (map->isTransparent(lx,ly-1))
 		addColor2x(lx-1,ly-2,col);
 }
 
@@ -261,7 +261,7 @@ void LightMap::computeFormFactor(int x, int y, float *ff, float *ffSum) {
 					curFfSum+=value;
 					cellFormFactor[cdx+cdy*RADIOSITY_DIAMETER]=value;
 				}
-			}		
+			}
 		}
 	}
 	// scale so that the sum of all form factors for cell x,y is 1.0
@@ -292,7 +292,7 @@ void LightMap::diffuse(float reflectivity, float selfIllumination, int steps) {
 		for (int x=0; x < width; x++ ) {
 			computeFormFactor(x,y,ff,ffSum);
 		}
-	}	
+	}
 	*/
 	// alter coefs when using fast light diffusion
 	reflectivity /= 10;

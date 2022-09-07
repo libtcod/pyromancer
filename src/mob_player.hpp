@@ -41,7 +41,7 @@ public :
 	void setLightColor(TCODColor col) { light->color=col; }
 	static bool getMoveKey(TCOD_key_t key,bool *up, bool *down, bool *left, bool *right);
 	inline float getAverageSpeed() { return averageSpeed;}
-	void computeStealth(float elapsed);	
+	void computeStealth(float elapsed);
 	void addSkill(Skill *skill);
 
 	// SaveListener
@@ -63,7 +63,7 @@ protected :
 	bool up,down,left,right;
 	bool initDungeon;
 	bool isSprinting;
-	
+
 	void computeFovRange(float elapsed);
 	void computeAverageSpeed(float elapsed);
 	void updateSprintDelay(float elapsed, bool isSprinting);

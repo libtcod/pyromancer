@@ -48,7 +48,7 @@ public :
 	void onActivate();
 	void onDeactivate();
 	bool update(float elapsed, TCOD_key_t &k, TCOD_mouse_t &mouse);
-	
+
 	// UIListener
 	bool onWidgetEvent(Widget *widget, EWidgetEvent event);
 protected :

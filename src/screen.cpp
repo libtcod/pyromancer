@@ -44,7 +44,7 @@ static const char *chapPix[] = {
 void Screen::onInitialise() {
 	static const char *windowTitle=getStringParam("windowTitle");
 	static bool first=true;
-	UmbraModule::onInitialise(); 
+	UmbraModule::onInitialise();
 	if ( first ) {
 		// the first module sets the window title
 		first=false;

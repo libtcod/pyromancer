@@ -40,11 +40,11 @@ public :
 		BLAST,			// push target away
 		CONDITION,		// apply condition to target
 		TELEPORT,		// teleport target
-		RUSH,			
+		RUSH,
 		METAMORPHOSE,	// transform target
 		SUMMON,			// create creature
 		LIGHT,			// enlighten target
-		CAST,			// create item (projectile) 
+		CAST,			// create item (projectile)
 	};
 	Type type;
 	Effect(Type type) : type(type) {}
@@ -81,7 +81,7 @@ private :
 
 class ItemFeature {
 public :
-	enum Type { 
+	enum Type {
 		FIRE,  // fire has an effect on item (either transform or destroy)
 		PRODUCE,  // item produces other items when clicked
 		FOOD, // item can be eaten and restore health and/or mana
@@ -158,7 +158,7 @@ public :
 	float patternDelay;
 	const char *pattern;
 	const char *colorPattern;
-	ItemFeatureLight(float range, const HDRColor &color, int flags, float patternDelay, 
+	ItemFeatureLight(float range, const HDRColor &color, int flags, float patternDelay,
 		const char *pattern,const HDRColor &color2,const char *colorPattern=NULL);
 	ItemFeature *clone() const;
 	void copy(const ItemFeature *feat);
@@ -168,11 +168,11 @@ public :
 
 class ItemFeatureAttack : public ItemFeature  {
 public :
-	enum WieldType { 
-		WIELD_NONE, 
-		WIELD_ONE_HAND, 
-		WIELD_MAIN_HAND, 
-		WIELD_OFF_HAND, 
+	enum WieldType {
+		WIELD_NONE,
+		WIELD_ONE_HAND,
+		WIELD_MAIN_HAND,
+		WIELD_OFF_HAND,
 		WIELD_TWO_HANDS };
 	enum Flags {
 		WEAPON_PROJECTILE=1,
@@ -191,8 +191,8 @@ public :
 	ItemType * casts; // example : fireball for a pyromancer wand
 	StatusResource::Type resourceType;
 	float resourceCost;
-	ItemFeatureAttack(WieldType wield, float minCastDelay, float maxCastDelay, 
-		float minReloadDelay, float maxReloadDelay, float minDamagesCoef, float maxDamagesCoef, 
+	ItemFeatureAttack(WieldType wield, float minCastDelay, float maxCastDelay,
+		float minReloadDelay, float maxReloadDelay, float minDamagesCoef, float maxDamagesCoef,
 		int flags, float speed, ItemType *ammunition, ItemType * casts,StatusResource::Type resourceType,float resourceCost);
 	ItemFeature *clone() const;
 	void copy(const ItemFeature *feat);
@@ -212,7 +212,7 @@ public :
 
 class ItemFeatureContainer : public ItemFeature  {
 public :
-	int size; 
+	int size;
 	ItemFeatureContainer(int size);
 	ItemFeature *clone() const;
 	void copy(const ItemFeature *feat);
@@ -231,7 +231,7 @@ public :
 
 	float endRange;
 	float endLightCoef;
-	
+
 	int particleCount;
 	ParticleType particleType;
 	TCODList<Effect *> effects;

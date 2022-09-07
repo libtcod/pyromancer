@@ -63,7 +63,7 @@ void Game::onActivate() {
 	// auto-activable (bumping = take and use)
 	ItemType *bottle=ItemType::getType("bottle");
 	bottle->flags |= ITEM_USE_WHEN_PICKED|ITEM_DELETE_ON_USE|ITEM_AUTOPICK;
-	player->maxFovRange=player->fovRange=CON_W/2;	
+	player->maxFovRange=player->fovRange=CON_W/2;
 	// health potions produce light in pyromancer!
 	bottle->features.push(new ItemFeatureLight(4,HDRColor(255,50,0),0,1.0f,"56789876",HDRColor()));
 	Item *wand=Item::getItem(ItemType::getType("wand"),0,0,false);
@@ -80,7 +80,7 @@ void Game::onActivate() {
 	Condition *regenHealth=new Condition(ConditionType::HEAL,1.0f,0.3f,"");
 	regenHealth->duration=0.0f; // unlimited condition
 	player->addCondition(regenHealth);
-	
+
 	// create main objective
 	Objective *obj=new Objective("Find the amulet of Zeepoh",
 	"Zeepoh has your amulet. Find him. Kill him. Get back the amulet.",
@@ -228,7 +228,7 @@ void Game::render() {
 		int y=3;
 		for (Skill **it=boss->skills.begin(); it != boss->skills.end(); it++) {
 			if ( (*it)->isCasting() ) {
-				TCODConsole::root->printEx(40,y++,TCOD_BKGND_NONE,TCOD_CENTER,(*it)->getName());				
+				TCODConsole::root->printEx(40,y++,TCOD_BKGND_NONE,TCOD_CENTER,(*it)->getName());
 			}
 		}
 	}

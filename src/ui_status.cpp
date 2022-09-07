@@ -37,15 +37,15 @@ StatusPanel::StatusPanel() {
 	possiblePos.push(new UmbraRect(CON_W-12,0,12,PANEL_HEIGHT));
 	possiblePos.push(new UmbraRect(CON_W-12,0,12,PANEL_HEIGHT));
 	possiblePos.push(new UmbraRect(CON_W-12,0,12,PANEL_HEIGHT));
-	
+
 	possiblePos.push(new UmbraRect(CON_W-12,CON_H-PANEL_HEIGHT,12,PANEL_HEIGHT));
 	possiblePos.push(new UmbraRect(CON_W-12,CON_H-PANEL_HEIGHT,12,PANEL_HEIGHT));
 	possiblePos.push(new UmbraRect(CON_W-12,CON_H-PANEL_HEIGHT,12,PANEL_HEIGHT));
-	
+
 	possiblePos.push(new UmbraRect(0,0,12,PANEL_HEIGHT));
 	possiblePos.push(new UmbraRect(0,0,12,PANEL_HEIGHT));
 	possiblePos.push(new UmbraRect(0,0,12,PANEL_HEIGHT));
-	
+
 	possiblePos.push(new UmbraRect(0,CON_H-PANEL_HEIGHT,12,PANEL_HEIGHT));
 	possiblePos.push(new UmbraRect(0,CON_H-PANEL_HEIGHT,12,PANEL_HEIGHT));
 	possiblePos.push(new UmbraRect(0,CON_H-PANEL_HEIGHT,12,PANEL_HEIGHT));
@@ -59,8 +59,8 @@ StatusPanel::StatusPanel() {
 void StatusPanel::drawBar(int x, int y, float lvl, const TCODColor &col1, const TCODColor &col2) {
 	drawBar(x,y,lvl,0.0f,col1,TCODColor::black,col2);
 }
-void StatusPanel::drawBar(int cx, int cy, 
-	float lvl1, float lvl2, 
+void StatusPanel::drawBar(int cx, int cy,
+	float lvl1, float lvl2,
 	const TCODColor &col1, const TCODColor &col2, const TCODColor &col3) {
 	static TCODImage img(20,4);
 	int ilvl1 = (int)(20*lvl1);
@@ -117,7 +117,7 @@ void StatusPanel::render() {
 		con->printEx(rect.w/2,y,TCOD_BKGND_NONE, TCOD_CENTER,"HP %d/%d",(int)player->getLife(),(int)player->getType()->getLife());
 		con->printEx(rect.w/2,y+2*dy,TCOD_BKGND_NONE, TCOD_CENTER,"MANA %d/%d",(int)player->getMana(),(int)player->getType()->getMana());
 		con->setDefaultBackground(guiText);
-		con->setDefaultForeground(guiBackground);		
+		con->setDefaultForeground(guiBackground);
 		if ( skills ) con->printEx(rect.w/2,rect.y+PANEL_HEIGHT-12*dy,TCOD_BKGND_SET, TCOD_CENTER,"   Actions  ");
 		if (!player->conditions.isEmpty()) {
 			con->printEx(rect.w/2,y+4*dy,TCOD_BKGND_SET, TCOD_CENTER," Conditions ");
@@ -132,7 +132,7 @@ void StatusPanel::render() {
 
 	drawBar(rect.x+1,rect.y+y+dy,player->getLifeRatio(),TCODColor::red,TCODColor::darkerGrey);
 	drawBar(rect.x+1,rect.y+y+3*dy,player->getManaRatio(),TCODColor::blue,TCODColor::darkerGrey);
-	
+
 	y += 5*dy;
 	TCODList<Condition *> conds;
 	// extract conditions from the player.
@@ -177,9 +177,9 @@ void StatusPanel::render() {
 				} else if (skill->castTime < 0.0f) {
 					// reloading phase
 					coef = (skill->type->reloadTime+skill->castTime) / skill->type->reloadTime;
-					col1=TCODColor::black;  
+					col1=TCODColor::black;
 					col2=TCODColor::darkRed;
-				} 			
+				}
 				if ( coef != 0.0f ) drawBar(rect.x+1,rect.y+y,coef,col1,col2);
 				TCODConsole::root->setDefaultForeground(guiText);
 				TCODConsole::root->printEx(rect.x+1,rect.y+y,TCOD_BKGND_NONE, TCOD_LEFT, "%d %s",i==10 ? 0:i+1,skill->getName());
@@ -198,7 +198,7 @@ bool StatusPanel::update(float elapsed, TCOD_key_t &k, TCOD_mouse_t &mouse) {
 	} else if ( !isDragging ) {
 		titleBarAlpha-=elapsed;
 		titleBarAlpha=MAX(0.0f,titleBarAlpha);
-	}	
+	}
 	return true;
 }
 

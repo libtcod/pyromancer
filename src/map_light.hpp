@@ -29,7 +29,7 @@ public :
 	enum LightFlags {
 		RANDOM_RAD = 1,
 		EXTENDED = 2, // this is an extended light
-		INVSQRT = 4, 
+		INVSQRT = 4,
 	};
 	enum LightDrawMode {
 		MODE_ADD,  // ground color += light
@@ -37,10 +37,10 @@ public :
 		MODE_MAX,  // ground color = max(ground color, light)
 	};
 	Light() : flags(0),drawMode(MODE_ADD),range(0.0f),color(TCODColor::white) {}
-	Light(float range, LightDrawMode mode=MODE_ADD, TCODColor color=TCODColor::white, int flags=0 ) : flags(flags), 
+	Light(float range, LightDrawMode mode=MODE_ADD, TCODColor color=TCODColor::white, int flags=0 ) : flags(flags),
 		drawMode(mode), range(range), color(color) {}
 	void addToLightMap(LightMap *map, bool withFov=true);
-	void addToImage(TCODImage *img); 
+	void addToImage(TCODImage *img);
 	void getDungeonPart(int *minx,int *miny,int *maxx,int *maxy);
 	void add(LightMap *l,TCODImage *i, bool withFov=true);
 	virtual void update(float elapsed) {}

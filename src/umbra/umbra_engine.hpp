@@ -82,7 +82,7 @@ class UmbraEngine {
 		 * @param factory a module factory
 		 * @param chainName (optional) the name of the module chain to load. Leave at default to load the chain specified in <code>umbra.txt</code> or, in case it's not specified, the first module chain that's encountered in the module configuration file.
 		 * @return <code>true</code> if module configuration has been loaded successfully, <code>false</code> otherwise
-		 */		  		 		  		
+		 */
 		bool loadModuleConfiguration (const char *filename, UmbraModuleFactory *factory, const char *chainName = NULL);
 		/**
 		 * Read module configuration from the given filename, or the filename defined as moduleConfig in umbra.txt.<br>If there's no filename or the file cannot be read, return false.
@@ -204,9 +204,9 @@ class UmbraEngine {
 		UmbraModule * getModule (const char *name);
 		/**
 		 * Retrieve the module id from its name
-		 * @param mod pointer to the module	 
-		 * @return the module's id		 		 		
-		 */		
+		 * @param mod pointer to the module
+		 * @return the module's id
+		 */
 		int getModuleId (const char * name);
 		/**
 		 * Retrieve the module id from its reference
@@ -281,7 +281,7 @@ class UmbraEngine {
 		TCODList <UmbraModule*> toActivate; // modules to activate next frame
 		TCODList <UmbraModule*> toDeactivate; // modules to deactivate next frame
 		UmbraModule * internalModules[UMBRA_INTERNAL_MAX];
-		UmbraKeyboardMode keyboardMode;	
+		UmbraKeyboardMode keyboardMode;
 		TCODList <UmbraCallback *> callbacks; //the keybinding callbacks
 
 		/**
