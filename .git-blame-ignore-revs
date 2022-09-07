@@ -1,2 +1,5 @@
 # Normalize line endings.
 b99a1953de694827a7b0b2cce71e4cc2037ea59e
+
+# Remove trailing whitespace.
+996d97079edae171c9df31849f9795acced08584
