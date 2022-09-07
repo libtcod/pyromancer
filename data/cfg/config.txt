@@ -69,15 +69,15 @@ struct config {
 			// (should correspond to main keyboard 1-0 keys for non qwerty layouts)
 			// azerty layout
 			char quickslot1='&'
-			char quickslot2='é'
+			char quickslot2='Ã©'
 			char quickslot3='\"'
 			char quickslot4='\''
 			char quickslot5='('
 			char quickslot6='-'
-			char quickslot7='è'
+			char quickslot7='Ã¨'
 			char quickslot8='_'
-			char quickslot9='ç'
-			char quickslot10='à'
+			char quickslot9='Ã§'
+			char quickslot10='Ã '
 		}
 		struct minion {
 			char ch='m'
