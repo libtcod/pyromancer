@@ -34,7 +34,7 @@ ItemFeature *ItemFeature::clone() const {
 void ItemFeature::copy(const ItemFeature *feat) {
 	if ( type != feat->type ) {
 		fprintf(stderr,"Fatal : cannot copy item feature %d on %d\n",feat->type,type);
-		exit(1);
+		std::abort();
 	}
 }
 
@@ -224,7 +224,7 @@ bool ItemFeatureAttack::update(float elapsed, TCOD_mouse_t *mouse, Item *it) {
 			ItemFeatureAttack *projectileAttack=(ItemFeatureAttack *)projectile->getFeature(ItemFeature::ATTACK);
 			if ( ! projectileAttack ) {
 				fprintf(stderr,"Item type %s cannot have non projectile ammunition/casts type %s",it->typeData->name,projectile->typeData->name);
-				exit(1);
+				std::abort();
 			}
 			projectile->speed=projectileAttack->speed;
 			projectile->damages *= attackCoef;

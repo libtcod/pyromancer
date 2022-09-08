@@ -111,7 +111,7 @@ bool TextGenerator::parserEndStruct(TCODParser *parser,const TCODParserStruct *s
 
 void TextGenerator::error(const char *msg) {
 	fprintf(stderr,"%s",msg);
-	exit(1);
+	std::abort();
 }
 
 char * TextGenerator::goatSoup2(const char *generator, const char *source,char *buf) {
@@ -124,7 +124,7 @@ char * TextGenerator::goatSoup2(const char *generator, const char *source,char *
 	}
 	if ( gen == NULL )  {
 		fprintf (stderr,"Unknown text generator %s in file %s\n",generator,filename);
-		exit(1);
+		std::abort();
 	}
 	for(;;)
 	{	int c=*(source++);

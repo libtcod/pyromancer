@@ -151,7 +151,7 @@ void SaveGame::loadChunk(uint32_t *chunkId, uint32_t *chunkVersion) {
 	if ( nbChunks == 0 ) {
 		clear();
 		fprintf(stderr,"error : unexpected end of file...");
-		exit(1);
+		std::abort();
 	}
 	*chunkId = zip->getInt();
 	*chunkVersion = zip->getInt();

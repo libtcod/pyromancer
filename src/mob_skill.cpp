@@ -148,7 +148,7 @@ bool SkillParser::parserEndStruct(TCODParser *parser, const TCODParserStruct *de
 
 void SkillParser::error(const char *msg) {
 	fprintf(stderr,"%s",msg);
-	exit(1);
+	std::abort();
 }
 
 SkillType::SkillType(char *name) :

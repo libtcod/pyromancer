@@ -124,7 +124,7 @@ CreatureTypeId CreatureType::getType(const char *name) {
 		}
 	}
 	fprintf(stderr,"Fatal : unknown creature type %s",name);
-	exit(0);
+	std::abort();
 }
 
 void CreatureType::setName(const char *pname) {
