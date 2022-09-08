@@ -68,16 +68,16 @@ struct config {
 			// quickslot shortcuts
 			// (should correspond to main keyboard 1-0 keys for non qwerty layouts)
 			// azerty layout
-			char quickslot1='&'
-			char quickslot2='é'
-			char quickslot3='\"'
-			char quickslot4='\''
-			char quickslot5='('
-			char quickslot6='-'
-			char quickslot7='è'
-			char quickslot8='_'
-			char quickslot9='ç'
-			char quickslot10='à'
+			// char quickslot1='&'
+			// char quickslot2='é'
+			// char quickslot3='\"'
+			// char quickslot4='\''
+			// char quickslot5='('
+			// char quickslot6='-'
+			// char quickslot7='è'
+			// char quickslot8='_'
+			// char quickslot9='ç'
+			// char quickslot10='à'
 		}
 		struct minion {
 			char ch='m'
