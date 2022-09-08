@@ -721,6 +721,7 @@ bool Item::init() {
 	light->addProperty("colorPattern",TCOD_TYPE_STRING,false);
 	light->addFlag("randomRadius");
 	light->addFlag("invsqrt");
+	light->addFlag("diffuse");
 	itemType->addStructure(light);
 
 	TCODParserStruct *eob=itemParser.newStructure("explodeOnBounce");
