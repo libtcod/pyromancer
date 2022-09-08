@@ -145,4 +145,3 @@ struct config {
 		float zoneDecay=2.0 // length of the decay phase in seconds
 	}
 }
-

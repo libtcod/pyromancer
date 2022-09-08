@@ -147,4 +147,3 @@ bool Fish::update(float elapsed) {
 	updated=true;
 	return true;
 }
-

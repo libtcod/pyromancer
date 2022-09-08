@@ -451,5 +451,3 @@ void Game::termLevel() {
 	particles.clearAndDelete();
 	delete dungeon;
 }
-
-

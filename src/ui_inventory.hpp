@@ -79,4 +79,3 @@ protected :
 	int cmenux,cmenuy, cmenuitem, cmenuwidth, cmenuheight;
 	bool cmenuon;
 };
-

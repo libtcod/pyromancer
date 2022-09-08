@@ -325,4 +325,3 @@ void LightMap::diffuse(float reflectivity, float selfIllumination, int steps) {
 	delete [] ffSum;
 	*/
 }
-

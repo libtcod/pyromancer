@@ -74,4 +74,3 @@ protected :
 	float getIntensity();
 	HDRColor getColor(float rad);
 };
-

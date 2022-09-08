@@ -313,5 +313,3 @@ const char *TextGenerator::generate(const char *generator, const char *source, .
 	goatSoup2(generator,tmp,buf);
 	return buf;
 }
-
-

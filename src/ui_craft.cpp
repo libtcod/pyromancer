@@ -380,4 +380,3 @@ void Craft::computeRecipes() {
 		}
 	}
 }
-

@@ -47,4 +47,3 @@ class UmbraPoint {
 		inline bool is (int px, int py) { return px == x && py == y; }
 		inline bool operator == (const UmbraPoint &p1) { return p1.x == x && p1.y == y; }
 };
-

@@ -248,5 +248,3 @@ bool AttackOnSee::update(Creature *crea, float elapsed) {
 	}
 	return true;
 }
-
-

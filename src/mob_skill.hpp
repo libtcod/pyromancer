@@ -109,4 +109,3 @@ private :
 	bool executeOnTarget(Creature *cr);
 	bool applyEffectOnTarget(Effect *fx,Creature *cr);
 };
-

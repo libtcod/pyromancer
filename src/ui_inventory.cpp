@@ -612,5 +612,3 @@ bool Inventory::update(float elapsed, TCOD_key_t &k, TCOD_mouse_t &mouse) {
 	}
 	return true;
 }
-
-

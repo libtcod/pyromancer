@@ -80,4 +80,3 @@ void SubCell::saveData(TCODZip *zip) {
 	zip->putFloat(shadow);
 	zip->putFloat(waterCoef);
 }
-

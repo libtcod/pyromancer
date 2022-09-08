@@ -259,5 +259,3 @@ Light *ExtendedLight::clone() const {
 	ret->noiseIntensity=noiseIntensity;
 	return ret;
 }
-
-

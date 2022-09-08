@@ -430,4 +430,3 @@ void Building::buildCityWalls(int x, Dungeon *dungeon) {
 		} else setBuildingWallCell(x,y,ysym,TCOD_CHAR_VLINE,dungeon);
 	}
 }
-

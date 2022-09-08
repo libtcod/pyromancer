@@ -184,4 +184,3 @@ void Condition::applyTo(Creature *cr) {
 		default:break;
 	}
 }
-

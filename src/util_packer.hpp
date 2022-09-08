@@ -45,4 +45,3 @@ protected :
 	bool findEmptyPlace(Rect *rect);
 	void addRectInternal(Rect *rect, bool duplicate);
 };
-

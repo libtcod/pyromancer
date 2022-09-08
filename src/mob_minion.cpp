@@ -93,4 +93,3 @@ bool Villager::update(float elapsed) {
 	}
 	return true;
 }
-

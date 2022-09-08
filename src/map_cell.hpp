@@ -102,4 +102,3 @@ struct SubCell : public Persistant {
 	bool loadData(TCODZip *zip);
 	void saveData(TCODZip *zip);
 };
-

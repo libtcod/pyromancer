@@ -76,6 +76,3 @@ protected :
 
 	friend class Powerup;
 };
-
-
-

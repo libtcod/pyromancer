@@ -72,4 +72,3 @@ class UmbraModSpeed: public UmbraWidget {
 		 */
 		void setTimes(long updateTime, long renderTime); // this is called by engine each frame
 };
-

@@ -41,4 +41,3 @@ protected :
 	float getData(float *data,int x, int y);
 	float getInterpolatedData(float *data,int x, int y);
 };
-

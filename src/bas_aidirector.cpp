@@ -244,8 +244,3 @@ void AiDirector::killCreature(Creature *cr) {
 		killCount=itemKillCount;
 	}
 }
-
-
-
-
-

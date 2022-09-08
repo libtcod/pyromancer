@@ -38,6 +38,3 @@ protected :
 	bool lookOn;
 	void getTerrainDescriptor(int x, int y);
 };
-
-
-
