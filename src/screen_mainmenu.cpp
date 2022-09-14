@@ -27,6 +27,8 @@
 #include <stdio.h>
 #include "main.hpp"
 
+#include <cassert>
+
 MainMenu *MainMenu::instance=NULL;
 static const TCODColor PAPER_COLOR(46,28,18);
 //static const TCODColor TEXT_COLOR(205,165,96);
@@ -93,6 +95,7 @@ void MainMenu::onInitialise() {
 	Screen::onInitialise();
 	img=new TCODImage(CON_W*2,CON_H*2);
 	title=new TCODImage("data/img/title.png");
+	assert(title);
 	title->getSize(&titlew,&titleh);
 	titlex = CON_W-titlew/2;
 	titley = CON_H/3+28;
