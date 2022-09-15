@@ -726,7 +726,7 @@ bool Dungeon::hasItemType(int x, int y, const ItemType *type) {
 }
 
 Item *Dungeon::getItem(int x, int y, const ItemType *type) {
-	if (!IN_RECTANGLE(x,y,width,height)) return false;
+	if (!IN_RECTANGLE(x,y,width,height)) return nullptr;
 	Cell *cell=getCell(x,y);
 	for (Item **it=cell->items.begin(); it != cell->items.end(); it++) {
 		if ((*it)->isA(type)) return *it;
@@ -735,7 +735,7 @@ Item *Dungeon::getItem(int x, int y, const ItemType *type) {
 }
 
 Item *Dungeon::getItem(int x, int y, const char *typeName) {
-	if (!IN_RECTANGLE(x,y,width,height)) return false;
+	if (!IN_RECTANGLE(x,y,width,height)) return nullptr;
 	return getItem(x,y,ItemType::getType(typeName));
 }
 

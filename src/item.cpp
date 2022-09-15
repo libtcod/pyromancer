@@ -1075,7 +1075,7 @@ ItemCombination *Item::getCombination() const {
 Item *Item::putInContainer(Item *it) {
 	ItemFeatureContainer *cont=(ItemFeatureContainer *)it->getFeature(ItemFeature::CONTAINER);
 	if ( ! cont ) return NULL; // it is not a container
-	if ( it->stack.size() >= cont->size ) return false; // no more room
+	if ( it->stack.size() >= cont->size ) return nullptr; // no more room
 	Item *item = addToList(&it->stack);
 	item->container=it;
 	item->x=it->x;
