@@ -25,6 +25,8 @@
 */
 #include <ctype.h>
 #include <assert.h>
+
+#include "input_movement.hpp"
 #include "main.hpp"
 
 // maximum sprint : 2 times faster
@@ -354,6 +356,15 @@ bool Player::update(float elapsed, TCOD_key_t key,TCOD_mouse_t *mouse) {
 	computeFovRange(elapsed);
 
 	bool tryToMove=Player::getMoveKey(key,&up,&down,&left,&right);
+
+	{
+		// Hack to fix movement.
+		auto [new_dx, new_dy] = get_current_movement_dir();
+		left = new_dx < 0;
+		right = new_dx > 0;
+		up = new_dy < 0;
+		down = new_dy > 0;
+	}
 
 	// mouse coordinates
 	int dungeonx=mouse->cx+gameEngine->xOffset;
