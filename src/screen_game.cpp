@@ -250,7 +250,7 @@ bool Game::update(float elapsed, TCOD_key_t &k,TCOD_mouse_t &mouse) {
 	if ( finalExplosion <= 1.0f ) finalExplosion -= elapsed/finalExplosionTime;
 
 
-	if ( helpOn && (k.c == '?' || k.c == ' ') && ! k.pressed ) {
+	if ( helpOn && (k.c == '/' || k.c == ' ') && ! k.pressed ) {
 		helpOn=false;
 		resumeGame();
 		return true;

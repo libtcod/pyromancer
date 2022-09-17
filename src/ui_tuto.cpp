@@ -372,9 +372,9 @@ bool Tutorial::update(float elapsed, TCOD_key_t &k,TCOD_mouse_t &mouse) {
 				pages[id].con->setCharForeground(w-1,0,TCODColor::lightGrey);
 			}
 			if ( (mouse.lbutton_pressed && mouse.cx == x + w - 1 && mouse.cy == y )
-				|| (!k.pressed && (k.c == '?' || k.c ==' ' || k.vk == TCODK_ESCAPE )) || tutoElapsed > pages[id].delay ) {
+				|| (!k.pressed && (k.c == '/' || k.c ==' ' || k.vk == TCODK_ESCAPE )) || tutoElapsed > pages[id].delay ) {
 				if (renderMenu) gameEngine->gui.setMode(GUI_NONE);
-				else if ( k.c != '?') closeLiveTuto();
+				else if ( k.c != '/') closeLiveTuto();
 				else gameEngine->gui.setMode(GUI_TUTORIAL);
 			}
 			if ( renderMenu && menu.size() > 1 && fadeOutDelay == 0.0f ) {
@@ -394,7 +394,7 @@ bool Tutorial::update(float elapsed, TCOD_key_t &k,TCOD_mouse_t &mouse) {
 				setNewPage(id);
 			}
 		}
-	} else if ( k.c == '?' && ! k.pressed ) {
+	} else if ( k.c == '/' && ! k.pressed ) {
 		gameEngine->gui.setMode(GUI_TUTORIAL);
 	}
 	return true;
