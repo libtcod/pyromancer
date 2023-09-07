@@ -31,8 +31,8 @@ public :
 	virtual void render() = 0;
 	virtual bool update(float elapsed, TCOD_key_t &k,TCOD_mouse_t &mouse) = 0;
 	virtual ~Screen() {}
-	void keyboard (TCOD_key_t &key) { this->key=&key; }
-	void mouse (TCOD_mouse_t &ms) { this->ms=&ms; }
+	void keyboard (TCOD_key_t &key) { this->key=key; }
+	void mouse (TCOD_mouse_t &ms) { this->ms=ms; }
 	bool update (void);
 
     void setFadeIn (int lengthInMilli, TCODColor col = TCODColor::black); //set fade lengths in milliseconds
@@ -47,8 +47,8 @@ protected :
     TCODColor fadeOutColor;
 
 	enum { FADE_UP, FADE_DOWN, FADE_OFF, FADE_NONE } fade;
-	TCOD_key_t *key;
-	TCOD_mouse_t *ms;
+	TCOD_key_t key{};
+	TCOD_mouse_t ms{};
 	void onInitialise();
 	void prepareImage(TCODImage *img)const;
 	TCODImage *loadChapterPicture(bool big=false);

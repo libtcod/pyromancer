@@ -138,7 +138,7 @@ bool Screen::update() {
 		}
 		if (fadeEnded) fadeLvl=0.0f;
 	}
-    return update(elapsed, *key,*ms);
+    return update(elapsed, key, ms);
 }
 
 void Screen::setFadeIn (int lengthInMilli, TCODColor col) {

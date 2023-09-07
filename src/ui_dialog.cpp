@@ -222,7 +222,7 @@ bool Dialog::update() {
 	}
 	if (!UmbraWidget::update()) return false;
     internalUpdate();
-    return update(elapsed, *key,*ms);
+    return update(elapsed, key, ms);
 }
 
 void Dialog::onActivate() {

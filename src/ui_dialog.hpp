@@ -123,8 +123,8 @@ protected :
 class Dialog : public UmbraWidget {
 public :
 	Dialog() : flags(0),isMinimized(false),waitRelease(false) {}
-	void keyboard (TCOD_key_t &key) { this->key=&key; UmbraWidget::keyboard(key); }
-	void mouse (TCOD_mouse_t &ms) { this->ms=&ms; UmbraWidget::mouse(ms); }
+	void keyboard (TCOD_key_t &key) { this->key=key; UmbraWidget::keyboard(key); }
+	void mouse (TCOD_mouse_t &ms) { this->ms=ms; UmbraWidget::mouse(ms); }
 	bool update (void);
 	virtual bool update(float elapsed, TCOD_key_t &k, TCOD_mouse_t &mouse) = 0;
 	void setMaximized();
@@ -141,8 +141,8 @@ public :
 	void onDeactivate();
 protected :
 	int flags;
-	TCOD_key_t *key;
-	TCOD_mouse_t *ms;
+	TCOD_key_t key{};
+	TCOD_mouse_t ms{};
 	TCODConsole *con;
 	bool isMinimized;
 	bool waitRelease;
