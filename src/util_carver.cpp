@@ -105,4 +105,3 @@ void MapCarver::hlineRight(TCODMap *map,int x, int y) {
 		x++;
 	}
 }
-
