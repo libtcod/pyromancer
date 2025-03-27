@@ -32,16 +32,17 @@ public :
 		NORTH, SOUTH, EAST, WEST,
 		NE, NW, SE, SW };
 
-	float x,y;
+	float x{0};
+	float y{0};
 
-	Entity() : x(0),y(0) {}
-	Entity(int px,int py) : x(px),y(py) {}
-	Entity(float px,float py) : x(px),y(py) {}
+	Entity() = default;
+	Entity(int px,int py) : x{static_cast<float>(px)},y{static_cast<float>(py)} {}
+	Entity(float px,float py) : x{px},y{py} {}
 	// get subcell coordinates
 	int getSubX() const { return (int)(x*2); }
 	int getSubY() const { return (int)(y*2); }
-	void setPos(int x, int y) { this->x=x; this->y=y; }
-	void setPos(float x, float y) { this->x=x; this->y=y; }
+	void setPos(int new_x, int new_y) { x=new_x; y=new_y; }
+	void setPos(float new_x, float new_y) { x=new_x; y=new_y; }
 	Entity &addDir(Direction d) {
 		static int xdirs[11] = { 0, 0, 0, 0, 0, 1, -1, 1, -1, 1, -1};
 		static int ydirs[11] = { 0, 0, 0, -1, 1, 0, 0, -1, -1, 1, 1};

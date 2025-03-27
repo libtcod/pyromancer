@@ -90,7 +90,7 @@ public :
 	inline int getChar() const { return ch; }
 	inline int getAttackDamages() const { return (int)attackDamages; }
 	inline const Light *getLight() const { return light; }
-	inline void setLight(Light *light) { this->light=light; }
+	inline void setLight(Light *light_ptr) { light=light_ptr; }
 	// resources
 	inline void setLife(float value) { maxStatusResource[StatusResource::LIFE] = value; }
 	inline void setMana(float value) { maxStatusResource[StatusResource::MANA] = value; }

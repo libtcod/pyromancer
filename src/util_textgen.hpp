@@ -98,7 +98,7 @@ protected :
 class RandomNameFunc : public ITextGeneratorFunc {
 public :
 	RandomNameFunc(TCODRandom *rnRng) : rnRng(rnRng) {}
-	const char * execute(const char *params) {
+	const char * execute([[maybe_unused]] const char *params) {
 		return NameGenerator::generateRandomName(rnRng);
 	}
 protected :

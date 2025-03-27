@@ -38,7 +38,7 @@ public :
 	void termLevel();
 	void render(LightMap *lightMap);
 	void setLightRange(float range) { light->range=range; }
-	void setLightColor(TCODColor col) { light->color=col; }
+	void setLightColor(TCODColor new_color) { light->color=new_color; }
 	static bool getMoveKey(TCOD_key_t key,bool *up, bool *down, bool *left, bool *right);
 	inline float getAverageSpeed() { return averageSpeed;}
 	void computeStealth(float elapsed);

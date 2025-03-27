@@ -42,14 +42,17 @@ class UIListener;
 
 class Widget {
 public :
-	Widget() : x(0),y(0),w(0),h(0) {}
-	Widget(int x, int y) : x(x),y(y) {}
-	Widget(int x, int y, int w, int h) : x(x),y(y),w(w),h(h) {}
-	void setPos(int x, int y) { this->x=x;this->y=y;}
-	void setSize(int w, int h) { this->w=w;this->h=h;}
+	Widget() = default;
+	Widget(int x, int y) : x{x},y{y} {}
+	Widget(int x, int y, int w, int h) : x{x},y{y},w{w},h{h} {}
+	void setPos(int new_x, int new_y) { x=new_x;y=new_y;}
+	void setSize(int new_w, int new_h) { w=new_w;h=new_h;}
 	void addListener(UIListener *listener) { listeners.push(listener); }
 	void removeListener(UIListener *listener) { listeners.removeFast(listener); }
-	int x,y,w,h;
+	int x{0};
+	int y{0};
+	int w{0};
+	int h{0};
 protected :
 	TCODList<UIListener *> listeners;
 	void sendEvent(EWidgetEvent event);
@@ -123,8 +126,8 @@ protected :
 class Dialog : public UmbraWidget {
 public :
 	Dialog() : flags(0),isMinimized(false),waitRelease(false) {}
-	void keyboard (TCOD_key_t &key) { this->key=key; UmbraWidget::keyboard(key); }
-	void mouse (TCOD_mouse_t &ms) { this->ms=ms; UmbraWidget::mouse(ms); }
+	void keyboard (TCOD_key_t &key_event) { this->key=key_event; UmbraWidget::keyboard(key_event); }
+	void mouse (TCOD_mouse_t &ms_event) { this->ms=ms_event; UmbraWidget::mouse(ms); }
 	bool update (void);
 	virtual bool update(float elapsed, TCOD_key_t &k, TCOD_mouse_t &mouse) = 0;
 	void setMaximized();
