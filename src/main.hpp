@@ -93,7 +93,7 @@
 #include "screen_forest.hpp"
 #include "screen_treeBurner.hpp"
 
-#define IN_RECTANGLE(x,y,w,h) ((unsigned)(x) < (unsigned)(w) && (unsigned)(y) < (unsigned)(h))
+#define IN_RECTANGLE(x, y, w, h) (0 <= (x) && 0 <= (y) && (x) < (w) && (y) < (h))
 #define SQRDIST(x1,y1,x2,y2) (((x1)-(x2))*((x1)-(x2))+((y1)-(y2))*((y1)-(y2)))
 #define TCOD_CHAR_PROGRESSBAR 1
 #define TCOD_CHAR_BOLT_N 2
