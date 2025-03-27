@@ -147,10 +147,11 @@ jobs:
     runs-on: ubuntu-24.04
     strategy:
       matrix:
-       build_type: [Debug, Release]
+       build_type: [Debug, Release, RelWithDebInfo, MinSizeRel]
     env:
       EM_VERSION: 4.0.5
       EM_CACHE_FOLDER: "emsdk-cache"
+      itch_deploy_type: Release
     steps:
       - uses: actions/checkout@v4
         with:
@@ -196,7 +197,7 @@ jobs:
           if-no-files-found: error
           compression-level: 6
       - name: Install Butler
-        if: github.ref == 'refs/heads/main' && matrix.build_type == 'Release'
+        if: github.ref == 'refs/heads/main' && matrix.build_type == env.itch_deploy_type
         run: |
           mkdir ~/bin
           cd ~/bin
@@ -206,7 +207,7 @@ jobs:
           echo "~/bin" >> $GITHUB_PATH
           ~/bin/butler -V
       - name: Upload to Itch
-        if: github.ref == 'refs/heads/main' && matrix.build_type == 'Release'
+        if: github.ref == 'refs/heads/main' && matrix.build_type == env.itch_deploy_type
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
         run: butler push build/bin hexdecimal/${{ env.project-name }}:emscripten-latest
