@@ -235,7 +235,7 @@ bool GameEngine::update(float elapsed, TCOD_key_t &k,TCOD_mouse_t &mouse) {
 
 void GameEngine::init() {
 	gameEngine = this;
-    engine.setKeyboardMode( UMBRA_KEYBOARD_PRESSED_RELEASED );
+    engine.setKeyboardMode( UMBRA_KEYBOARD_SDL );
 }
 
 void GameEngine::pauseGame() {

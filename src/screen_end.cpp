@@ -42,7 +42,7 @@ void EndScreen::onInitialise() {
 void EndScreen::onActivate() {
     // set keyboard mode to RELEASED only
     Screen::onActivate();
-    engine.setKeyboardMode( UMBRA_KEYBOARD_RELEASED );
+    engine.setKeyboardMode( UMBRA_KEYBOARD_SDL );
     Screen::onActivate();
 	const char *al=getStringParam("alignment");
 	if (al) {

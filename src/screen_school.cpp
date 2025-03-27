@@ -148,7 +148,7 @@ void SchoolScreen::generateWorld(uint32_t seed) {
 }
 
 void SchoolScreen::onActivate() {
-    engine.setKeyboardMode( UMBRA_KEYBOARD_RELEASED );
+    engine.setKeyboardMode( UMBRA_KEYBOARD_SDL );
 	if (! worldGenerated) MainMenu::instance->waitForWorldGen();
 	selectSchool(0);
 	offx = rng->getFloat(MAP_WIDTH,HM_WIDTH-MAP_WIDTH-1);

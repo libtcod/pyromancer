@@ -23,6 +23,8 @@
 * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
+#define SDL_MAIN_USE_CALLBACKS
+#include <SDL3/SDL_main.h>
 #include <time.h>
 #include <stdio.h>
 #include "main.hpp"
@@ -155,7 +157,12 @@ public :
 	}
 };
 
-int main (int argc, char *argv[]) {
+
+SDL_AppResult SDL_AppEvent(void*, SDL_Event* event) { return engine.onEvent(*event); }
+
+SDL_AppResult SDL_AppIterate(void*) { return engine.onFrame(); }
+
+SDL_AppResult SDL_AppInit(void**, int argc, char** argv) {
 	// read main configuration file
 	config.run("data/cfg/config.txt",NULL);
 	ConditionType::init();
@@ -185,12 +192,17 @@ int main (int argc, char *argv[]) {
 	engine.loadModuleConfiguration("data/cfg/modules.cfg", new ModuleFactory());
 
 	sound.initialize();
+	engine.setKeyboardMode(UMBRA_KEYBOARD_SDL);
     if (engine.initialise(TCOD_RENDERER_SDL2)) {
-		engine.run();
-		saveGame.save();
-		userPref.save();
-		return 0;
+		//engine.run();
+		//return SDL_APP_SUCCESS;
+		return SDL_APP_CONTINUE;
 	}
+	return SDL_APP_FAILURE;
+}
 
-	return 1;
+void SDL_AppQuit(void*, SDL_AppResult) {
+	saveGame.save();
+	userPref.save();
+	engine.onQuit();
 }

@@ -107,7 +107,7 @@ void MainMenu::onInitialise() {
 
 void MainMenu::onActivate() {
     // revert keyboard mode to RELEASED only
-    engine.setKeyboardMode( UMBRA_KEYBOARD_RELEASED );
+    engine.setKeyboardMode( UMBRA_KEYBOARD_SDL );
     Screen::onActivate();
     sound.load("data/snd/menu.ogg");
     sound.playLoop();
