@@ -33,6 +33,18 @@ else()
     target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra)
 endif()
 
+if (EMSCRIPTEN)
+    # Attach data folder to Emscripten builds.
+    target_link_options(${PROJECT_NAME} PRIVATE
+        "SHELL:--preload-file ${CMAKE_CURRENT_SOURCE_DIR}/data@data"
+        -lidbfs.js  # Enable IDBFS (browser file system.)
+    )
+    configure_file(
+        ${PROJECT_SOURCE_DIR}/emscripten/index.html
+        ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/index.html
+    )
+endif()
+
 target_compile_definitions(${PROJECT_NAME} PRIVATE _USE_MATH_DEFINES)  # For M_PI
 target_compile_definitions(${PROJECT_NAME} PRIVATE NO_SOUND)
 target_compile_definitions(${PROJECT_NAME} PRIVATE NO_LUA)

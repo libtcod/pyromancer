@@ -25,6 +25,7 @@
 */
 #define SDL_MAIN_USE_CALLBACKS
 #include <SDL3/SDL_main.h>
+#include <SDL3/SDL_log.h>
 #include <time.h>
 #include <stdio.h>
 #include "main.hpp"
@@ -163,6 +164,7 @@ SDL_AppResult SDL_AppEvent(void*, SDL_Event* event) { return engine.onEvent(*eve
 SDL_AppResult SDL_AppIterate(void*) { return engine.onFrame(); }
 
 SDL_AppResult SDL_AppInit(void**, int argc, char** argv) {
+	SDL_SetLogPriorities(SDL_LOG_PRIORITY_VERBOSE);
 	// read main configuration file
 	config.run("data/cfg/config.txt",NULL);
 	ConditionType::init();
@@ -193,12 +195,8 @@ SDL_AppResult SDL_AppInit(void**, int argc, char** argv) {
 
 	sound.initialize();
 	engine.setKeyboardMode(UMBRA_KEYBOARD_SDL);
-    if (engine.initialise(TCOD_RENDERER_SDL2)) {
-		//engine.run();
-		//return SDL_APP_SUCCESS;
-		return SDL_APP_CONTINUE;
-	}
-	return SDL_APP_FAILURE;
+	if (!engine.initialise(TCOD_RENDERER_SDL2)) return SDL_APP_FAILURE;
+	return SDL_APP_CONTINUE;
 }
 
 void SDL_AppQuit(void*, SDL_AppResult) {

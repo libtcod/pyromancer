@@ -28,7 +28,7 @@ jobs:
             butler-url: https://broth.itch.ovh/butler/windows-amd64/LATEST/archive/default
           - os: macos-14
             triplet: arm64-osx
-            platform-name: macos.x64
+            platform-name: macos.arm64
             butler-url: https://broth.itch.ovh/butler/darwin-amd64/LATEST/archive/default
           - os: ubuntu-24.04
             triplet: x64-linux
@@ -128,7 +128,7 @@ jobs:
           tag: ${{ github.ref }}
           overwrite: true
       - name: Install Butler
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main' && matrix.butler-url
         run: |
           mkdir ~/bin
           cd ~/bin
@@ -138,7 +138,75 @@ jobs:
           echo "~/bin" >> $GITHUB_PATH
           ~/bin/butler -V
       - name: Upload to Itch
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main' && matrix.butler-url
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
         run: butler push dist/${{ env.archive-name }} hexdecimal/${{ env.project-name }}:${{ matrix.platform-name }}-latest
+
+  emscripten:
+    runs-on: ubuntu-24.04
+    strategy:
+      matrix:
+       build_type: [Debug, Release]
+    env:
+      EM_VERSION: 4.0.5
+      EM_CACHE_FOLDER: "emsdk-cache"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - name: Restore vcpkg and its artifacts
+        uses: actions/cache@v4
+        with:
+          path: |
+            build/vcpkg_installed/
+            ${{ env.VCPKG_ROOT }}
+            !${{ env.VCPKG_ROOT }}/buildtrees
+            !${{ env.VCPKG_ROOT }}/packages
+            !${{ env.VCPKG_ROOT }}/downloads
+          key: wasm32-emscripten-${{ hashFiles('vcpkg.json', '.git/modules/vcpkg/HEAD') }}
+      - name: Setup cache
+        id: cache-system-libraries
+        uses: actions/cache@v4
+        with:
+          path: ${{env.EM_CACHE_FOLDER}}
+          key: ${{env.EM_VERSION}}-${{ runner.os }}
+      - uses: mymindstorm/setup-emsdk@v14
+        with:
+          version: ${{env.EM_VERSION}}
+          actions-cache-folder: ${{env.EM_CACHE_FOLDER}}
+      - name: Verify
+        run: emcc -v
+      - uses: lukka/get-cmake@latest
+      - name: Configure
+        run: emcmake cmake -S . -B build -G Ninja
+          -DVCPKG_CHAINLOAD_TOOLCHAIN_FILE="${EMSDK}/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake"
+          -DCMAKE_TOOLCHAIN_FILE=vcpkg/scripts/buildsystems/vcpkg.cmake
+          -DVCPKG_TARGET_TRIPLET=wasm32-emscripten
+          -DCMAKE_BUILD_TYPE="${{ matrix.build_type }}"
+      - name: Build
+        run: cmake --build build
+      - name: Show contents of the build directory
+        run: find build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: emscripten-${{ matrix.build_type }}
+          path: build/bin
+          retention-days: 7
+          if-no-files-found: error
+          compression-level: 6
+      - name: Install Butler
+        if: github.ref == 'refs/heads/main' && matrix.build_type == 'Release'
+        run: |
+          mkdir ~/bin
+          cd ~/bin
+          curl -L -o butler.zip https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default
+          unzip butler.zip
+          chmod +x butler
+          echo "~/bin" >> $GITHUB_PATH
+          ~/bin/butler -V
+      - name: Upload to Itch
+        if: github.ref == 'refs/heads/main' && matrix.build_type == 'Release'
+        env:
+          BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
+        run: butler push build/bin hexdecimal/${{ env.project-name }}:emscripten-latest
