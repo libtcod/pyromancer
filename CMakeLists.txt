@@ -39,13 +39,12 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE NO_LUA)
 
 add_subdirectory(umbra)
 
-find_package(SDL2 CONFIG REQUIRED)
+find_package(SDL3 CONFIG REQUIRED)
 find_package(libtcod CONFIG REQUIRED)
 target_link_libraries(
     ${PROJECT_NAME}
     PRIVATE
-        SDL2::SDL2
-        SDL2::SDL2main
+        SDL3::SDL3
         libtcod::libtcod
         umbra::umbra
 )

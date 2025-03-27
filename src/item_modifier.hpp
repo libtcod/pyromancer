@@ -35,7 +35,7 @@ public :
 	};
 	float currentValue;
 	float currentMaxValue;
-	void add(float val) { currentValue+=val; currentValue=CLAMP(0.0f,currentMaxValue,currentValue);}
+	void add(float val) { currentValue+=val; currentValue=std::clamp(currentValue,0.0f,currentMaxValue);}
 	float getRatio() const { return currentValue / currentMaxValue; }
 	static const char *getName(Type typ) {return names[typ];}
 protected :

@@ -156,7 +156,7 @@ float WorldGenerator::getAltitude(int x, int y) const {
 float WorldGenerator::getRealAltitude(float x, float y) const {
 	int ih=(int)(256*getInterpolatedAltitude(x,y));
 	int idx;
-    ih = CLAMP(0,255,ih);
+    ih = std::clamp(ih,0,255);
 	for (idx=0; idx < MAX_ALT_KEY-1; idx++) {
 		if ( altIndexes[idx+1] > ih ) break;
 	}
@@ -167,7 +167,7 @@ float WorldGenerator::getRealAltitude(float x, float y) const {
 float WorldGenerator::getPrecipitations(float x, float y) const {
 	int iprec=(int)(256*precipitation->getValue((int)x,(int)y));
 	int idx;
-	iprec=CLAMP(0,255,iprec);
+	iprec=std::clamp(iprec,0,255);
 	for (idx=0; idx < MAX_PREC_KEY-1; idx++) {
 		if ( precIndexes[idx+1] > iprec ) break;
 	}
@@ -221,7 +221,7 @@ void WorldGenerator::setLandMass(float landMass, float waterLevel) {
 	    for (int y=0; y < HM_HEIGHT; y++) {
 			float h=hm->getValue(x,y);
 			int ih=(int)(h*255);
-			ih = CLAMP(0,255,ih);
+			ih = std::clamp(ih,0,255);
 			heightcount[ih]++;
 		}
 	}
@@ -386,7 +386,7 @@ void WorldGenerator::erodeMap() {
                     } else {
                         // remember, slope is negative
                         h += precipitation->getValue(ix,iy)* EROSION_FACTOR * md2->slope;
-                        h=MAX(h,sandHeight);
+                        h=std::max(h,sandHeight);
                         sediment -= md2->slope;
                         hm->setValue(ix,iy,h);
                         oldFlow = md2->flowDir;
@@ -448,8 +448,8 @@ float WorldGenerator::getCloudThickness(float x, float y) const {
     x += cloudDx;
     int ix=(int)x;
     int iy=(int)y;
-    int ix1 = MIN(HM_WIDTH-1,ix+1);
-    int iy1 = MIN(HM_HEIGHT-1,iy+1);
+    int ix1 = std::min(HM_WIDTH-1,ix+1);
+    int iy1 = std::min(HM_HEIGHT-1,iy+1);
     float fdx = x - ix;
     float fdy = y - iy;
     float v1 = clouds[ix][iy];
@@ -466,7 +466,7 @@ TCODColor WorldGenerator::getMapColor(float h) {
 	int colorIdx;
 	if ( h < sandHeight ) colorIdx = (int)(h/sandHeight * COLOR_KEY_MAX_SEA);
 	else colorIdx = COLOR_KEY_MIN_LAND + (int)((h-sandHeight)/(1.0f-sandHeight) * (255-COLOR_KEY_MIN_LAND));
-	colorIdx=CLAMP(0,255,colorIdx);
+	colorIdx=std::clamp(colorIdx,0,255);
 	return mapGradient[colorIdx];
 }
 
@@ -483,14 +483,14 @@ float WorldGenerator::getMapIntensity(float worldX,float worldY, float lightDir[
     // sun color & direction
     static const TCODColor sunCol(255,255,160);
 	float normal[3];
-    float wx = CLAMP(0.0f, HM_WIDTH-1,worldX);
-    float wy = CLAMP(0.0f, HM_HEIGHT-1,worldY);
+    float wx = std::clamp<float>(worldX, 0.0f, HM_WIDTH - 1);
+    float wy = std::clamp<float>(worldY, 0.0f, HM_HEIGHT - 1);
 	// apply sun light
     getInterpolatedNormal(wx,wy,normal);
 normal[2] *= 3.0f;
     float intensity = 0.75f
 		- (normal[0]*lightDir[0]+normal[1]*lightDir[1]+normal[2]*lightDir[2])*0.75f;
-	intensity=CLAMP(0.75f,1.5f,intensity);
+	intensity=std::clamp(intensity,0.75f,1.5f);
 	return intensity;
 }
 
@@ -501,8 +501,8 @@ TCODColor WorldGenerator::getInterpolatedColor(float worldX,float worldY) {
 TCODColor WorldGenerator::getInterpolatedColor(TCODImage *img,float x,float y) {
 	int w,h;
 	img->getSize(&w,&h);
-	float wx = CLAMP(0.0f, w-1,x);
-	float wy = CLAMP(0.0f, h-1,y);
+	float wx = std::clamp<float>(x, 0.0f, w - 1);
+	float wy = std::clamp<float>(y, 0.0f, h - 1);
 	int iwx = (int)wx;
 	int iwy = (int)wy;
 	float dx = wx - iwx;
@@ -591,11 +591,11 @@ void WorldGenerator::generateRivers() {
 	int maxx = sx + HM_WIDTH/4;
 	int miny = sy - HM_HEIGHT/4;
 	int maxy = sy + HM_HEIGHT/4;
-	minx = MAX(0,minx);
-	maxx = MIN(HM_WIDTH-1,maxx);
-	miny = MAX(0,miny);
-	maxy = MIN(HM_HEIGHT-1,maxy);
-	h = MIN(snowHeight,h + wgRng->getFloat(0.1f,0.5f));
+	minx = std::max(0,minx);
+	maxx = std::min(HM_WIDTH-1,maxx);
+	miny = std::max(0,miny);
+	maxy = std::min(HM_HEIGHT-1,maxy);
+	h = std::min(snowHeight,h + wgRng->getFloat(0.1f,0.5f));
 	for (int y=miny; y < maxy; y++) {
         for (int x=minx; x < maxx; x++) {
             float dh=hm->getValue(x,y);
@@ -782,8 +782,8 @@ EClimate WorldGenerator::getClimateFromTemp(float temp) {
 }
 
 float WorldGenerator::getInterpolatedFloat(float *arr,float x,float y, int width, int height) {
-	float wx = CLAMP(0.0f, width-1,x);
-	float wy = CLAMP(0.0f, height-1,y);
+	float wx = std::clamp<float>(x, 0.0f, width - 1);
+	float wy = std::clamp<float>(y, 0.0f, height - 1);
 	int iwx = (int)wx;
 	int iwy = (int)wy;
 	float dx = wx - iwx;
@@ -828,7 +828,7 @@ void WorldGenerator::computePrecipitations() {
                         float precip = waterAmount * (basePrecip + slope * slopeCoef);
                         precipitation->setValue(x,y,precipitation->getValue(x,y)+precip);
                         waterAmount -= precip;
-                        waterAmount = MAX(0.0f,waterAmount);
+                        waterAmount = std::max(0.0f,waterAmount);
                     }
                 }
             }
@@ -857,7 +857,7 @@ void WorldGenerator::computePrecipitations() {
                         float precip = waterAmount * (basePrecip + slope * slopeCoef);
                         precipitation->setValue(x,y,precipitation->getValue(x,y)+precip);
                         waterAmount -= precip;
-                        waterAmount = MAX(0.0f,waterAmount);
+                        waterAmount = std::max(0.0f,waterAmount);
                     }
                 }
             }
@@ -928,8 +928,8 @@ void WorldGenerator::smoothPrecipitations() {
 			int maxy=2;
 			float sum=0.0f;
 			int count=0;
-			minx = MAX( 0, minx );
-			maxx = MIN( HM_WIDTH-1, maxx);
+			minx = std::max( 0, minx );
+			maxx = std::min( HM_WIDTH-1, maxx);
 			// compute the kernel sum at x,0
 			for (int ix=minx; ix <= maxx; ix++) {
 				for (int iy =miny; iy <= maxy; iy++) {
@@ -992,7 +992,7 @@ void WorldGenerator::computeTemperaturesAndBiomes() {
 			// compute biome
 			EClimate climate = getClimateFromTemp(temp);
 			int iHumid = (int)(humid * 5);
-			iHumid = MIN(4,iHumid);
+			iHumid = std::min(4,iHumid);
 			EBiome biome = biomeDiagram[climate][iHumid];
 			biomeMap[x+y*HM_WIDTH]=biome;
 		}
@@ -1045,9 +1045,9 @@ TCODColor WorldGenerator::getBiomeColor(EBiome biome,int x,int y) {
     r/=count;
     g/=count;
     b/=count;
-    r=CLAMP(0,255,r);
-    g=CLAMP(0,255,g);
-    b=CLAMP(0,255,b);
+    r=std::clamp(r,0,255);
+    g=std::clamp(g,0,255);
+    b=std::clamp(b,0,255);
     return TCODColor(r,g,b);
 }
 
@@ -1253,7 +1253,7 @@ void WorldGenerator::saveBiomeMap(const char *filename) {
         legend->getSize(&legendWidth,&legendHeight);
     }
     if ( filename == NULL ) filename="world_biome.png";
-    TCODImage img(MAX(HM_WIDTH,legendWidth),HM_HEIGHT+legendHeight);
+    TCODImage img(std::max(HM_WIDTH,legendWidth),HM_HEIGHT+legendHeight);
     // draw biome map
 	for (int x=0; x < HM_WIDTH; x++) {
 		for (int y=0; y < HM_HEIGHT; y++) {
@@ -1264,7 +1264,7 @@ void WorldGenerator::saveBiomeMap(const char *filename) {
 	}
 	drawCoasts(&img);
 	// blit legend
-	int legendx = MAX(HM_WIDTH,legendWidth) / 2 - legendWidth/2;
+	int legendx = std::max(HM_WIDTH,legendWidth) / 2 - legendWidth/2;
 	for (int x=0; x < legendWidth; x++) {
 		for (int y=0; y < legendHeight; y++) {
 		    img.putPixel(legendx+x,HM_HEIGHT+y,legend->getPixel(x,y));
@@ -1296,7 +1296,7 @@ void WorldGenerator::saveTemperatureMap(const char *filename) {
     }
 
     if ( filename == NULL ) filename="world_temperature.png";
-    TCODImage img(MAX(HM_WIDTH,legendWidth),HM_HEIGHT+legendHeight);
+    TCODImage img(std::max(HM_WIDTH,legendWidth),HM_HEIGHT+legendHeight);
     float minTemp,maxTemp;
     temperature->getMinMax(&minTemp,&maxTemp);
     // render temperature map
@@ -1308,7 +1308,7 @@ void WorldGenerator::saveTemperatureMap(const char *filename) {
 	            float temp=temperature->getValue(x,y);
 	            temp = (temp - minTemp) / (maxTemp-minTemp);
 	            int colorIdx = (int)(temp*255);
-	            colorIdx=CLAMP(0,255,colorIdx);
+	            colorIdx=std::clamp(colorIdx,0,255);
 	            img.putPixel(x,y,tempGradient[colorIdx]);
 	        }
         }
@@ -1316,7 +1316,7 @@ void WorldGenerator::saveTemperatureMap(const char *filename) {
     drawCoasts(&img);
 
 	// blit legend
-	int legendx = MAX(HM_WIDTH,legendWidth) / 2 - legendWidth/2;
+	int legendx = std::max(HM_WIDTH,legendWidth) / 2 - legendWidth/2;
 	for (int x=0; x < legendWidth; x++) {
 		for (int y=0; y < legendHeight; y++) {
 		    img.putPixel(legendx+x,HM_HEIGHT+y,legend->getPixel(x,y));
@@ -1334,7 +1334,7 @@ void WorldGenerator::savePrecipitationMap(const char *filename) {
     }
 
     if ( filename == NULL ) filename="world_precipitation.png";
-    TCODImage img(MAX(HM_WIDTH,legendWidth),HM_HEIGHT+legendHeight);
+    TCODImage img(std::max(HM_WIDTH,legendWidth),HM_HEIGHT+legendHeight);
     // render precipitation map
     for (int x=0; x < HM_WIDTH; x++) {
         for (int y=0; y < HM_HEIGHT; y++) {
@@ -1345,7 +1345,7 @@ void WorldGenerator::savePrecipitationMap(const char *filename) {
 	            int iprec = (int)(prec * 180);
 	            int colorIdx=0;
 	            while (colorIdx < MAX_PREC_KEY && iprec > precIndexes[colorIdx]) colorIdx++;
-	            colorIdx = CLAMP(0,MAX_PREC_KEY,colorIdx);
+	            colorIdx = std::clamp(colorIdx,0,MAX_PREC_KEY);
 	            img.putPixel(x,y,precColors[colorIdx]);
 	        }
         }
@@ -1353,7 +1353,7 @@ void WorldGenerator::savePrecipitationMap(const char *filename) {
     drawCoasts(&img);
 
 	// blit legend
-	int legendx = MAX(HM_WIDTH,legendWidth) / 2 - legendWidth/2;
+	int legendx = std::max(HM_WIDTH,legendWidth) / 2 - legendWidth/2;
 	for (int x=0; x < legendWidth; x++) {
 		for (int y=0; y < legendHeight; y++) {
 		    img.putPixel(legendx+x,HM_HEIGHT+y,legend->getPixel(x,y));
@@ -1374,19 +1374,19 @@ void WorldGenerator::saveAltitudeMap(const char *filename) {
     }
 
     if ( filename == NULL ) filename="world_altitude.png";
-    TCODImage img(HM_WIDTH+legendWidth,MAX(HM_HEIGHT,legendHeight));
+    TCODImage img(HM_WIDTH+legendWidth,std::max(HM_HEIGHT,legendHeight));
     // render altitude map
     for (int x=0; x < HM_WIDTH; x++) {
         for (int y=0; y < HM_HEIGHT; y++) {
             float h=hm->getValue(x,y);
             int ialt = (int)(h * 256);
-            ialt = CLAMP(0,255,ialt);
+            ialt = std::clamp(ialt,0,255);
             img.putPixel(x,y,altGradient[ialt]);
         }
     }
 
 	// blit legend
-	int legendy = MAX(HM_HEIGHT,legendHeight) / 2 - legendHeight/2;
+	int legendy = std::max(HM_HEIGHT,legendHeight) / 2 - legendHeight/2;
 	for (int x=0; x < legendWidth; x++) {
 		for (int y=0; y < legendHeight; y++) {
 		    img.putPixel(HM_WIDTH+x,legendy+y,legend->getPixel(x,y));

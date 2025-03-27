@@ -31,7 +31,7 @@ struct HDRColor {
 	HDRColor(const HDRColor &col) : r(col.r),g(col.g),b(col.b) {}
 	HDRColor(const TCODColor &col) : r(col.r),g(col.g),b(col.b) {}
 	HDRColor(float r,float g,float b) : r(r),g(g),b(b) {}
-	operator TCODColor() { return TCODColor(CLAMP(0,255,(int)r),CLAMP(0,255,(int)g),CLAMP(0,255,(int)b));}
+	operator TCODColor() { return TCODColor(std::clamp((int)r,0,255),std::clamp((int)g,0,255),std::clamp((int)b,0,255));}
 	bool operator == (const HDRColor & c) const {
 		return (c.r == r && c.g == g && c.b == b);
 	}

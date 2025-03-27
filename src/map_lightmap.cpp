@@ -71,7 +71,7 @@ float LightMap::getPlayerFog(int x, int y) {
 	float playerdy=gameEngine->player->y*2-y;
 	float fogDist=playerdx*playerdx+playerdy*playerdy; // distance from player
 	float fogCoef=fogDist*maxDistDiv;
-	fogCoef=MIN(1.0f,fogCoef); // increase fog with distance
+	fogCoef=std::min(1.0f,fogCoef); // increase fog with distance
 	fogLevel =fogLevel*fogCoef;
 	return fogLevel;
 }
@@ -186,10 +186,10 @@ void LightMap::computeLightContribution(int lx, int ly, const HDRColor &lcol, fl
 	int ominy=ly-RADIOSITY_RADIUS;
 	int omaxx=lx+RADIOSITY_RADIUS;
 	int omaxy=ly+RADIOSITY_RADIUS;
-	int minx=MAX(ominx,0);
-	int miny=MAX(ominy,0);
-	int maxx=MIN(omaxx,width-1);
-	int maxy=MIN(omaxy,height-1);
+	int minx=std::max(ominx,0);
+	int miny=std::max(ominy,0);
+	int maxx=std::min(omaxx,width-1);
+	int maxy=std::min(omaxy,height-1);
 	float *cellFormFactor = ff + (lx+ly*width)*RADIOSITY_DIAMETER*RADIOSITY_DIAMETER;
 	// compute the light's contribution
 	#define MIN_FACTOR (1.0f/255.0f)
@@ -240,10 +240,10 @@ void LightMap::computeFormFactor(int x, int y, float *ff, float *ffSum) {
 	int ominy=y-RADIOSITY_RADIUS;
 	int omaxx=x+RADIOSITY_RADIUS;
 	int omaxy=y+RADIOSITY_RADIUS;
-	int minx=MAX(ominx,0);
-	int miny=MAX(ominy,0);
-	int maxx=MIN(omaxx,width-1);
-	int maxy=MIN(omaxy,height-1);
+	int minx=std::max(ominx,0);
+	int miny=std::max(ominy,0);
+	int maxx=std::min(omaxx,width-1);
+	int maxy=std::min(omaxy,height-1);
 	float *cellFormFactor = ff + (x+y*width)*RADIOSITY_DIAMETER*RADIOSITY_DIAMETER;
 	TCODMap *map=gameEngine->dungeon->map2x;
 	map->computeFov(x,y,RADIOSITY_RADIUS);

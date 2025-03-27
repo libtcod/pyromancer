@@ -47,7 +47,7 @@ void AiDirector::setLevelCoef(float coef) {
 	levelCoef=coef;
 	waitTimer=0.0f;
 	float maxHorde=config.getIntProperty("config.aidirector.hordeDelay")* (1.0f-0.5f*coef);
-	hordeTimer=MIN(maxHorde,hordeTimer);
+	hordeTimer=std::min(maxHorde,hordeTimer);
 }
 void AiDirector::update(float elapsed) {
 	static float waveLength=config.getFloatProperty("config.aidirector.waveLength");
@@ -126,7 +126,7 @@ void AiDirector::spawnMiniBoss(Creature *cr, bool withItem) {
 void AiDirector::spawnMiniBosses() {
 	#define MAXNUM 2
 	int level=gameEngine->dungeon->level;
-	level=MIN(MAXNUM,level);
+	level=std::min(MAXNUM,level);
 	int typ=TCODRandom::getInstance()->getInt(0,level);
 	Creature *cr=NULL;
 	switch (typ) {

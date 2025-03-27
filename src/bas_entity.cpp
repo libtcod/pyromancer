@@ -86,8 +86,8 @@ DynamicEntity::CollisionType DynamicEntity::updateMove(float elapsed, float boun
 					//  ##
 					//  ##
 					// .
-					float fdx=ABS(dx);
-					float fdy=ABS(dy);
+					float fdx=std::abs(dx);
+					float fdy=std::abs(dy);
 					if ( fdx >= fdy ) dy=-dy;
 					if ( fdy >= fdx ) dx=-dx;
 				} else if (! xwalk ) {
@@ -107,8 +107,8 @@ DynamicEntity::CollisionType DynamicEntity::updateMove(float elapsed, float boun
 			}
 		} else {
 			// on a walkable cell
-			if ( hitPlayer && ABS(curoldx - (int)gameEngine->player->x) < 2
-					&& ABS(curoldy - (int)gameEngine->player->y) < 2 ) {
+			if ( hitPlayer && std::abs(curoldx - (int)gameEngine->player->x) < 2
+					&& std::abs(curoldy - (int)gameEngine->player->y) < 2 ) {
 				x=oldx;y=oldy;
 				speed=0;
 				return PLAYER;

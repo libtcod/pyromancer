@@ -25,7 +25,7 @@
 */
 #include "main.hpp"
 
-#include <SDL.h>
+#include <SDL3/SDL.h>
 
 EndScreen::EndScreen(const char *txt,float fadeLvl, bool stats)
 	: Screen(fadeLvl),txt(strdup(txt)),noiseZ(0.0f),stats(stats) {
@@ -202,8 +202,8 @@ void EndScreen::renderText(int x,int y, int w, const char *txt) {
 // I'm using the SDL callback to display a picture with a higher resolution than subcell
 // this is cheating but even subcell was too big
 SDL_Surface *TCOD_sys_get_surface(int width, int height, bool alpha) {
-	if (alpha) return SDL_CreateRGBSurfaceWithFormat(0, width, height, 32, SDL_PIXELFORMAT_RGBA32);
-	return SDL_CreateRGBSurfaceWithFormat(0, width, height, 24, SDL_PIXELFORMAT_RGB24);
+	if (alpha) return SDL_CreateSurface(width, height, SDL_PIXELFORMAT_RGBA32);
+	return SDL_CreateSurface(width, height, SDL_PIXELFORMAT_RGB24);
 }
 
 
@@ -240,13 +240,14 @@ void PaperScreen::onFontChange() {
 	int charw,charh;
 	float ratio=(float)(pixh)/pixw;
 	TCODSystem::getCharSize(&charw, &charh);
-	int ridx=surf->format->Rshift/8;
-	int gidx=surf->format->Gshift/8;
-	int bidx=surf->format->Bshift/8;
+	const SDL_PixelFormatDetails* surf_format = SDL_GetPixelFormatDetails(surf->format);
+	const int ridx = surf_format->Rshift / 8;
+	const int gidx = surf_format->Gshift / 8;
+	const int bidx = surf_format->Bshift / 8;
 	for (int y=0; y < pixh; y++) {
 		for (int x=0; x <pixw;x++) {
 			TCODColor col=tcodpix->getPixel(x,y);
-			uint8_t *p = (uint8_t *)surf->pixels + x * surf->format->BytesPerPixel + y * surf->pitch;
+			uint8_t *p = (uint8_t *)surf->pixels + x * surf_format->bytes_per_pixel + y * surf->pitch;
 			p[ridx]=col.r;
 			p[gidx]=col.g;
 			p[bidx]=col.b;
@@ -255,9 +256,9 @@ void PaperScreen::onFontChange() {
 	pixw = CON_W*charw/2;
 	pixh = (int)(CON_W*charw/2*ratio);
 	SDL_Surface *surf2 = TCOD_sys_get_surface(pixw, pixh, false);
-	SDL_SoftStretch(surf, NULL,surf2, NULL);
-	SDL_FreeSurface(surf);
-	if (pix) SDL_FreeSurface(pix);
+	SDL_StretchSurface(surf, NULL,surf2, NULL, SDL_SCALEMODE_NEAREST);
+	SDL_DestroySurface(surf);
+	if (pix) SDL_DestroySurface(pix);
 	pix = surf2;
 	int offx=0,offy=0;
 
@@ -268,8 +269,8 @@ void PaperScreen::onFontChange() {
 	overlaph=offseth=0;
 	int texth=TCODConsole::root->getHeightRect(0,0,50,0,txt) * 2;
 	overlaph = texth + (15 + pixh/charh) - CON_H;
-	overlaph = MAX(0,overlaph);
-	overlaph = MAX(overlaph,paperHeight/2-CON_H);
+	overlaph = std::max(0,overlaph);
+	overlaph = std::max(overlaph,paperHeight/2-CON_H);
 }
 
 

@@ -263,7 +263,7 @@ bool DamageEffect::execute(int x, int y, Creature *cr, Creature *caster, Skill *
 			//new Bubble(cr->x,cr->y-1, cr->isPlayer ? TCODColor::lightRed : TCODColor::lightBlue, "blocked");
 			dmg=0;
 			//cr->curSta+=5;
-			//cr->curSta = MIN(cr->maxSta,cr->curSta);
+			//cr->curSta = std::min(cr->maxSta,cr->curSta);
 		}
 	}
 	if ( dmg > 0 ) {

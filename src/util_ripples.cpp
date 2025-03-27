@@ -213,7 +213,7 @@ bool RippleManager::updateRipples(float elapsed) {
 							zone->data[off] = sum - zone->data[off];
 							// damping
 							zone->data[off] *= 1.0f-DAMPING_COEF/RIPPLE_FPS;
-							if ( ABS(zone->data[off]) > ACTIVE_THRESHOLD ) {
+							if ( std::abs(zone->data[off]) > ACTIVE_THRESHOLD ) {
 								zone->isActive=true;
 								updated=true;
 							}
@@ -249,8 +249,8 @@ bool RippleManager::updateRipples(float elapsed) {
 						}
 					}
 				}
-				fish1->dx=CLAMP(-MAX_FISH_SPEED,MAX_FISH_SPEED,fish1->dx);
-				fish1->dy=CLAMP(-MAX_FISH_SPEED,MAX_FISH_SPEED,fish1->dy);
+				fish1->dx=std::clamp(fish1->dx,-MAX_FISH_SPEED,MAX_FISH_SPEED);
+				fish1->dy=std::clamp(fish1->dy,-MAX_FISH_SPEED,MAX_FISH_SPEED);
 				// fish-scare interaction
 				// TODO can be optimized with fastInvSqrt
 				for (ScarePoint **spit=shoal->scare.begin(); spit != shoal->scare.end(); spit++) {
@@ -263,8 +263,8 @@ bool RippleManager::updateRipples(float elapsed) {
 						fish1->dy -= elapsed*MAX_FISH_SPEED*10*coef*dy/dist;
 					}
 				}
-				fish1->dx=CLAMP(-MAX_FISH_SPEED*2,MAX_FISH_SPEED*2,fish1->dx);
-				fish1->dy=CLAMP(-MAX_FISH_SPEED*2,MAX_FISH_SPEED*2,fish1->dy);
+				fish1->dx=std::clamp(fish1->dx,-MAX_FISH_SPEED*2,MAX_FISH_SPEED*2);
+				fish1->dy=std::clamp(fish1->dy,-MAX_FISH_SPEED*2,MAX_FISH_SPEED*2);
 
 				fish1->slide();
 				assert(gameEngine->dungeon->hasWater(fish1->getSubX(),fish1->getSubY()));
@@ -322,7 +322,7 @@ void RippleManager::renderRipples(TCODImage *ground) {
 						float yOffset=(getData(**it,zx2,zy2-1)-getData(**it,zx2,zy2+1));
 						float f[3] = {static_cast<float>(zx2), static_cast<float>(zy2), elCoef};
 						xOffset+=noise3d.get(f)*0.3f;
-						if ( ABS(xOffset) < 250 && ABS(yOffset) < 250 ) {
+						if ( std::abs(xOffset) < 250 && std::abs(yOffset) < 250 ) {
 							TCODColor col=ground->getPixel(groundx+(int)(xOffset*2),groundy+(int)(yOffset*2));
 							col = col + TCODColor::white*xOffset*0.1f;
 							ground->putPixel(groundx,groundy,col);

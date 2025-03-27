@@ -99,10 +99,10 @@ void IndoorRenderer::renderSubcells() {
 	maxx2x-=2*gameEngine->xOffset;
 	miny2x-=2*gameEngine->yOffset;
 	maxy2x-=2*gameEngine->yOffset;
-	minx2x=MAX(0,minx2x);
-	maxx2x=MIN(CON_W*2-1,maxx2x);
-	miny2x=MAX(0,miny2x);
-	maxy2x=MIN(CON_H*2-1,maxy2x);
+	minx2x=std::max(0,minx2x);
+	maxx2x=std::min(CON_W*2-1,maxx2x);
+	miny2x=std::max(0,miny2x);
+	maxy2x=std::min(CON_H*2-1,maxy2x);
 
 	// shade the 2xground
 	gameEngine->lightMap->applyToImage(gameEngine->ground,minx2x,miny2x,maxx2x,maxy2x);

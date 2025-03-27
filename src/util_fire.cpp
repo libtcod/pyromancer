@@ -45,12 +45,12 @@ Fire::Fire(int w, int h) :w(w),h(h),el(0.0f) {
 	if (! col_init) {
 		int i;
 		for (i=0; i < 128; i++) {
-			fireColor[i].r=MIN(i*3,255);
+			fireColor[i].r=std::min(i*3,255);
 			fireColor[i].g=i*2;
 			fireColor[i].b=i/2;
 			fireColor[i+128].r=255;
 			fireColor[i+128].g=255;
-			fireColor[i+128].b=MIN(64+192*i/128,255);
+			fireColor[i+128].b=std::min(64+192*i/128,255);
 		}
 		col_init=true;
 	}
@@ -79,7 +79,7 @@ void Fire::antispark(int x, int y) {
 
 void Fire::softspark(int x, int y, int delta) {
 	int v = (int)(FIRE_GET(x,y))+delta;
-	v = CLAMP(0,255,v);
+	v = std::clamp(v,0,255);
 	FIRE_SET(x,y,(uint8_t)v);
 }
 
@@ -94,7 +94,7 @@ void Fire::update(float elapsed) {
 	for (x=0; x < w+2; x++) {
 		uint8_t v = TCODRandom::getInstance()->getInt(0,255);
 		buf[ off1 + x ] = v;
-		buf[ off2 + x ] = MAX(v-4,0);
+		buf[ off2 + x ] = std::max(v-4,0);
 	}
 	*/
 	for (int y=1; y < h-1; y++) {
@@ -137,12 +137,12 @@ FireManager::FireManager(Dungeon *dungeon)  : dungeon(dungeon),el(0.0f) {
 	if (! col_init) {
 		int i;
 		for (i=0; i < 128; i++) {
-			fireColor[i].r=MIN(i*3,255);
+			fireColor[i].r=std::min(i*3,255);
 			fireColor[i].g=i*2;
 			fireColor[i].b=i/2;
 			fireColor[i+128].r=255;
 			fireColor[i+128].g=255;
-			fireColor[i+128].b=MIN(64+192*i/128,255);
+			fireColor[i+128].b=std::min(64+192*i/128,255);
 		}
 		col_init=true;
 	}
@@ -162,16 +162,16 @@ void FireManager::antispark(int x, int y) {
 
 void FireManager::softspark(int x, int y, int delta) {
 	int v = (int)(get(x,y))+delta;
-	v = CLAMP(0,255,v);
+	v = std::clamp(v,0,255);
 	set(x,y,(uint8_t)v);
 }
 
 void FireManager::addZone(int x,int y, int w, int h) {
 	FireZone z;
-	x = MAX(0,x);
-	y = MAX(0,y);
-	w = MIN(dungeon->width*2-1-x,w);
-	h = MIN(dungeon->height*2-1-y,h);
+	x = std::max(0,x);
+	y = std::max(0,y);
+	w = std::min(dungeon->width*2-1-x,w);
+	h = std::min(dungeon->height*2-1-y,h);
 	z.r=Rect(x,y,w,h);
 	z.life=-1.0f;
 	zones.push(z);
@@ -243,7 +243,7 @@ void FireManager::update(float elapsed) {
 				for ( int y = (int)(z->r.y+z->r.h-3); y < (int)(z->r.y+z->r.h-1); y++ ) {
 					int v = TCODRandom::getInstance()->getInt(24,64);
 					//v += buf[x+y*dungeon->width*2];
-					//v = MIN(255,v);
+					//v = std::min(255,v);
 					if ( v >= prob ) buf[x+y*dungeon->width*2]=v;
 				}
 			}
@@ -251,10 +251,10 @@ void FireManager::update(float elapsed) {
 	}
 	// update fire
 	if ( screenFireZone.w > screenFireZone.x ) {
-		screenFireZone.x = MAX(1,screenFireZone.x);
-		screenFireZone.y = MAX(1,screenFireZone.y);
-		screenFireZone.w = MIN(dungeon->width*2-2,screenFireZone.w);
-		screenFireZone.h = MIN(dungeon->height*2-2,screenFireZone.h);
+		screenFireZone.x = std::max<float>(1,screenFireZone.x);
+		screenFireZone.y = std::max<float>(1,screenFireZone.y);
+		screenFireZone.w = std::min(dungeon->width*2-2,screenFireZone.w);
+		screenFireZone.h = std::min(dungeon->height*2-2,screenFireZone.h);
 		for ( int x = (int)screenFireZone.x; x < screenFireZone.w; x++ ) {
 			for ( int y = (int)screenFireZone.y; y < screenFireZone.h; y++ ) {
 				int x2 = x + TCODRandom::getInstance()->getInt(-1,1);
@@ -289,7 +289,7 @@ void FireManager::update(float elapsed) {
 	for (x=0; x < w+2; x++) {
 		uint8_t v = TCODRandom::getInstance()->getInt(0,255);
 		buf[ off1 + x ] = v;
-		buf[ off2 + x ] = MAX(v-4,0);
+		buf[ off2 + x ] = std::max(v-4,0);
 	}
 	*/
 }
@@ -297,10 +297,10 @@ void FireManager::update(float elapsed) {
 void FireManager::renderFire(TCODImage *ground) {
 	int dx=gameEngine->xOffset*2;
 	int dy=gameEngine->yOffset*2;
-	screenFireZone.x = MAX(dx,screenFireZone.x);
-	screenFireZone.y = MAX(dy,screenFireZone.y);
-	screenFireZone.w = MIN(dungeon->width*2+dx,screenFireZone.w);
-	screenFireZone.h = MIN(dungeon->height*2+dy,screenFireZone.h);
+	screenFireZone.x = std::max<float>(dx,screenFireZone.x);
+	screenFireZone.y = std::max<float>(dy,screenFireZone.y);
+	screenFireZone.w = std::min(dungeon->width*2+dx,screenFireZone.w);
+	screenFireZone.h = std::min(dungeon->height*2+dy,screenFireZone.h);
 	for ( int x = (int)screenFireZone.x; x < screenFireZone.w; x++ ) {
 		for ( int y = (int)screenFireZone.y; y < screenFireZone.h; y++ ) {
 			uint8_t v=get(x,y);

@@ -394,7 +394,7 @@ bool Skill::update(float elapsed) {
 			/*
 			if ( type->staminaCost < 0 ) {
 				caster->curSta -= type->staminaCost;
-				caster->curSta = MIN(caster->maxSta,caster->curSta);
+				caster->curSta = std::min(caster->maxSta,caster->curSta);
 			}
 			*/
 			if (type->flags & SkillType::ONOFF) {
@@ -414,7 +414,7 @@ bool Skill::update(float elapsed) {
 				float coef=(1.0f-castTime/type->castTime);
 				if (isOn) coef = 1.0f-coef;
 				caster->light->range = (fx->light.range-gameEngine->player->noLight.range) * coef+gameEngine->player->noLight.range;
-				caster->light->color=(TCODColor)(fx->light.color)*MIN(1.0f,coef+0.2f);
+				caster->light->color=(TCODColor)(fx->light.color)*std::min(1.0f,coef+0.2f);
 			}
 		}
 	} else if ( castTime < 0.0f ) {
@@ -434,7 +434,7 @@ bool Skill::cast() {
 
 	// check conditions
 	// combo ?
-	if ( castTime < 0.0f && ABS(-castTime-type->reloadTime/2) < comboDelay && type->hasEffect(Effect::DAMAGE) ) {
+	if ( castTime < 0.0f && std::abs(-castTime-type->reloadTime/2) < comboDelay && type->hasEffect(Effect::DAMAGE) ) {
 		combo = true;
 		castTime=0.0f;
 	} else if ( castTime != 0.0f ) return false; // already casting or reloading
@@ -443,8 +443,8 @@ bool Skill::cast() {
 	//if ( type->staminaCost > caster->curSta ) return false; // not enough stamina
 	if ( type->targetType == SkillType::OPPONENT && target == NULL ) return false; // no target selected
 	if ( type->targetType == SkillType::OPPONENT ) {
-		if ( ABS(target->x - caster->x) > 1 ) return false; // target too far away
-		if ( ABS(target->y - caster->y) > 1 ) return false; // target too far away
+		if ( std::abs(target->x - caster->x) > 1 ) return false; // target too far away
+		if ( std::abs(target->y - caster->y) > 1 ) return false; // target too far away
 	}
 	// TODO
 	/*
@@ -545,8 +545,8 @@ bool Skill::execute() {
 	if ( type->targetType == SkillType::CASTER ) {
 		if (executeOnTarget(caster) ) return true;
 	} else if ( type->targetType == SkillType::OPPONENT ) {
-		if ( ABS(target->x - caster->x) > 2 ) return true; // target too far away
-		if ( ABS(target->y - caster->y) > 2 ) return true; // target too far away
+		if ( std::abs(target->x - caster->x) > 2 ) return true; // target too far away
+		if ( std::abs(target->y - caster->y) > 2 ) return true; // target too far away
 		if (executeOnTarget(target)) return true;
 	} else if ( type->targetType >= SkillType::RANGE1 && type->targetType <= SkillType::RANGE3 ) {
 		// range 1 creatures

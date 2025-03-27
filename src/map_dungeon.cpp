@@ -155,9 +155,9 @@ Dungeon::Dungeon(int level, CaveGenerator *caveGen) : level(level), ambient(TCOD
 		for (int y=0; y< height*2; y++) {
 			SubCell *sc=getSubCell(x,y);
 			HDRColor col=temp->getHdrColor2x(x,y);
-			sc->r = MIN(255.0f,col.r);
-			sc->g = MIN(255.0f,col.g);
-			sc->b = MIN(255.0f,col.b);
+			sc->r = std::min(255.0f,col.r);
+			sc->g = std::min(255.0f,col.g);
+			sc->b = std::min(255.0f,col.b);
 
 		}
 	}
@@ -204,7 +204,7 @@ void Dungeon::finalizeMap(bool roundCorners, bool blurGround) {
 
 	// generate ground image
     float noiseDepth = 0.05f * (level-1);
-    noiseDepth = MIN(0.3f, noiseDepth);
+    noiseDepth = std::min(0.3f, noiseDepth);
 	for (int x=0; x < width*2; x++) {
 		for (int y=0; y < height*2; y++) {
 		    if (map2x->isTransparent(x,y)) {
@@ -369,10 +369,10 @@ void Dungeon::getClosestWalkable(int *x, int *y, bool includingStairs, bool incl
 		int maxx=*x + range;
 		int miny=*y - range;
 		int maxy=*y + range;
-		minx=MAX(0,minx);
-		miny=MAX(0,miny);
-		maxx=MIN(width-1,maxx);
-		maxy=MIN(height-1,maxy);
+		minx=std::max(0,minx);
+		miny=std::max(0,miny);
+		maxx=std::min(width-1,maxx);
+		maxy=std::min(height-1,maxy);
 		for (int cx=minx; cx <= maxx; cx++) {
 			for (int cy=miny; cy <= maxy; cy++) {
 				if ( map->isWalkable(cx,cy)
@@ -415,7 +415,7 @@ TCODColor Dungeon::getShadedGroundColor(int x2, int y2, LightMap *lightmap) cons
 	if (! useLightMap) {
 		// natural ground shadow (tree, house,...)
 		float intensity = getShadow(x2,y2);
-		intensity=MIN(intensity,cloudIntensity);
+		intensity=std::min(intensity,cloudIntensity);
 		if ( intensity < 1.0f ) {
 			col = col * intensity;
 		}
@@ -480,7 +480,7 @@ void Dungeon::getClosestSpawnSource(int x,int y, int *ssx, int *ssy) const {
 	}
 	*/
 	// return one of the 3 bests
-	int b=TCODRandom::getInstance()->getInt(1,MIN(3,bests.size()));
+	int b=TCODRandom::getInstance()->getInt(1,std::min(3,bests.size()));
 	int best=bests.get(bests.size()-b);
 	*ssx=best&0xFFFF;
 	*ssy=best>>16;
@@ -915,10 +915,10 @@ void Dungeon::computeFov(int x, int y) {
 	int maxx=gameEngine->xOffset+CON_W-1;
 	int maxy=gameEngine->yOffset+CON_H-1;
 	// clamp if to the dungeon map
-	minx=MAX(0,minx);
-	miny=MAX(0,miny);
-	maxx=MIN(width-1,maxx);
-	maxy=MIN(height-1,maxy);
+	minx=std::max(0,minx);
+	miny=std::max(0,miny);
+	maxx=std::min(width-1,maxx);
+	maxy=std::min(height-1,maxy);
 	for (int cx=minx; cx <= maxx; cx++) {
 		for (int cy=miny; cy <= maxy; cy++) {
 			map->setInFov(cx,cy,map2x->isInFov(cx*2,cy*2)

@@ -223,17 +223,17 @@ void Inventory::render() {
 				if (( owner && action->onInventory() )
 					|| (container && action->onLoot() ) ) {
 					cmenuheight++;
-					cmenuwidth = MAX(cmenuwidth,(int)strlen(action->name)+2);
+					cmenuwidth = std::max(cmenuwidth,(int)strlen(action->name)+2);
 					if ( *id == ITEM_ACTION_TAKE && item->count > 1 ) {
 						// add one entry for 'Take all'
 						cmenuheight++;
 						ItemAction *takeAll=ItemAction::getFromId(ITEM_ACTION_TAKE_ALL);
-						cmenuwidth = MAX(cmenuwidth,(int)strlen(takeAll->name)+2);
+						cmenuwidth = std::max(cmenuwidth,(int)strlen(takeAll->name)+2);
 					} else if ( *id == ITEM_ACTION_DROP && item->count > 1 ) {
 						// add one entry for 'Drop all'
 						cmenuheight++;
 						ItemAction *dropAll=ItemAction::getFromId(ITEM_ACTION_DROP_ALL);
-						cmenuwidth = MAX(cmenuwidth,(int)strlen(dropAll->name)+2);
+						cmenuwidth = std::max(cmenuwidth,(int)strlen(dropAll->name)+2);
 					}
 				}
 			}
@@ -562,7 +562,7 @@ bool Inventory::update(float elapsed, TCOD_key_t &k, TCOD_mouse_t &mouse) {
 					newItem->dx=dx;
 					newItem->dy=dy;
 					newItem->speed=1.0f/(invLength*1.5f);
-					newItem->speed=MIN(12.0f,newItem->speed);
+					newItem->speed=std::min(12.0f,newItem->speed);
 					newItem->duration = 1.5f;
 					dungeon->addItem(newItem);
 					if ( owner ) initialize(owner);

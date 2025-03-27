@@ -241,9 +241,9 @@ bool ItemFeatureAttack::update(float elapsed, TCOD_mouse_t *mouse, Item *it) {
 				it->targety=dy;
 				if ( !mouse->lbutton ) {
 					// fire when mouse button released
-					it->phaseTimer=MAX(it->phaseTimer,0.0f);
+					it->phaseTimer=std::max(it->phaseTimer,0.0f);
 					float ispeed=(it->castDelay-it->phaseTimer)/it->castDelay;
-					it->speed=MIN(ispeed,1.0f);
+					it->speed=std::min(ispeed,1.0f);
 					it->phase=RELOAD;
 					it->phaseTimer=it->reloadDelay;
 					if ( (int)it->targetx == (int)it->owner->x && (int)it->targety == (int)it->owner->y ) return true;
@@ -282,7 +282,7 @@ bool ItemFeatureAttack::update(float elapsed, TCOD_mouse_t *mouse, Item *it) {
 			it->targetx=dx;
 			it->targety=dy;
 			attackCoef=1.0f ; //+((Player *)it->owner)->lbuttonDelay/longSpellDelay;
-			attackCoef=MIN(2.0f,attackCoef);
+			attackCoef=std::min(2.0f,attackCoef);
 			((Player *)it->owner)->lbuttonDelay=0.0f;
 //printf ("delay %g coef %g\n",((Player *)owner)->lbuttonDelay,attackCoef);
 		}
@@ -423,8 +423,8 @@ bool ItemFeatureExplodeOnBounce::update(float elapsed, TCOD_mouse_t *mouse, Item
 	if ( it->phaseTimer < 0.0f ) {
 		// apply effects to all creatures in range
 		if ( effects.size() > 0 ) {
-			float maxRange=MAX(startRange,middleRange);
-			maxRange=MAX(maxRange,endRange);
+			float maxRange=std::max(startRange,middleRange);
+			maxRange=std::max(maxRange,endRange);
 			Dungeon *dungeon=gameEngine->dungeon;
 			Player *player=gameEngine->player;
 			TCODList<Creature *> creatures;

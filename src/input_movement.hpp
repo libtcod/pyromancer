@@ -2,7 +2,7 @@
 #include <array>
 #include <tuple>
 
-#include <SDL.h>
+#include <SDL3/SDL_events.h>
 
 /// @brief Simple mapping of movement keys to directions.
 struct MoveKey {

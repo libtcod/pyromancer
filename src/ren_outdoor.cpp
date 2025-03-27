@@ -50,7 +50,7 @@ void OutdoorRenderer::renderSubcells() {
 			gameEngine->ground->putPixel(x,y,col);
 			float intensity = dungeon->getShadow(dungeon2x,dungeon2y);
 			float cloudIntensity = dungeon->getInterpolatedCloudCoef(dungeon2x,dungeon2y);
-			intensity=MIN(intensity,cloudIntensity);
+			intensity=std::min(intensity,cloudIntensity);
 			TCODColor lightCol=dungeon->getAmbient() ;
 			if ( intensity < 1.0f ) {
 				lightCol = lightCol * intensity;

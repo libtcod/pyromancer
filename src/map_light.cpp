@@ -44,26 +44,26 @@ void Light::add(LightMap *l, TCODImage *img, bool withFov) {
 	int xOffset=gameEngine->xOffset*2;
 	int yOffset=gameEngine->yOffset*2;
 	// clamp it to the dungeon
-	minx=MAX(0,minx);
-	miny=MAX(0,miny);
-	maxx=MIN(gameEngine->dungeon->width*2-1,maxx);
-	maxy=MIN(gameEngine->dungeon->height*2-1,maxy);
+	minx=std::max(0,minx);
+	miny=std::max(0,miny);
+	maxx=std::min(gameEngine->dungeon->width*2-1,maxx);
+	maxy=std::min(gameEngine->dungeon->height*2-1,maxy);
 	// convert it to lightmap (console x2) coordinates
 	minx-=xOffset;
 	maxx-=xOffset;
 	miny-=yOffset;
 	maxy-=yOffset;
 	// clamp it to the lightmap
-	minx=MAX(0,minx);
-	miny=MAX(0,miny);
+	minx=std::max(0,minx);
+	miny=std::max(0,miny);
 	if ( l ) {
-		maxx=MIN(l->width-1,maxx);
-		maxy=MIN(l->height-1,maxy);
+		maxx=std::min(l->width-1,maxx);
+		maxy=std::min(l->height-1,maxy);
 	} else {
 		int iw,ih;
 		img->getSize(&iw,&ih);
-		maxx=MIN(iw-1,maxx);
-		maxy=MIN(ih-1,maxy);
+		maxx=std::min(iw-1,maxx);
+		maxy=std::min(ih-1,maxy);
 	}
 
 	int fovmap_width=maxx-minx;
@@ -122,7 +122,7 @@ void Light::add(LightMap *l, TCODImage *img, bool withFov) {
 							rad=1.0f-coef;
 						} else {
 							rad=crange/squaredRangeRnd;
-							rad=MIN(1.0f,rad);
+							rad=std::min(1.0f,rad);
 							coef=1.0f - rad;
 						}
 					} else {
@@ -131,7 +131,7 @@ void Light::add(LightMap *l, TCODImage *img, bool withFov) {
 							rad = 1.0f-coef;
 						} else {
 							rad=crange/squaredRange;
-							rad=MIN(1.0f,rad);
+							rad=std::min(1.0f,rad);
 							coef=1.0f - rad;
 						}
 					}
@@ -153,9 +153,9 @@ void Light::add(LightMap *l, TCODImage *img, bool withFov) {
 							break;
 							case MODE_MAX:
 								col = col * coef;
-								prevCol.r = MAX(prevCol.r,col.r);
-								prevCol.g = MAX(prevCol.g,col.g);
-								prevCol.b = MAX(prevCol.b,col.b);
+								prevCol.r = std::max(prevCol.r,col.r);
+								prevCol.g = std::max(prevCol.g,col.g);
+								prevCol.b = std::max(prevCol.b,col.b);
 							break;
 							}
 							l->setColor2x(cx+minx,cy+miny,prevCol);
@@ -166,9 +166,9 @@ void Light::add(LightMap *l, TCODImage *img, bool withFov) {
 							case MODE_ADD:	prevCol = prevCol+col;break;
 							case MODE_MUL:	prevCol = prevCol*col;break;
 							case MODE_MAX:
-								prevCol.r = MAX(prevCol.r,col.r);
-								prevCol.g = MAX(prevCol.g,col.g);
-								prevCol.b = MAX(prevCol.b,col.b);
+								prevCol.r = std::max(prevCol.r,col.r);
+								prevCol.g = std::max(prevCol.g,col.g);
+								prevCol.b = std::max(prevCol.b,col.b);
 							break;
 							}
 							img->putPixel(cx+minx,cy+miny,prevCol);

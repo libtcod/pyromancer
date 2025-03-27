@@ -150,7 +150,7 @@ void Player::render(LightMap *lightMap) {
 	if ( lbuttonDelay> longButtonDelay || rbuttonDelay>longButtonDelay ) {
 		// spell charging progress bar
 		int barLength=0;
-		float delay=MAX(rbuttonDelay,lbuttonDelay);
+		float delay=std::max(rbuttonDelay,lbuttonDelay);
 		if ( delay >= longSpellDelay ) {
 			barLength=3;
 		} else barLength=1+(int)((delay-longButtonDelay)*1.99/(longSpellDelay-longButtonDelay));
@@ -171,7 +171,7 @@ void Player::render(LightMap *lightMap) {
 			static TCODImage sprintBar(10,2);
 			for (int x=0; x < 10; x++ ) {
 				float coef = ( x * 0.1f - sprintCoef ) * 5;
-				coef=CLAMP(0.0f,1.0f,coef);
+				coef=std::clamp(coef,0.0f,1.0f);
 				TCODColor col=TCODColor::lerp(TCODColor::blue,TCODColor::white,coef);
 				sprintBar.putPixel(x,0,col);
 				sprintBar.putPixel(x,1,col);
@@ -185,7 +185,7 @@ void Player::render(LightMap *lightMap) {
 		static TCODImage stealthBar(2,10);
 		for (int y=0; y < 10; y++ ) {
 			float coef=(y*0.1f - stealth )* 5;
-			coef=CLAMP(0.0f,1.0f,coef);
+			coef=std::clamp(coef,0.0f,1.0f);
 			TCODColor col=TCODColor::lerp(TCODColor::white,TCODColor::darkViolet,coef);
 			stealthBar.putPixel(0,y,col);
 			stealthBar.putPixel(1,y,col);
@@ -246,14 +246,14 @@ void Player::computeStealth(float elapsed) {
 	Dungeon *dungeon=gameEngine->dungeon;
 	float shadow = dungeon->getShadow(x*2,y*2);
 	float cloud = dungeon->getCloudCoef(x*2,y*2);
-	shadow = MIN(shadow,cloud);
+	shadow = std::min(shadow,cloud);
 	// increase shadow. TODO should be in outdoor only!
 	float shadowcoef = crouch ? 4.0f : 2.0f;
 	shadow = 1.0f - shadowcoef*(1.0f-shadow);
 	stealth -= (stealth-shadow) * elapsed;
 	float speedcoef = crouch ? 0.6f : 1.0f;
 	stealth += speedcoef * averageSpeed * elapsed * 0.1f;
-	stealth = CLAMP(0.0f,3.0f,stealth);
+	stealth = std::clamp(stealth,0.0f,3.0f);
 //printf ("shadow %g stealth %g\n",shadow,stealth);
 }
 
@@ -376,9 +376,9 @@ bool Player::update(float elapsed, TCOD_key_t key,TCOD_mouse_t *mouse) {
 	if ( frozen && ( tryToMove || mouse->lbutton_pressed ) ) {
 		// wriggle to reduce frozen length
 		frozen->duration -= 0.1f;
-		frozen->duration=MAX(0.0001f,frozen->duration);
+		frozen->duration=std::max(0.0001f,frozen->duration);
 	}
-	if ( !isStunned && mouse->lbutton_pressed && ABS(dungeonx-x) <= 1 && ABS(dungeony-y) <= 1 ) {
+	if ( !isStunned && mouse->lbutton_pressed && std::abs(dungeonx-x) <= 1 && std::abs(dungeony-y) <= 1 ) {
 		// click on the player or near him in water=ripples
 		if ( mouse->lbutton_pressed && dungeon->hasRipples(dungeonx,dungeony) ) gameEngine->startRipple(dungeonx,dungeony);
 		if ( dungeonx != x || dungeony != y ) {
@@ -419,7 +419,7 @@ bool Player::update(float elapsed, TCOD_key_t key,TCOD_mouse_t *mouse) {
 	float maxInvSpeed=1.0f/getType()->getSpeed();
 	if ( isSprinting && sprintDelay> 0.0f && sprintDelay < sprintLength ) {
 		float sprintCoef=1.0f - 4*(sprintLength-sprintDelay)/sprintLength;
-		sprintCoef=MAX(MIN_SPRINT_COEF,sprintCoef);
+		sprintCoef=std::max(MIN_SPRINT_COEF,sprintCoef);
 		maxInvSpeed *= sprintCoef;
 	}
 	if (hasCondition(ConditionType::CRIPPLED)) {

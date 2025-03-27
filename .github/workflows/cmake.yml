@@ -34,6 +34,8 @@ jobs:
             triplet: x64-linux
             platform-name: linux.x64
             butler-url: https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default
+            # libltdl-dev needed to build libxcrypt sub-dependency, others needed for sdl3
+            apt-packages: libltdl-dev libx11-dev libxft-dev libxext-dev libwayland-dev libxkbcommon-dev libegl1-mesa-dev libibus-1.0-dev
 
     env:
       # Indicates the CMake build directory where project files and binaries are being produced.
@@ -41,6 +43,9 @@ jobs:
       archive-name:
 
     steps:
+      - name: Install APT packages
+        if: matrix.apt-packages
+        run: sudo apt-get install ${{ matrix.apt-packages }}
       # fetch-depth=0 and v1 are needed for 'git describe' to work correctly.
       - uses: actions/checkout@v4
         with:

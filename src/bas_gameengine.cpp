@@ -96,10 +96,10 @@ void GameEngine::recomputeCanopy(Item *it) {
 		if (it) {
 			// reset only for one tree
 			Rect r(it->x*2-treeRadius-1,it->y*2-treeRadius-1,treeRadius*2+2,treeRadius*2+2);
-			r.x=MAX(0,r.x);
-			r.y=MAX(0,r.y);
-			r.w=(int)MIN(dungeon->width*2-1-r.x,r.w);
-			r.h=(int)MIN(dungeon->height*2-1-r.y,r.h);
+			r.x=std::max(0.0f,r.x);
+			r.y=std::max(0.0f,r.y);
+			r.w=std::min<int>(dungeon->width * 2 - 1 - r.x, r.w);
+			r.h=std::min<int>(dungeon->height * 2 - 1 - r.y, r.h);
 			for (int x=(int)r.x; x < (int)(r.x+r.w); x++) {
 				for (int y=(int)r.y; y < (int)(r.y+r.h); y++) {
 					if ( IN_RECTANGLE(x,y,dungeon->width*2,dungeon->height*2)) {
@@ -186,7 +186,7 @@ void GameEngine::computeAspectRatio() {
 void GameEngine::hitFlash() {
 	static float hitFlashDelay=config.getFloatProperty("config.display.hitFlashDelay");
 	hitFlashAmount+=hitFlashDelay;
-	hitFlashAmount=MIN(5*hitFlashDelay,hitFlashAmount);
+	hitFlashAmount=std::min(5*hitFlashDelay,hitFlashAmount);
 }
 
 TCODColor GameEngine::setSepia(const TCODColor &col, float coef) {

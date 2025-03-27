@@ -985,11 +985,11 @@ Item *Item::getRandomWeapon(const char *typeName,ItemClass itemClass) {
         switch(modType) {
             case MOD_RELOAD :
                 weapon->reloadDelay -= rng->getFloat(0.05f, MAX_RELOAD_BONUS);
-                weapon->reloadDelay = MAX(0.1f,weapon->reloadDelay);
+                weapon->reloadDelay = std::max(0.1f,weapon->reloadDelay);
             break;
             case MOD_CAST :
                 weapon->castDelay -= rng->getFloat(0.05f, MAX_CAST_BONUS);
-                weapon->castDelay = MAX(0.1f,weapon->reloadDelay);
+                weapon->castDelay = std::max(0.1f,weapon->reloadDelay);
             break;
             case MOD_MODIFIER :
                 ItemModifierId id=(ItemModifierId)0;
@@ -1007,7 +1007,7 @@ Item *Item::getRandomWeapon(const char *typeName,ItemClass itemClass) {
         }
 	}
 	weapon->damages += weapon->damages * (int)(itemClass)*0.2f; // 20% increase per color level
-	weapon->damages = MIN(1.0f,weapon->damages);
+	weapon->damages = std::min(1.0f,weapon->damages);
 	// build components
 	weapon->generateComponents();
     return weapon;
@@ -1308,8 +1308,8 @@ void Item::renderGenericDescription(int x, int y, bool below, bool frame) {
 		float maxDamages = 15 * (featAttack->maxCastDelay + featAttack->maxReloadDelay ) * featAttack->maxDamagesCoef;
     	minDamages += minDamages * (int)(itemClass)*0.2f;
     	maxDamages += maxDamages * (int)(itemClass)*0.2f;
-    	minDamages=(int)MIN(1.0f,minDamages);
-    	maxDamages=(int)MIN(1.0f,maxDamages);
+    	minDamages=std::min<int>(1.0f,minDamages);
+    	maxDamages=std::min<int>(1.0f,maxDamages);
 
 		if ( minDamages != maxDamages ) {
 			descCon->print(CON_W/4,cy++,"%d-%d damages/hit", (int)minDamages,(int)maxDamages);
@@ -1530,8 +1530,8 @@ bool Item::update(float elapsed, TCOD_key_t key, TCOD_mouse_t *mouse) {
 						//  ##
 						//  ##
 						// .
-						float fdx=ABS(dx);
-						float fdy=ABS(dy);
+						float fdx=std::abs(dx);
+						float fdy=std::abs(dy);
 						if ( fdx >= fdy ) dy=-dy;
 						if ( fdy >= fdx ) dx=-dx;
 					} else if (! xwalk ) {
@@ -1552,8 +1552,8 @@ bool Item::update(float elapsed, TCOD_key_t key, TCOD_mouse_t *mouse) {
 			} else {
 				ItemFeatureAttack *feat=(ItemFeatureAttack *)getFeature(ItemFeature::ATTACK);
 				if ( feat ) {
-					if (!owner->isPlayer() && ABS(curoldx - (int)gameEngine->player->x) < 2
-						&& ABS(curoldy - (int)gameEngine->player->y) < 2 ) {
+					if (!owner->isPlayer() && std::abs(curoldx - (int)gameEngine->player->x) < 2
+						&& std::abs(curoldy - (int)gameEngine->player->y) < 2 ) {
 							// a projectile hits the player
 							gameEngine->player->takeDamage(TCODRandom::getInstance()->getFloat(feat->minDamagesCoef,feat->maxDamagesCoef));
 							x=oldx;y=oldy;

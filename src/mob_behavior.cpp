@@ -74,8 +74,8 @@ bool WalkBehavior::update(Creature *crea, float elapsed) {
 				destx = (int)(crea->x+TCODRandom::getInstance()->getInt(-15,15));
 				desty = (int)(crea->y+TCODRandom::getInstance()->getInt(-15,15));
 			}
-			destx=CLAMP(0,gameEngine->dungeon->width-1,destx);
-			desty=CLAMP(0,gameEngine->dungeon->height-1,desty);
+			destx=std::clamp(destx,0,gameEngine->dungeon->width-1);
+			desty=std::clamp(desty,0,gameEngine->dungeon->height-1);
 			gameEngine->dungeon->getClosestWalkable(&destx,&desty,true,true);
 			if (! crea->path) {
 				crea->path=new TCODPath(gameEngine->dungeon->width,gameEngine->dungeon->height,walkPattern,gameEngine);
@@ -97,8 +97,8 @@ bool FollowBehavior::update(Creature *crea, float elapsed) {
 			// go near the leader
 			int destx = (int)(leader->x + TCODRandom::getInstance()->getInt(-FOLLOW_DIST,FOLLOW_DIST));
 			int desty = (int)(leader->y + TCODRandom::getInstance()->getInt(-FOLLOW_DIST,FOLLOW_DIST));
-			destx=CLAMP(0,dungeon->width-1,destx);
-			desty=CLAMP(0,dungeon->height-1,desty);
+			destx=std::clamp(destx,0,dungeon->width-1);
+			desty=std::clamp(desty,0,dungeon->height-1);
 			dungeon->getClosestWalkable(&destx,&desty,true,true,false);
 			if (! crea->path) {
 				crea->path=new TCODPath(dungeon->width,dungeon->height,walkPattern,NULL);
@@ -159,8 +159,8 @@ bool HerdBehavior::update(Creature *crea1, float elapsed) {
 	}
 
 	float speed=crea1->getType()->getSpeed();
-	crea1->dx=CLAMP(-speed,speed,crea1->dx);
-	crea1->dy=CLAMP(-speed,speed,crea1->dy);
+	crea1->dx=std::clamp(crea1->dx,-speed,speed);
+	crea1->dy=std::clamp(crea1->dy,-speed,speed);
 	// interaction with scare points
 	for (ScarePoint **spit=scare.begin(); spit != scare.end(); spit++) {
 		float dx = (*spit)->x - crea1->x;
@@ -172,14 +172,14 @@ bool HerdBehavior::update(Creature *crea1, float elapsed) {
 			crea1->dy -= elapsed*speed*10*coef*dy*dist;
 		}
 	}
-	crea1->dx=CLAMP(-speed*2,speed*2,crea1->dx);
-	crea1->dy=CLAMP(-speed*2,speed*2,crea1->dy);
+	crea1->dx=std::clamp(crea1->dx,-speed*2,speed*2);
+	crea1->dy=std::clamp(crea1->dy,-speed*2,speed*2);
 
 	float newx=crea1->x+crea1->dx;
 	float newy=crea1->y+crea1->dy;
 	Dungeon *dungeon=gameEngine->dungeon;
-	newx=CLAMP(0.0, dungeon->width-1,newx);
-	newy=CLAMP(0.0, dungeon->height-1,newy);
+	newx=std::clamp<float>(newx, 0.0f, dungeon->width-1);
+	newy=std::clamp<float>(newy, 0.0f, dungeon->height-1);
 	crea1->walkTimer+=elapsed;
 	if ((int)crea1->x != (int)newx
 		|| (int)crea1->y != (int)newy ) {
@@ -240,8 +240,8 @@ bool AttackOnSee::update(Creature *crea, float elapsed) {
 		}
 		crea->walk(elapsed);
 	}
-	float dx=ABS(game->player->x-crea->x);
-	float dy=ABS(game->player->y-crea->y);
+	float dx=std::abs(game->player->x-crea->x);
+	float dy=std::abs(game->player->y-crea->y);
 	if ( dx <= 1.0f && dy <= 1.0f ) {
 		// at melee range. attack
 		crea->attack(game->player,elapsed);

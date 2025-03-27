@@ -8,6 +8,6 @@
       "name": "libtcod",
       "features": ["threads"]
     },
-    "sdl2"
+    "sdl3"
   ]
 }

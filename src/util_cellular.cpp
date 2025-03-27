@@ -234,10 +234,10 @@ bool CellularAutomata::CAFunc_dig(int x, int y, void *userData) {
 }
 
 void CellularAutomata::setRange(int minx,int miny, int maxx,int maxy) {
-	this->minx=MAX(0,minx);
-	this->miny=MAX(0,miny);
-	this->maxx=MIN(w-1,maxx);
-	this->maxy=MIN(h-1,maxy);
+	this->minx=std::max(0,minx);
+	this->miny=std::max(0,miny);
+	this->maxx=std::min(w-1,maxx);
+	this->maxy=std::min(h-1,maxy);
 }
 
 CellularAutomata::CellularAutomata(CellularAutomata *c1, CellularAutomata *c2, float morphCoef) {

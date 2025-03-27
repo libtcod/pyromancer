@@ -100,7 +100,7 @@ void Logger::render() {
 		blitSemiTransparent(con,0,0,maximizedRect.w,maximizedRect.h,TCODConsole::root,maximizedRect.x,maximizedRect.y,0.8f,1.0f);
 		/*
 		int nbMessages = messages.size();
-		int nbDisplayed = MIN(CON_H-1,nbMessages-offset);
+		int nbDisplayed = std::min(CON_H-1,nbMessages-offset);
 		if ( nbMessages > 0 ) {
 			y = CON_H-nbDisplayed;
 			blitTransparent(con,0,0,maximizedRect.w,maximizedRect.h,TCODConsole::root,maximizedRect.x,maximizedRect.y);
@@ -109,7 +109,7 @@ void Logger::render() {
 				int firstDisplayed = nbMessages - offset - nbDisplayed;
 				int start = ((CON_H-1) * firstDisplayed)/nbMessages;
 				int end = (CON_H * (firstDisplayed + nbDisplayed))/nbMessages;
-				end=MIN(CON_H-1,end);
+				end=std::min(CON_H-1,end);
 				if ( start > 0 ) darken(maximizedRect.x+LOG_WIDTH-1,0,1,start,0.5f);
 				if ( end+1 < CON_H ) darken(maximizedRect.x+LOG_WIDTH-1,end+1,1,CON_H-1-end,0.5f);
 				lighten(maximizedRect.x+LOG_WIDTH-2,start,2,end-start+1,focus || drag ? 0.5f : 0.25f);
@@ -122,12 +122,12 @@ void Logger::render() {
 	    int ry=0, dy=0,count=0;
 	    if (rect.y == 0 ) {
 	        y=0;
-	        count=MIN(rect.h,nbActive);
+	        count=std::min(rect.h,nbActive);
 	        it=messages.end()-1;
 	        dy=-1;
 	        ry=0;
 	    } else {
-            y = MAX(0,rect.h-nbActive);
+            y = std::max(0,rect.h-nbActive);
             ry = rect.y+y;
             count=rect.h-y;
             dy=1;
@@ -186,32 +186,32 @@ bool Logger::update(float elapsed, TCOD_key_t &k, TCOD_mouse_t &mouse) {
 		&& ! lookOn
 		&& !gameEngine->isGamePaused() ) ) {
 		titleBarAlpha+=elapsed;
-		titleBarAlpha=MIN(1.0f,titleBarAlpha);
+		titleBarAlpha=std::min(1.0f,titleBarAlpha);
 	} else if ( !isDragging ) {
 		titleBarAlpha-=elapsed;
-		titleBarAlpha=MAX(0.0f,titleBarAlpha);
+		titleBarAlpha=std::max(0.0f,titleBarAlpha);
 	}
 
 	Message **it=NULL;
 	int y=0, count=0,dy=0;
 
 	if ( !isMinimized ) {
-		//y = MAX(1,rect.h-messages.size()-offset);
+		//y = std::max(1,rect.h-messages.size()-offset);
         //count=rect.h-y;
 	} else if ( titleBarAlpha > 0.0f ) {
 	    if ( rect.y == 0 ) {
 	        y = 1;
-	        count=MIN(rect.h,messages.size());
+	        count=std::min(rect.h,messages.size());
 	    } else {
-            y = MAX(1,rect.h-messages.size());
+            y = std::max(1,rect.h-messages.size());
            	count=rect.h-y;
 	    }
 	} else {
 	    if ( rect.y == 0 ) {
 	        y = 0;
-	        count=MIN(rect.h,nbActive);
+	        count=std::min(rect.h,nbActive);
 	    } else {
-            y = MAX(0,rect.h-nbActive);
+            y = std::max(0,rect.h-nbActive);
             count=rect.h-y;
 	    }
 	}

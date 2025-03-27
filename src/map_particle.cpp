@@ -90,8 +90,8 @@ bool Particle::update(float elapsed) {
 				// TODO : this does not work
 				float fdx=newx+0.5f - foldx;
 				float fdy=newy+0.5f - foldy;
-				fdx=ABS(fdx);
-				fdy=ABS(fdy);
+				fdx=std::abs(fdx);
+				fdy=std::abs(fdy);
 				if ( fdx >= fdy ) dx=-dx;
 				if ( fdy >= fdx ) dy=-dy;
 			} else if (! xwalk ) {

@@ -288,8 +288,8 @@ Creature *Creature::getCreature(CreatureTypeId id) {
 bool Creature::isInRange(int px, int py) const {
 	int dx=(int)(px-x);
 	int dy=(int)(py-y);
-	return ( ABS(dx) <= fovRange
-		&& ABS(dy) <= fovRange
+	return ( std::abs(dx) <= fovRange
+		&& std::abs(dy) <= fovRange
 		&& dx*dx + dy*dy <= fovRange*fovRange );
 }
 
@@ -301,7 +301,7 @@ void Creature::talk(const char *text) {
 	strncpy(talkText.text,(char*)text,CREATURE_TALK_SIZE-1);
 	talkText.text[CREATURE_TALK_SIZE-1]=0;
 	talkText.delay=strlen(text) * 0.1f;
-	talkText.delay=MAX(0.5f,talkText.delay);
+	talkText.delay=std::max(0.5f,talkText.delay);
 	// compute text size
 	char *ptr=(char*)text;
 	talkText.h=1;
@@ -368,7 +368,7 @@ void Creature::render(LightMap *lightMap) {
 	Dungeon *dungeon=gameEngine->dungeon;
 	float shadow = dungeon->getShadow(x*2,y*2);
 	float clouds = dungeon->getCloudCoef(x*2,y*2);
-	shadow = MIN(shadow,clouds);
+	shadow = std::min(shadow,clouds);
 	lightColor = lightColor * shadow;
 	if ( getLife() <= 0 ) {
 		ch='%';
@@ -380,9 +380,9 @@ void Creature::render(LightMap *lightMap) {
 		int r=(int)(c.r*1.5f*lightColor.r/255);
 		int g=(int)(c.g*1.5f*lightColor.g/255);
 		int b=(int)(c.b*1.5f*lightColor.b/255);
-		c.r=CLAMP(0,255,r);
-		c.g=CLAMP(0,255,g);
-		c.b=CLAMP(0,255,b);
+		c.r=std::clamp(r,0,255);
+		c.g=std::clamp(g,0,255);
+		c.b=std::clamp(b,0,255);
 	} else {
 		c=col*lightColor;
 	}
@@ -395,7 +395,7 @@ void Creature::render(LightMap *lightMap) {
 }
 
 void Creature::stun(float delay) {
-	walkTimer=MIN(-delay,walkTimer);
+	walkTimer=std::min(-delay,walkTimer);
 }
 
 bool Creature::walk(float elapsed) {
